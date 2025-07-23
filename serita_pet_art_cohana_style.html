@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ペット肖像日本画 | セリタ - あなたと大切な子の、愛された証を日本画に</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200;300;400;500;600&family=Playfair+Display:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --deep-charcoal: #2c2c2c;
+      --rich-gold: #d4af37;
+      --warm-gold: #b8941f;
+      --soft-platinum: #8a8a8a;
+      --warm-cream: #faf8f2;
+      --pearl-white: #f9f7f4;
+      --champagne: #f7f3e9;
+      --subtle-gold: rgba(212, 175, 55, 0.1);
+      --elegant-shadow: rgba(44, 44, 44, 0.1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Noto Serif JP', serif;
+      background: var(--warm-cream);
+      color: var(--deep-charcoal);
+      line-height: 1.8;
+      font-weight: 300;
+    }
+
+    .font-display {
+      font-family: 'Playfair Display', serif;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .section {
+      padding: 6rem 0;
+    }
+
+    .section-large {
+      padding: 8rem 0;
+    }
+
+    .text-center {
+      text-align: center;
+    }
+
+    /* ファーストビュー - cohana.style風 */
+    .hero-section {
+      position: relative;
+      height: 100vh;
+      width: 100%;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('/Users/matsuyamaryuuichi/Downloads/line_oa_chat_250706_105919.JPG');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      opacity: 0;
+      transform: scale(1.1);
+      transition: all 1.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    .hero-background.show {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .hero-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        135deg,
+        rgba(44, 44, 44, 0.5) 0%,
+        rgba(212, 175, 55, 0.15) 50%,
+        rgba(44, 44, 44, 0.4) 100%
+      );
+      z-index: 1;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      color: white;
+      max-width: 900px;
+      padding: 0 2rem;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 1s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    .hero-content.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .hero-content h1 {
+      font-size: 4.5rem;
+      font-weight: 300;
+      line-height: 1.2;
+      margin-bottom: 2.5rem;
+      text-shadow: 2px 2px 15px rgba(0, 0, 0, 0.6);
+      color: white;
+      letter-spacing: 0.02em;
+    }
+
+    .hero-content .subtitle {
+      font-size: 1.5rem;
+      color: rgba(255, 255, 255, 0.95);
+      font-weight: 300;
+      line-height: 1.7;
+      text-shadow: 1px 1px 8px rgba(0, 0, 0, 0.7);
+      margin-bottom: 0;
+    }
+
+    .hero-text {
+      opacity: 0;
+      transform: translateY(-20px);
+      animation: heroTextIn 1s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+    }
+
+    .hero-text.fade-out {
+      animation: heroTextOut 0.8s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+    }
+
+    @keyframes heroTextIn {
+      0% {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes heroTextOut {
+      0% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+    }
+
+    /* その他のセクション用スタイル */
+    h1 {
+      font-size: 3.5rem;
+      font-weight: 300;
+      line-height: 1.3;
+      margin-bottom: 2rem;
+      letter-spacing: 0.02em;
+      background: linear-gradient(135deg, var(--deep-charcoal) 0%, var(--rich-gold) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    h2 {
+      font-size: 2.5rem;
+      font-weight: 300;
+      line-height: 1.4;
+      margin-bottom: 3rem;
+      letter-spacing: 0.02em;
+      position: relative;
+    }
+
+    h2::after {
+      content: '';
+      position: absolute;
+      bottom: -1rem;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--rich-gold), transparent);
+    }
+
+    h3 {
+      font-size: 1.8rem;
+      font-weight: 400;
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.01em;
+      color: var(--deep-charcoal);
+    }
+
+    .subtitle {
+      font-size: 1.25rem;
+      color: var(--soft-platinum);
+      font-weight: 300;
+      line-height: 1.8;
+      margin-bottom: 4rem;
+    }
+
+    .body-text {
+      font-size: 1rem;
+      line-height: 2;
+      margin-bottom: 2rem;
+      color: var(--soft-platinum);
+    }
+
+    .minimal-card {
+      background: linear-gradient(145deg, var(--pearl-white) 0%, var(--champagne) 100%);
+      border: 1px solid rgba(212, 175, 55, 0.2);
+      padding: 3rem;
+      margin-bottom: 3rem;
+      transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 20px var(--elegant-shadow);
+    }
+
+    .minimal-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--rich-gold), transparent);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .minimal-card:hover {
+      box-shadow: 0 12px 40px rgba(44, 44, 44, 0.15);
+      transform: translateY(-5px);
+    }
+
+    .minimal-card:hover::before {
+      opacity: 1;
+    }
+
+    .price {
+      font-size: 2rem;
+      font-weight: 500;
+      background: linear-gradient(135deg, var(--rich-gold), var(--warm-gold));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+    }
+
+    .feature-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .feature-list li {
+      padding: 0.8rem 0;
+      color: var(--soft-platinum);
+      border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+      position: relative;
+      padding-left: 1.5rem;
+    }
+
+    .feature-list li::before {
+      content: '•';
+      position: absolute;
+      left: 0;
+      color: var(--rich-gold);
+      font-weight: bold;
+    }
+
+    .feature-list li:last-child {
+      border-bottom: none;
+    }
+
+    .button-primary {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--rich-gold) 0%, var(--warm-gold) 100%);
+      color: white;
+      padding: 1.2rem 3rem;
+      text-decoration: none;
+      font-size: 1rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      transition: all 0.4s ease;
+      border: 2px solid var(--rich-gold);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+    }
+
+    .button-primary::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .button-primary:hover {
+      background: linear-gradient(135deg, var(--warm-gold) 0%, var(--rich-gold) 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
+    }
+
+    .button-primary:hover::before {
+      left: 100%;
+    }
+
+    .divider {
+      width: 120px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--rich-gold), transparent);
+      margin: 4rem auto;
+      position: relative;
+    }
+
+    .divider::after {
+      content: '◊';
+      position: absolute;
+      top: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--warm-cream);
+      color: var(--rich-gold);
+      font-size: 1rem;
+      padding: 0 0.5rem;
+    }
+
+    @media (max-width: 768px) {
+      .hero-content h1 {
+        font-size: 3rem;
+      }
+      
+      .hero-content .subtitle {
+        font-size: 1.2rem;
+      }
+      
+      h1 {
+        font-size: 2.5rem;
+      }
+      
+      h2 {
+        font-size: 2rem;
+      }
+      
+      .container {
+        padding: 0 1rem;
+      }
+      
+      .section {
+        padding: 4rem 0;
+      }
+      
+      .section-large {
+        padding: 5rem 0;
+      }
+      
+      .minimal-card {
+        padding: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- セクション①｜ファーストビュー -->
+  <section class="hero-section">
+    <div class="hero-background" id="heroBackground"></div>
+    <div class="hero-overlay"></div>
+    
+    <div class="hero-text text-center" id="heroText">
+      <h1 class="font-display">
+        あなたと大切な子の、<br>愛された証を日本画に。
+      </h1>
+      <p class="subtitle">
+        東京藝大卒の日本画家が描く、世界にたったひとつのペット肖像画。
+      </p>
+    </div>
+    
+    <div class="hero-content" id="heroContent" style="display: none;">
+      <h1 class="font-display">
+        あなたと大切な子の、<br>愛された証を日本画に。
+      </h1>
+      <p class="subtitle">
+        東京藝大卒の日本画家が描く、世界にたったひとつのペット肖像画。
+      </p>
+    </div>
+  </section>
+
+  <!-- セクション②｜セリタについて -->
+  <section class="section">
+    <div class="container">
+      <div class="divider"></div>
+      <h2 class="font-display text-center">愛をかたちに変える日本画家</h2>
+      <div style="max-width: 800px; margin: 0 auto;">
+        <p class="body-text">
+          はじめまして、日本画家のセリタと申します。<br><br>
+          東京藝術大学大学院を修了後、20年間日本画を描いてきました。<br><br>
+          数年前から、大切な家族である"ペット"の絵をご依頼いただくようになり、今ではそれが私の天職だと感じています。
+        </p>
+        <blockquote style="font-size: 1.4rem; line-height: 1.8; font-style: italic; text-align: center; margin: 4rem 0; background: linear-gradient(135deg, var(--rich-gold), var(--warm-gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-family: 'Playfair Display', serif; position: relative;">
+          「この子がいたことを、未来に残したい」
+        </blockquote>
+        <p class="body-text">
+          そんな願いに寄り添える絵を、心を込めて描いています。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- セクション③｜制作過程 -->
+  <section class="section" style="background: var(--champagne);">
+    <div class="container">
+      <h2 class="font-display text-center">伝統を受け継ぐ、丁寧な手仕事</h2>
+      <div style="max-width: 900px; margin: 0 auto;">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 3rem; margin-top: 4rem;">
+          <div class="minimal-card">
+            <h3>厳選された国産材料</h3>
+            <p class="body-text">
+              職人の手によって作られた和紙、天然顔料、膠など、すべて国産の最高品質な材料のみを使用しています。
+            </p>
+          </div>
+          <div class="minimal-card">
+            <h3>毛の一本一本まで</h3>
+            <p class="body-text">
+              愛らしい表情、毛の質感、目の輝き。一筆一筆に心を込めて、あなたの大切な子の魂を描き出します。
+            </p>
+          </div>
+          <div class="minimal-card">
+            <h3>百年の風化に耐える</h3>
+            <p class="body-text">
+              伝統的な日本画技法により制作された作品は、適切な環境下で百年以上の保存が可能な伝統工芸品です。
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- セクション④｜世界でたったひとつ。あなたの愛を描きます。 -->
+  <section class="section">
+    <div class="container">
+      <div class="divider"></div>
+      <h2 class="font-display text-center">世界でたったひとつ。あなたの愛を描きます。</h2>
+      <div style="max-width: 800px; margin: 0 auto;">
+        <p class="body-text text-center">
+          お預かりしたお写真をもとに、日本画の繊細な技法で大切な子の姿を描き出します。<br><br>
+          生きた証として、愛された記録として。<br>
+          時を超えて、あなたの心に寄り添う一枚を。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- セクション⑤｜料金プラン -->
+  <section class="section" style="background: var(--champagne);">
+    <div class="container">
+      <h2 class="font-display text-center">料金プラン</h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 3rem; max-width: 1000px; margin: 4rem auto 0;">
+        <div class="minimal-card">
+          <h3 class="text-center">SM（22.7×15.8cm）</h3>
+          <div class="price text-center">¥130,000</div>
+          <ul class="feature-list">
+            <li>日本画用紙（麻紙）</li>
+            <li>天然顔料・膠使用</li>
+            <li>額装込み</li>
+            <li>制作期間：4-6週間</li>
+          </ul>
+          <div class="text-center" style="margin-top: 2rem;">
+            <a href="#contact" class="button-primary">ご注文</a>
+          </div>
+        </div>
+        <div class="minimal-card">
+          <h3 class="text-center">F4（33.3×24.2cm）</h3>
+          <div class="price text-center">¥180,000</div>
+          <ul class="feature-list">
+            <li>日本画用紙（麻紙）</li>
+            <li>天然顔料・膠使用</li>
+            <li>額装込み</li>
+            <li>制作期間：6-8週間</li>
+          </ul>
+          <div class="text-center" style="margin-top: 2rem;">
+            <a href="#contact" class="button-primary">ご注文</a>
+          </div>
+        </div>
+        <div class="minimal-card">
+          <h3 class="text-center">F6（41.0×31.8cm）</h3>
+          <div class="price text-center">¥250,000</div>
+          <ul class="feature-list">
+            <li>日本画用紙（麻紙）</li>
+            <li>天然顔料・膠使用</li>
+            <li>額装込み</li>
+            <li>制作期間：8-10週間</li>
+          </ul>
+          <div class="text-center" style="margin-top: 2rem;">
+            <a href="#contact" class="button-primary">ご注文</a>
+          </div>
+        </div>
+      </div>
+      <div class="text-center" style="margin-top: 3rem;">
+        <p class="body-text" style="color: var(--soft-platinum); font-size: 0.9rem;">
+          ※価格は税込み表示です<br>
+          ※その他のサイズについてはお気軽にご相談ください
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- セクション⑥｜お客様の声 -->
+  <section class="section">
+    <div class="container">
+      <div class="divider"></div>
+      <h2 class="font-display text-center">お客様の声</h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 3rem; max-width: 1000px; margin: 4rem auto 0;">
+        <div class="minimal-card">
+          <blockquote style="font-size: 1.1rem; line-height: 1.8; font-style: italic; margin-bottom: 2rem; color: var(--deep-charcoal);">
+            「愛犬が虹の橋を渡って2年。セリタさんの絵を見るたび、あの子がそばにいるような温かい気持ちになります。」
+          </blockquote>
+          <div style="text-align: right; color: var(--soft-platinum); font-size: 0.9rem;">
+            — 東京都 田中様
+          </div>
+        </div>
+        <div class="minimal-card">
+          <blockquote style="font-size: 1.1rem; line-height: 1.8; font-style: italic; margin-bottom: 2rem; color: var(--deep-charcoal);">
+            「毛の質感や表情まで、本当に丁寧に描いてくださいました。家族みんなで大切にしています。」
+          </blockquote>
+          <div style="text-align: right; color: var(--soft-platinum); font-size: 0.9rem;">
+            — 神奈川県 佐藤様
+          </div>
+        </div>
+        <div class="minimal-card">
+          <blockquote style="font-size: 1.1rem; line-height: 1.8; font-style: italic; margin-bottom: 2rem; color: var(--deep-charcoal);">
+            「写真とは違う、日本画ならではの深い味わいがあります。依頼して本当に良かったです。」
+          </blockquote>
+          <div style="text-align: right; color: var(--soft-platinum); font-size: 0.9rem;">
+            — 大阪府 山田様
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- セクション⑦｜ご依頼の流れ -->
+  <section class="section" style="background: var(--champagne);">
+    <div class="container">
+      <h2 class="font-display text-center">ご依頼の流れ</h2>
+      <div style="max-width: 800px; margin: 4rem auto 0;">
+        <div style="display: grid; gap: 2rem;">
+          <div class="minimal-card" style="display: flex; align-items: flex-start; gap: 2rem;">
+            <div style="background: var(--rich-gold); color: white; border-radius: 50%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0; box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);">1</div>
+            <div>
+              <h3>お問い合わせ・ご相談</h3>
+              <p class="body-text">まずはお気軽にお問い合わせください。ご希望やご予算について詳しくお聞かせいただきます。</p>
+            </div>
+          </div>
+          <div class="minimal-card" style="display: flex; align-items: flex-start; gap: 2rem;">
+            <div style="background: var(--rich-gold); color: white; border-radius: 50%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0; box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);">2</div>
+            <div>
+              <h3>お写真のご提供</h3>
+              <p class="body-text">制作の参考となるお写真をメールでお送りください。複数枚お送りいただけるとより良い作品に仕上がります。</p>
+            </div>
+          </div>
+          <div class="minimal-card" style="display: flex; align-items: flex-start; gap: 2rem;">
+            <div style="background: var(--rich-gold); color: white; border-radius: 50%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0; box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);">3</div>
+            <div>
+              <h3>ご契約・お支払い</h3>
+              <p class="body-text">制作内容にご納得いただけましたら、ご契約とお支払いをお願いいたします。</p>
+            </div>
+          </div>
+          <div class="minimal-card" style="display: flex; align-items: flex-start; gap: 2rem;">
+            <div style="background: var(--rich-gold); color: white; border-radius: 50%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0; box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);">4</div>
+            <div>
+              <h3>制作・完成</h3>
+              <p class="body-text">心を込めて制作いたします。完成次第、お手元にお届けいたします。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- セクション⑧｜よくあるご質問 -->
+  <section class="section">
+    <div class="container">
+      <div class="divider"></div>
+      <h2 class="font-display text-center">よくあるご質問</h2>
+      <div style="max-width: 800px; margin: 4rem auto 0;">
+        <div class="minimal-card" style="margin-bottom: 2rem;">
+          <h3>どのような写真を送ればよいですか？</h3>
+          <p class="body-text">
+            できるだけ高画質で、お顔がはっきりと写っているものをお送りください。複数の角度から撮影されたお写真があると、より立体的で魅力的な作品に仕上がります。
+          </p>
+        </div>
+        <div class="minimal-card" style="margin-bottom: 2rem;">
+          <h3>制作期間はどのくらいですか？</h3>
+          <p class="body-text">
+            サイズによって異なりますが、SMサイズで4-6週間、F4サイズで6-8週間、F6サイズで8-10週間程度です。お急ぎの場合はご相談ください。
+          </p>
+        </div>
+        <div class="minimal-card" style="margin-bottom: 2rem;">
+          <h3>額装は込みですか？</h3>
+          <p class="body-text">
+            はい、すべてのプランに額装が含まれています。作品に最も適した上質な額縁を選んでお届けいたします。
+          </p>
+        </div>
+        <div class="minimal-card">
+          <h3>修正は可能ですか？</h3>
+          <p class="body-text">
+            制作過程で写真をお送りして確認していただきますので、その時点でのご要望は可能な限り対応いたします。完成後の大幅な修正は承れませんので、ご了承ください。
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- セクション⑨｜お問い合わせ -->
+  <section class="section section-large" style="background: var(--champagne);" id="contact">
+    <div class="container">
+      <h2 class="font-display text-center">お問い合わせ</h2>
+      <div style="max-width: 600px; margin: 4rem auto 0;">
+        <div class="minimal-card">
+          <div class="text-center">
+            <h3 style="margin-bottom: 2rem;">ご質問・ご相談はお気軽に</h3>
+            <p class="body-text" style="margin-bottom: 3rem;">
+              大切な家族の絵について、どんな小さなことでもお気軽にご相談ください。<br>
+              心を込めて、あなただけの特別な一枚をお描きします。
+            </p>
+            <div style="display: grid; gap: 2rem;">
+              <div style="display: flex; align-items: center; justify-content: center; gap: 1rem;">
+                <div style="font-size: 1.5rem; color: var(--rich-gold);">📧</div>
+                <div>
+                  <div style="font-weight: 500; color: var(--deep-charcoal); margin-bottom: 0.5rem;">メール</div>
+                  <div style="color: var(--soft-platinum);">serita.pet.art@example.com</div>
+                </div>
+              </div>
+              <div style="display: flex; align-items: center; justify-content: center; gap: 1rem;">
+                <div style="font-size: 1.5rem; color: var(--rich-gold);">📞</div>
+                <div>
+                  <div style="font-weight: 500; color: var(--deep-charcoal); margin-bottom: 0.5rem;">お電話</div>
+                  <div style="color: var(--soft-platinum);">03-1234-5678（平日 10:00-18:00）</div>
+                </div>
+              </div>
+            </div>
+            <div style="margin-top: 3rem;">
+              <a href="mailto:serita.pet.art@example.com?subject=ペット肖像画のお問い合わせ" class="button-primary">
+                お問い合わせはこちら
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // ファーストビューのアニメーション制御
+    document.addEventListener('DOMContentLoaded', function() {
+      const heroText = document.getElementById('heroText');
+      const heroContent = document.getElementById('heroContent');
+      const heroBackground = document.getElementById('heroBackground');
+
+      // 初期状態：文字が浮かんで表示される
+      setTimeout(() => {
+        heroText.style.opacity = '1';
+        heroText.style.transform = 'translateY(0)';
+      }, 300);
+
+      // 2.5秒後：文字がフェードアウト
+      setTimeout(() => {
+        heroText.classList.add('fade-out');
+      }, 2800);
+
+      // 3秒後：背景画像が表示開始
+      setTimeout(() => {
+        heroBackground.classList.add('show');
+      }, 3200);
+
+      // 3.8秒後：オーバーレイテキストがフェードイン
+      setTimeout(() => {
+        heroText.style.display = 'none';
+        heroContent.style.display = 'block';
+        heroContent.classList.add('show');
+      }, 4000);
+    });
+
+    // スムーズスクロール
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+  </script>
+</body>
+</html>

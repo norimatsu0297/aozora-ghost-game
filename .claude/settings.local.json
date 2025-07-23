@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:cohana.style)",
+      "Bash(ls:*)",
+      "Bash(touch:*)"
+    ],
+    "deny": []
+  }
+}

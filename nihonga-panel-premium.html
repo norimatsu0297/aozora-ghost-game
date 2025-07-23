@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>日本画ってなに？ - プレミアムA4パネル</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Noto+Serif+JP:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* A4印刷用設定 */
+    @page {
+      size: A4 portrait;
+      margin: 8mm;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Crimson Text', 'Noto Serif JP', serif;
+      background: #fefefe;
+      color: #1a1a1a;
+      width: 194mm; /* A4 - margin */
+      height: 281mm; /* A4 - margin */
+      padding: 0;
+      margin: 0;
+      font-weight: 400;
+      line-height: 1.6;
+    }
+    
+    .panel {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+    }
+    
+    /* ヘッダー */
+    .header {
+      background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+      color: #fefefe;
+      padding: 12mm 15mm;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        radial-gradient(ellipse at top left, rgba(183, 149, 47, 0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at bottom right, rgba(183, 149, 47, 0.12) 0%, transparent 50%);
+    }
+    
+    .header::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 15mm;
+      right: 15mm;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #b7952f, transparent);
+    }
+    
+    h1 {
+      font-family: 'Cormorant Garamond', 'Noto Serif JP', serif;
+      font-size: 52px;
+      font-weight: 300;
+      letter-spacing: 0.5px;
+      text-align: center;
+      margin-bottom: 8mm;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .subtitle {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 20px;
+      font-weight: 300;
+      text-align: center;
+      color: rgba(254, 254, 254, 0.85);
+      letter-spacing: 1.5px;
+      position: relative;
+      z-index: 1;
+    }
+    
+    /* メインコンテンツ */
+    .content {
+      padding: 12mm 15mm;
+      background: #fefefe;
+      display: grid;
+      gap: 8mm;
+      grid-template-rows: auto auto 1fr auto;
+    }
+    
+    /* イントロ */
+    .intro {
+      text-align: center;
+      font-size: 18px;
+      line-height: 1.8;
+      color: #333;
+      font-weight: 400;
+      position: relative;
+      padding: 8mm 0;
+    }
+    
+    .intro::before,
+    .intro::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 40px;
+      height: 1px;
+      background: #b7952f;
+    }
+    
+    .intro::before { top: 0; }
+    .intro::after { bottom: 0; }
+    
+    /* セクション見出し */
+    .section-title {
+      font-family: 'Cormorant Garamond', 'Noto Serif JP', serif;
+      font-size: 32px;
+      font-weight: 500;
+      text-align: center;
+      color: #1a1a1a;
+      margin-bottom: 10mm;
+      position: relative;
+    }
+    
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -4mm;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #b7952f, transparent);
+    }
+    
+    /* 4つのポイント - グリッドレイアウト */
+    .features-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6mm;
+      margin-bottom: 8mm;
+    }
+    
+    .feature-card {
+      background: #fafafa;
+      border: 1px solid #e8e8e8;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      display: grid;
+      grid-template-rows: 100px 1fr;
+    }
+    
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #b7952f, #8b7420, #b7952f);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    
+    .feature-card:hover::before {
+      opacity: 1;
+    }
+    
+    .feature-image {
+      width: 100%;
+      height: 100px;
+      background: linear-gradient(135deg, #f0f0f0 0%, #e0e0e0 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      color: #666;
+      text-align: center;
+      line-height: 1.4;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .feature-image::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        linear-gradient(45deg, transparent 48%, rgba(183, 149, 47, 0.05) 50%, transparent 52%),
+        linear-gradient(-45deg, transparent 48%, rgba(183, 149, 47, 0.05) 50%, transparent 52%);
+      background-size: 20px 20px;
+    }
+    
+    .feature-content {
+      padding: 6mm;
+      text-align: center;
+    }
+    
+    .feature-title {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 16px;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-bottom: 4mm;
+      line-height: 1.3;
+    }
+    
+    .feature-desc {
+      font-size: 13px;
+      color: #555;
+      line-height: 1.6;
+      font-weight: 400;
+    }
+    
+    /* 比較・説明セクション */
+    .explanation {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10mm;
+      align-items: start;
+    }
+    
+    .comparison-visual {
+      background: #fafafa;
+      border: 1px solid #e8e8e8;
+      padding: 10mm;
+      text-align: center;
+      position: relative;
+    }
+    
+    .comparison-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-bottom: 6mm;
+    }
+    
+    .vs-grid {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 4mm;
+      align-items: center;
+      margin-bottom: 6mm;
+    }
+    
+    .vs-item {
+      text-align: center;
+      font-size: 11px;
+      line-height: 1.4;
+    }
+    
+    .vs-icon {
+      font-size: 24px;
+      margin-bottom: 2mm;
+      display: block;
+    }
+    
+    .vs-divider {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #b7952f;
+    }
+    
+    .explanation-text {
+      font-size: 15px;
+      line-height: 1.7;
+      color: #333;
+    }
+    
+    .explanation-text h4 {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 20px;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-bottom: 6mm;
+    }
+    
+    .explanation-text p {
+      margin-bottom: 4mm;
+    }
+    
+    .analogy {
+      background: linear-gradient(135deg, #f9f9f9 0%, #f5f5f5 100%);
+      border-left: 3px solid #b7952f;
+      padding: 6mm;
+      font-style: italic;
+      font-size: 11px;
+      line-height: 1.6;
+      margin-top: 6mm;
+    }
+    
+    /* フッター */
+    .footer {
+      background: linear-gradient(135deg, #b7952f 0%, #8b7420 100%);
+      color: #fefefe;
+      padding: 10mm 15mm;
+      text-align: center;
+      position: relative;
+    }
+    
+    .footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 15mm;
+      right: 15mm;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    }
+    
+    .footer-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: 4mm;
+    }
+    
+    .footer-message {
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 1.5;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+    }
+    
+    /* 強調 */
+    strong {
+      font-weight: 600;
+      color: #1a1a1a;
+    }
+    
+    em {
+      color: #b7952f;
+      font-style: normal;
+      font-weight: 600;
+    }
+    
+    /* 印刷用調整 */
+    @media print {
+      body {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      
+      .panel {
+        page-break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="panel">
+    <!-- ヘッダー -->
+    <header class="header">
+      <h1>日本画って なに？</h1>
+      <div class="subtitle">100年残る、日本の手作りアート</div>
+    </header>
+    
+    <!-- メインコンテンツ -->
+    <main class="content">
+      <!-- イントロ -->
+      <div class="intro">
+        紙・筆・絵の具、ぜんぶ日本の職人さんが手作り！<br>
+        自然の貝や石から生まれた色で、何度も塗り重ねて、<br>
+        <strong>100年たっても色あせない</strong> 特別な絵にします。
+      </div>
+      
+      <!-- 4つのポイント -->
+      <section>
+        <h2 class="section-title">日本画の4つのすごいところ</h2>
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-image">
+              職人さんの手作り<br>
+              和紙・筆・絵の具<br>
+              📸 材料の写真
+            </div>
+            <div class="feature-content">
+              <h3 class="feature-title">ぜんぶ国産・手作り</h3>
+              <p class="feature-desc">紙も筆も絵の具も、日本の職人さんが一つ一つ丁寧に作ったものだけ使います</p>
+            </div>
+          </div>
+          
+          <div class="feature-card">
+            <div class="feature-image">
+              貝殻や石の原料<br>
+              自然からの色<br>
+              📸 天然素材の写真
+            </div>
+            <div class="feature-content">
+              <h3 class="feature-title">自然からの美しい色</h3>
+              <p class="feature-desc">貝殻や綺麗な石を砕いて作った絵の具。化学的な色とは違う、やさしい色合い</p>
+            </div>
+          </div>
+          
+          <div class="feature-card">
+            <div class="feature-image">
+              何度も塗り重ね<br>
+              職人の筆づかい<br>
+              📸 制作風景の写真
+            </div>
+            <div class="feature-content">
+              <h3 class="feature-title">何度も重ね塗り</h3>
+              <p class="feature-desc">薄い色を何回も重ねて塗ることで、深みのある美しい色を作り出します</p>
+            </div>
+          </div>
+          
+          <div class="feature-card">
+            <div class="feature-image">
+              昔から残る作品<br>
+              時代を超える美<br>
+              📸 保存作品の写真
+            </div>
+            <div class="feature-content">
+              <h3 class="feature-title">100年も長持ち</h3>
+              <p class="feature-desc">きちんと保管すれば100年以上も美しいまま。お子さん、お孫さんまで見てもらえます</p>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <!-- 説明・比較セクション -->
+      <section class="explanation">
+        <div class="comparison-visual">
+          <h3 class="comparison-title">みんなが思ってること vs 本当のこと</h3>
+          <div class="vs-grid">
+            <div class="vs-item">
+              <div class="vs-icon">🏯</div>
+              <div><strong>よくある勘違い</strong></div>
+              <div>浮世絵とか<br>昔の絵だけ</div>
+            </div>
+            <div class="vs-divider">×</div>
+            <div class="vs-item">
+              <div class="vs-icon">🐕</div>
+              <div><strong>実際は</strong></div>
+              <div>ペットも風景も<br>なんでも描ける！</div>
+            </div>
+          </div>
+          <div style="font-size: 12px; color: #666; text-align: center;">
+            何を描くかじゃなくて、<em>どうやって描くか</em>が大切
+          </div>
+        </div>
+        
+        <div class="explanation-text">
+          <h4>今の時代の日本画</h4>
+          <p>日本画って、描く絵の種類で決まるんじゃないんです。<strong>材料と描き方</strong>で決まるんです！</p>
+          <p>パリの風景を日本画で描いても日本画。だから、今のワンちゃんネコちゃんも、この特別な技術で永遠に残せるんです。</p>
+          
+          <div class="analogy">
+            コーヒーに例えると、インスタントと手でドリップしたコーヒーの違い。手間をかけた一杯が心に残るように、日本画も時間と技術をかけて作る特別な一枚なんです。
+          </div>
+        </div>
+      </section>
+    </main>
+    
+    <!-- フッター -->
+    <footer class="footer">
+      <h3 class="footer-title">つまり</h3>
+      <p class="footer-message">大切な家族の姿を、100年先まで残せる絵──<br>それが日本画です！</p>
+    </footer>
+  </div>
+</body>
+</html>

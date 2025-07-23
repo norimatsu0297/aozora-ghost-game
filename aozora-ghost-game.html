@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>あおぞら学級 - 呪われた校舎からの脱出</title>
+  <meta name="description" content="あおぞら学級を舞台にしたお化け屋敷×アクションRPGゲーム。伝説の装備を集めて魔王を倒そう！">
+  <meta name="keywords" content="教育ゲーム,あおぞら学級,お化け屋敷,RPG,アクション,教材">
+  <meta name="author" content="あおぞら学級の先生">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Yu Gothic Medium', 'Meiryo', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: white;
+            overflow: hidden;
+            user-select: none;
+            cursor: default;
+        }
+        
+        #gameContainer {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+        
+        #gameArea {
+            width: 800px;
+            height: 600px;
+            background: linear-gradient(45deg, #2d1b69 0%, #0f0f23 100%);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 3px solid #4a4a8a;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(74, 74, 138, 0.5);
+        }
+        
+        #player {
+            width: 50px;
+            height: 50px;
+            position: absolute;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            z-index: 10;
+            cursor: pointer;
+            background: linear-gradient(45deg, #ff6b9d 0%, #ff8e8e 100%);
+            border: 3px solid #fff;
+            box-shadow: 
+                0 0 20px rgba(255, 107, 157, 0.6),
+                inset 0 -10px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        #player::before {
+            content: '';
+            position: absolute;
+            top: 8px;
+            left: 12px;
+            width: 8px;
+            height: 8px;
+            background: #000;
+            border-radius: 50%;
+            box-shadow: 15px 0 0 #000;
+        }
+        
+        #player::after {
+            content: '';
+            position: absolute;
+            top: 25px;
+            left: 15px;
+            width: 15px;
+            height: 8px;
+            background: #ff4757;
+            border-radius: 0 0 15px 15px;
+        }
+        
+        .room {
+            position: absolute;
+            background: rgba(30, 30, 60, 0.8);
+            border: 2px solid #666;
+            border-radius: 5px;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+        
+        .ghost {
+            position: absolute;
+            width: 40px;
+            height: 45px;
+            background: linear-gradient(180deg, #e0e6ff 0%, transparent 100%);
+            border-radius: 50% 50% 0 0;
+            animation: float 2s ease-in-out infinite;
+            cursor: pointer;
+            border: 2px solid #a0a0ff;
+            box-shadow: 0 0 20px rgba(160, 160, 255, 0.5);
+            transition: transform 0.2s ease;
+        }
+        
+        .ghost::before {
+            content: '';
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            width: 6px;
+            height: 6px;
+            background: #000;
+            border-radius: 50%;
+            box-shadow: 12px 0 0 #000;
+        }
+        
+        .ghost::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: linear-gradient(90deg, 
+                transparent 0%, #e0e6ff 15%, transparent 25%,
+                #e0e6ff 35%, transparent 45%, #e0e6ff 55%,
+                transparent 65%, #e0e6ff 75%, transparent 85%,
+                #e0e6ff 95%, transparent 100%);
+        }
+        
+        .ghost:hover {
+            transform: scale(1.1);
+            filter: brightness(1.2);
+        }
+        
+        .ghost.attacking {
+            animation: ghostAttack 0.5s ease-in-out;
+            border-color: #ff4757;
+            box-shadow: 0 0 25px rgba(255, 71, 87, 0.8);
+        }
+        
+        @keyframes ghostAttack {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); filter: brightness(1.5); }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .treasure {
+            position: absolute;
+            width: 35px;
+            height: 35px;
+            border-radius: 8px;
+            animation: sparkle 1.5s ease-in-out infinite;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            border: 3px solid #fff;
+        }
+        
+        .treasure:hover {
+            transform: scale(1.2);
+        }
+        
+        .sword { 
+            background: linear-gradient(45deg, #ffd700, #ffed4a);
+            box-shadow: 0 0 15px #ffd700;
+        }
+        .sword::before {
+            content: '⚔️';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 20px;
+        }
+        
+        .shield { 
+            background: linear-gradient(45deg, #c0c0c0, #e8e8e8);
+            box-shadow: 0 0 15px #c0c0c0;
+        }
+        .shield::before {
+            content: '🛡️';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 20px;
+        }
+        
+        .helmet { 
+            background: linear-gradient(45deg, #cd7f32, #daa520);
+            box-shadow: 0 0 15px #cd7f32;
+        }
+        .helmet::before {
+            content: '⛑️';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 20px;
+        }
+        
+        @keyframes sparkle {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.1) rotate(5deg); }
+        }
+        
+        .boss {
+            position: absolute;
+            width: 90px;
+            height: 90px;
+            background: radial-gradient(circle, #8b0000 0%, #4b0000 100%);
+            border-radius: 15px;
+            border: 4px solid #ff0000;
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.8);
+            animation: bossPulse 1s ease-in-out infinite;
+            display: none;
+            cursor: pointer;
+        }
+        
+        .boss::before {
+            content: '👹';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 50px;
+        }
+        
+        @keyframes bossPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        #ui {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 100;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 15px;
+            border: 2px solid #4a4a8a;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            font-size: 16px;
+        }
+        
+        #inventory {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .item-slot {
+            width: 50px;
+            height: 50px;
+            border: 2px solid #666;
+            border-radius: 8px;
+            background: rgba(50, 50, 100, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            transition: all 0.3s ease;
+        }
+        
+        .item-slot.collected {
+            border-color: #ffd700;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+            background: rgba(255, 215, 0, 0.2);
+        }
+        
+        #message {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.9);
+            padding: 20px 30px;
+            border-radius: 25px;
+            border: 2px solid #4a4a8a;
+            font-size: 18px;
+            text-align: center;
+            max-width: 700px;
+            z-index: 100;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+        
+        #controls {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 15px;
+            border-radius: 10px;
+            border: 2px solid #4a4a8a;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        .classroom-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: 
+                repeating-linear-gradient(
+                    90deg,
+                    transparent,
+                    transparent 50px,
+                    rgba(255, 255, 255, 0.03) 52px
+                ),
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 50px,
+                    rgba(255, 255, 255, 0.03) 52px
+                );
+        }
+        
+        .victory-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            z-index: 1000;
+        }
+        
+        .victory-text {
+            font-size: 48px;
+            color: #ffd700;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+            animation: victoryGlow 2s ease-in-out infinite;
+            margin-bottom: 20px;
+        }
+        
+        @keyframes victoryGlow {
+            0%, 100% { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8), 0 0 20px #ffd700; }
+            50% { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8), 0 0 40px #ffd700; }
+        }
+        
+        .restart-btn {
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            margin-top: 20px;
+        }
+        
+        .restart-btn:hover {
+            transform: scale(1.05);
+        }
+        
+        .attack-effect {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background: radial-gradient(circle, rgba(255, 255, 0, 0.8), transparent);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: attackFlash 0.3s ease-out;
+        }
+        
+        @keyframes attackFlash {
+            0% { transform: scale(0); opacity: 1; }
+            100% { transform: scale(2); opacity: 0; }
+        }
+        
+        .projectile {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: radial-gradient(circle, #ff4757 0%, #8b0000 100%);
+            border-radius: 50%;
+            box-shadow: 0 0 10px #ff4757;
+            z-index: 5;
+            animation: projectilePulse 0.3s ease-in-out infinite;
+        }
+        
+        @keyframes projectilePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+        
+        .projectile-trail {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: rgba(255, 71, 87, 0.4);
+            border-radius: 50%;
+            z-index: 4;
+            animation: trailFade 0.5s ease-out forwards;
+        }
+        
+        @keyframes trailFade {
+            0% { opacity: 1; transform: scale(1); }
+            100% { opacity: 0; transform: scale(0.3); }
+        }
+    </style>
+</head>
+<body>
+    <div id="gameContainer">
+        <div id="gameArea">
+            <div class="classroom-bg"></div>
+            <div id="player"></div>
+            
+            <!-- 教室の部屋 -->
+            <div class="room" style="top: 50px; left: 50px; width: 150px; height: 120px;"></div>
+            <div class="room" style="top: 50px; right: 50px; width: 150px; height: 120px;"></div>
+            <div class="room" style="bottom: 50px; left: 50px; width: 150px; height: 120px;"></div>
+            <div class="room" style="bottom: 50px; right: 50px; width: 150px; height: 120px;"></div>
+            <div class="room" style="top: 250px; left: 300px; width: 200px; height: 100px;"></div>
+            
+            <!-- お化け -->
+            <div class="ghost" style="top: 80px; left: 100px;"></div>
+            <div class="ghost" style="top: 80px; right: 100px;"></div>
+            <div class="ghost" style="bottom: 80px; left: 100px;"></div>
+            <div class="ghost" style="bottom: 80px; right: 100px;"></div>
+            <div class="ghost" style="top: 280px; left: 350px;"></div>
+            <div class="ghost" style="top: 280px; left: 420px;"></div>
+            
+            <!-- 伝説のアイテム -->
+            <div class="treasure sword" style="top: 90px; left: 120px;" data-item="sword"></div>
+            <div class="treasure shield" style="bottom: 90px; right: 120px;" data-item="shield"></div>
+            <div class="treasure helmet" style="top: 290px; left: 380px;" data-item="helmet"></div>
+            
+            <!-- 魔王 -->
+            <div class="boss" id="boss" style="top: 255px; left: 355px;"></div>
+        </div>
+        
+        <div id="ui">
+            <div>HP: <span id="hp">100</span>/100</div>
+            <div>スコア: <span id="score">0</span></div>
+            <div style="margin-top: 10px;">伝説の装備:</div>
+            <div id="inventory">
+                <div class="item-slot" id="sword-slot">⚔️</div>
+                <div class="item-slot" id="shield-slot">🛡️</div>
+                <div class="item-slot" id="helmet-slot">⛑️</div>
+            </div>
+        </div>
+        
+        <div id="message">
+            あおぞら学級に夜中に忍び込んだあなた...<br>
+            しかし校舎は呪われていた！伝説の装備を集めて魔王を倒そう！<br>
+            <strong>カーソルキーで移動、エンターキーで攻撃！</strong>
+        </div>
+        
+        <div id="controls">
+            <strong>操作方法:</strong><br>
+            ← → ↑ ↓ : 移動<br>
+            ⏎ エンターキー: 攻撃・装備収集<br>
+            💡 敵に近づくと攻撃される！
+        </div>
+        
+        <div class="victory-screen" id="victoryScreen">
+            <div class="victory-text">
+                🎉 勝利！🎉<br>
+                あおぞら学級を救った！
+            </div>
+            <div style="font-size: 24px; color: #fff; text-align: center;">
+                君は真の勇者だ！<br>
+                最終スコア: <span id="finalScore">0</span>
+            </div>
+            <button class="restart-btn" onclick="location.reload()">もう一度プレイ</button>
+        </div>
+    </div>
+
+    <script>
+        const player = document.getElementById('player');
+        const gameArea = document.getElementById('gameArea');
+        const hpElement = document.getElementById('hp');
+        const scoreElement = document.getElementById('score');
+        const messageElement = document.getElementById('message');
+        const bossElement = document.getElementById('boss');
+        const victoryScreen = document.getElementById('victoryScreen');
+        const finalScoreElement = document.getElementById('finalScore');
+        
+        let playerX = 400;
+        let playerY = 300;
+        let hp = 100;
+        let score = 0;
+        let inventory = { sword: false, shield: false, helmet: false };
+        let bossActive = false;
+        let bossHP = 300;
+        let isMoving = false;
+        let projectiles = [];
+        let ghostAttackTimers = [];
+        
+        // プレイヤーの初期位置設定
+        player.style.left = playerX + 'px';
+        player.style.top = playerY + 'px';
+        
+        // カーソルキーで移動とエンターキーで攻撃
+        document.addEventListener('keydown', (e) => {
+            if (isMoving) return;
+            
+            const speed = 8;
+            let newX = playerX;
+            let newY = playerY;
+            
+            switch(e.key) {
+                case 'ArrowLeft':
+                    newX = Math.max(25, playerX - speed);
+                    break;
+                case 'ArrowRight':
+                    newX = Math.min(775, playerX + speed);
+                    break;
+                case 'ArrowUp':
+                    newY = Math.max(25, playerY - speed);
+                    break;
+                case 'ArrowDown':
+                    newY = Math.min(575, playerY + speed);
+                    break;
+                case 'Enter':
+                    attack();
+                    return;
+            }
+            
+            // 移動があった場合のみ更新
+            if (newX !== playerX || newY !== playerY) {
+                playerX = newX;
+                playerY = newY;
+                player.style.left = playerX + 'px';
+                player.style.top = playerY + 'px';
+                checkCollisions();
+            }
+        });
+        
+        // ゲーム開始時にお化けの攻撃タイマーを設定
+        function initializeGhostAttacks() {
+            const ghosts = document.querySelectorAll('.ghost');
+            ghosts.forEach((ghost, index) => {
+                // 各お化けに異なる攻撃間隔を設定（2-4秒）
+                const attackInterval = 2000 + (index * 500) + Math.random() * 1000;
+                
+                const timer = setInterval(() => {
+                    // お化けが生きているかチェック
+                    if (ghost.style.display === 'none') {
+                        clearInterval(timer);
+                        return;
+                    }
+                    
+                    // 攻撃を実行
+                    ghostAttack(ghost);
+                }, attackInterval);
+                
+                ghostAttackTimers.push(timer);
+            });
+        }
+        
+        // ゲームループ（弾丸の更新）
+        function gameLoop() {
+            updateProjectiles();
+            requestAnimationFrame(gameLoop);
+        }
+        
+        // ゲーム開始
+        initializeGhostAttacks();
+        gameLoop();
+        
+        function attack() {
+            // 攻撃エフェクト表示
+            const attackEffect = document.createElement('div');
+            attackEffect.className = 'attack-effect';
+            attackEffect.style.left = (playerX - 5) + 'px';
+            attackEffect.style.top = (playerY - 5) + 'px';
+            gameArea.appendChild(attackEffect);
+            
+            setTimeout(() => {
+                gameArea.removeChild(attackEffect);
+            }, 300);
+            
+            let actionTaken = false;
+            
+            // 装備収集の判定（優先）
+            const treasures = document.querySelectorAll('.treasure:not([style*="display: none"])');
+            treasures.forEach(treasure => {
+                if (actionTaken) return;
+                
+                const treasureRect = treasure.getBoundingClientRect();
+                const playerRect = player.getBoundingClientRect();
+                const distance = Math.sqrt(
+                    Math.pow(treasureRect.left - playerRect.left, 2) + 
+                    Math.pow(treasureRect.top - playerRect.top, 2)
+                );
+                
+                if (distance < 80) {
+                    const itemType = treasure.dataset.item;
+                    inventory[itemType] = true;
+                    treasure.style.display = 'none';
+                    
+                    document.getElementById(itemType + '-slot').classList.add('collected');
+                    
+                    const itemNames = { 
+                        sword: '伝説の剣', 
+                        shield: '伝説の盾', 
+                        helmet: '伝説の兜' 
+                    };
+                    showMessage(`${itemNames[itemType]}を手に入れた！`);
+                    
+                    score += 50;
+                    scoreElement.textContent = score;
+                    actionTaken = true;
+                    
+                    checkForBossActivation();
+                }
+            });
+            
+            if (actionTaken) return;
+            
+            // お化けへの攻撃判定
+            const ghosts = document.querySelectorAll('.ghost:not([style*="display: none"])');
+            ghosts.forEach(ghost => {
+                if (actionTaken) return;
+                
+                const ghostRect = ghost.getBoundingClientRect();
+                const playerRect = player.getBoundingClientRect();
+                const distance = Math.sqrt(
+                    Math.pow(ghostRect.left - playerRect.left, 2) + 
+                    Math.pow(ghostRect.top - playerRect.top, 2)
+                );
+                
+                if (distance < 100) {
+                    ghost.style.display = 'none';
+                    score += 10;
+                    scoreElement.textContent = score;
+                    showMessage('お化けを退治した！ +10点');
+                    actionTaken = true;
+                    
+                    // 残りお化けチェック
+                    checkForBossActivation();
+                }
+            });
+            
+            if (actionTaken) return;
+            
+            // 魔王への攻撃判定
+            if (bossActive) {
+                const bossRect = bossElement.getBoundingClientRect();
+                const playerRect = player.getBoundingClientRect();
+                const distance = Math.sqrt(
+                    Math.pow(bossRect.left - playerRect.left, 2) + 
+                    Math.pow(bossRect.top - playerRect.top, 2)
+                );
+                
+                if (distance < 120) {
+                    let damage = 30;
+                    if (inventory.sword) damage += 20;
+                    if (inventory.shield) damage += 10;
+                    if (inventory.helmet) damage += 10;
+                    
+                    bossHP -= damage;
+                    showMessage(`魔王に${damage}ダメージ！残りHP: ${bossHP}`);
+                    actionTaken = true;
+                    
+                    if (bossHP <= 0) {
+                        victory();
+                    } else {
+                        // 魔王の反撃
+                        setTimeout(() => {
+                            let counterDamage = 20;
+                            if (inventory.shield) counterDamage -= 10;
+                            if (inventory.helmet) counterDamage -= 5;
+                            
+                            hp -= Math.max(5, counterDamage);
+                            hpElement.textContent = hp;
+                            
+                            if (hp <= 0) {
+                                gameOver();
+                            } else {
+                                showMessage(`魔王の反撃！${counterDamage}ダメージを受けた！`);
+                            }
+                        }, 1000);
+                    }
+                }
+            }
+            
+            if (!actionTaken) {
+                showMessage('攻撃できる相手がいません！');
+            }
+        }
+        
+        // お化けの攻撃実行
+        function ghostAttack(ghost) {
+            const ghostRect = ghost.getBoundingClientRect();
+            const gameAreaRect = gameArea.getBoundingClientRect();
+            
+            // お化けの相対位置を計算
+            const ghostX = ghostRect.left - gameAreaRect.left + 20; // お化けの中心
+            const ghostY = ghostRect.top - gameAreaRect.top + 20;
+            
+            // 攻撃エフェクト
+            ghost.classList.add('attacking');
+            setTimeout(() => {
+                ghost.classList.remove('attacking');
+            }, 500);
+            
+            // 攻撃時のプレイヤー位置をターゲットに設定（その瞬間の位置）
+            const targetX = playerX + 25;
+            const targetY = playerY + 25;
+            
+            // 弾丸を発射（直線）
+            createStraightProjectile(ghostX, ghostY, targetX, targetY);
+        }
+        
+        // 直線弾丸を作成
+        function createStraightProjectile(startX, startY, targetX, targetY) {
+            const projectile = document.createElement('div');
+            projectile.className = 'projectile';
+            projectile.style.left = startX + 'px';
+            projectile.style.top = startY + 'px';
+            gameArea.appendChild(projectile);
+            
+            // 発射時の方向を計算（その後は直線で飛ぶ）
+            const dx = targetX - startX;
+            const dy = targetY - startY;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            const speed = 2.5; // ピクセル/フレーム（少し遅くして回避可能に）
+            
+            const velocityX = (dx / distance) * speed;
+            const velocityY = (dy / distance) * speed;
+            
+            projectiles.push({
+                element: projectile,
+                x: startX,
+                y: startY,
+                vx: velocityX,
+                vy: velocityY,
+                life: 200, // フレーム数（長めに設定）
+                isStraight: true // 直線弾であることを示すフラグ
+            });
+        }
+        
+        // 弾丸の更新
+        function updateProjectiles() {
+            for (let i = projectiles.length - 1; i >= 0; i--) {
+                const proj = projectiles[i];
+                
+                // 弾丸を移動（直線移動）
+                proj.x += proj.vx;
+                proj.y += proj.vy;
+                proj.element.style.left = proj.x + 'px';
+                proj.element.style.top = proj.y + 'px';
+                
+                // 軌跡エフェクト
+                if (Math.random() < 0.3) {
+                    createTrail(proj.x, proj.y);
+                }
+                
+                // プレイヤーとの当たり判定
+                const distanceToPlayer = Math.sqrt(
+                    Math.pow(proj.x - (playerX + 25), 2) + 
+                    Math.pow(proj.y - (playerY + 25), 2)
+                );
+                
+                if (distanceToPlayer < 25) {
+                    // ヒット！
+                    let damage = 10;
+                    if (inventory.shield) damage -= 3;
+                    if (inventory.helmet) damage -= 2;
+                    damage = Math.max(2, damage);
+                    
+                    hp -= damage;
+                    hpElement.textContent = hp;
+                    
+                    showMessage(`お化けの魔法弾が命中！${damage}ダメージ！`);
+                    
+                    // 弾丸を削除
+                    gameArea.removeChild(proj.element);
+                    projectiles.splice(i, 1);
+                    
+                    if (hp <= 0) {
+                        gameOver();
+                        return;
+                    }
+                    continue;
+                }
+                
+                // 寿命・境界チェック
+                proj.life--;
+                if (proj.life <= 0 || proj.x < -20 || proj.x > 820 || proj.y < -20 || proj.y > 620) {
+                    if (gameArea.contains(proj.element)) {
+                        gameArea.removeChild(proj.element);
+                    }
+                    projectiles.splice(i, 1);
+                }
+            }
+        }
+        
+        // 軌跡エフェクト
+        function createTrail(x, y) {
+            const trail = document.createElement('div');
+            trail.className = 'projectile-trail';
+            trail.style.left = x + 'px';
+            trail.style.top = y + 'px';
+            gameArea.appendChild(trail);
+            
+            setTimeout(() => {
+                if (gameArea.contains(trail)) {
+                    gameArea.removeChild(trail);
+                }
+            }, 500);
+        }
+        
+        function checkForBossActivation() {
+            const remainingGhosts = document.querySelectorAll('.ghost:not([style*="display: none"])').length;
+            const allItemsCollected = Object.values(inventory).every(item => item);
+            
+            if (remainingGhosts === 0 && allItemsCollected && !bossActive) {
+                activateBoss();
+            } else if (allItemsCollected && remainingGhosts > 0) {
+                showMessage('すべての伝説装備を手に入れた！残りのお化けを全て倒して魔王を呼び出そう！');
+            }
+        }
+        
+        function activateBoss() {
+            bossElement.style.display = 'block';
+            bossActive = true;
+            showMessage('魔王が現れた！エンターキーで攻撃しよう！');
+        }
+        
+        function victory() {
+            score += 200;
+            scoreElement.textContent = score;
+            finalScoreElement.textContent = score;
+            victoryScreen.style.display = 'flex';
+            showMessage('');
+        }
+        
+        function gameOver() {
+            // すべてのタイマーをクリア
+            ghostAttackTimers.forEach(timer => clearInterval(timer));
+            ghostAttackTimers = [];
+            
+            showMessage('ゲームオーバー... リロードして再挑戦しよう！');
+            setTimeout(() => {
+                if (confirm('ゲームオーバー！もう一度プレイしますか？')) {
+                    location.reload();
+                }
+            }, 2000);
+        }
+        
+        function showMessage(text) {
+            messageElement.innerHTML = text;
+            if (text) {
+                setTimeout(() => {
+                    if (messageElement.innerHTML === text) {
+                        messageElement.innerHTML = '';
+                    }
+                }, 4000);
+            }
+        }
+        
+        function checkCollisions() {
+            // アイテムとの距離チェック（近づいた時の効果）
+            document.querySelectorAll('.treasure').forEach(treasure => {
+                if (treasure.style.display === 'none') return;
+                
+                const treasureRect = treasure.getBoundingClientRect();
+                const playerRect = player.getBoundingClientRect();
+                const distance = Math.sqrt(
+                    Math.pow(treasureRect.left - playerRect.left, 2) + 
+                    Math.pow(treasureRect.top - playerRect.top, 2)
+                );
+                
+                if (distance < 80) {
+                    treasure.style.border = '4px solid #fff';
+                    treasure.style.transform = 'scale(1.2)';
+                } else {
+                    treasure.style.border = '3px solid #fff';
+                    treasure.style.transform = 'scale(1)';
+                }
+            });
+        }
+        
+        // ゲーム開始時メッセージを消す
+        setTimeout(() => {
+            showMessage('');
+        }, 6000);
+    </script>
+</body>
+</html>
