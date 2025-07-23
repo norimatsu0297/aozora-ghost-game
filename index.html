@@ -42,9 +42,8 @@
         }
         
         .games-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
+            display: flex;
+            justify-content: center;
             margin-bottom: 3rem;
         }
         
@@ -52,9 +51,11 @@
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
             border-radius: 15px;
-            padding: 2rem;
+            padding: 3rem;
             border: 1px solid rgba(255, 255, 255, 0.2);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            max-width: 500px;
+            text-align: center;
         }
         
         .game-card:hover {
@@ -126,18 +127,6 @@
                     🎨 かわいいアニメ風デザイン
                 </p>
                 <a href="aozora-ghost-game.html" class="play-button">🎮 ゲームスタート</a>
-            </div>
-            
-            <div class="game-card">
-                <h2>🎨 日本画説明パネル</h2>
-                <p>
-                    「日本画ってなに？」をわかりやすく解説するA4印刷用パネル。<br>
-                    イベントや展示会での説明資料として活用できます。<br><br>
-                    📄 A4サイズ対応<br>
-                    ✨ 高級感のあるデザイン<br>
-                    📚 教育現場での利用に最適
-                </p>
-                <a href="nihonga-panel-premium.html" class="play-button">📄 パネルを見る</a>
             </div>
         </div>
         
