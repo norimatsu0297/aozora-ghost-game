@@ -44,41 +44,422 @@
         }
         
         #player {
-            width: 50px;
-            height: 50px;
+            width: 60px;
+            height: 80px;
             position: absolute;
-            border-radius: 50%;
             transition: all 0.3s ease;
             z-index: 10;
             cursor: pointer;
-            background: linear-gradient(45deg, #ff6b9d 0%, #ff8e8e 100%);
-            border: 3px solid #fff;
-            box-shadow: 
-                0 0 20px rgba(255, 107, 157, 0.6),
-                inset 0 -10px 15px rgba(0, 0, 0, 0.2);
+            animation: playerBreathe 2s ease-in-out infinite;
         }
         
-        #player::before {
+        @keyframes playerBreathe {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            25% { transform: scale(1.03) rotate(1deg); }
+            75% { transform: scale(1.03) rotate(-1deg); }
+        }
+        
+        .player-moving {
+            animation: playerMove 0.5s ease-in-out;
+        }
+        
+        @keyframes playerMove {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1) translateY(-3px); }
+            100% { transform: scale(1); }
+        }
+        
+        /* 男の子プレイヤー */
+        .player-boy .player-head {
+            position: absolute;
+            top: 5px;
+            left: 10px;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(145deg, #FFDBAC 0%, #E8B895 100%);
+            border-radius: 50%;
+            border: 2px solid #D4AF37;
+        }
+        
+        .player-boy .player-hair {
+            position: absolute;
+            top: 0px;
+            left: 5px;
+            width: 30px;
+            height: 20px;
+            background: #8B4513;
+            border-radius: 50% 50% 30% 30%;
+        }
+        
+        .player-boy .player-eyes {
+            position: absolute;
+            top: 12px;
+            left: 8px;
+            width: 24px;
+            height: 8px;
+        }
+        
+        .player-boy .player-eyes::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 3px;
+            width: 6px;
+            height: 6px;
+            background: #000;
+            border-radius: 50%;
+        }
+        
+        .player-boy .player-eyes::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 3px;
+            width: 6px;
+            height: 6px;
+            background: #000;
+            border-radius: 50%;
+        }
+        
+        .player-boy .player-body {
+            position: absolute;
+            top: 35px;
+            left: 15px;
+            width: 30px;
+            height: 35px;
+            background: linear-gradient(145deg, #4FC3F7 0%, #29B6F6 100%);
+            border-radius: 8px 8px 5px 5px;
+            border: 2px solid #0277BD;
+        }
+        
+        /* 共通の腕と脚 */
+        .player-left-arm {
+            position: absolute;
+            top: 40px;
+            left: 5px;
+            width: 15px;
+            height: 25px;
+            background: linear-gradient(145deg, #FFDBAC 0%, #E8B895 100%);
+            border-radius: 8px;
+            transform-origin: top center;
+        }
+        
+        .player-right-arm {
+            position: absolute;
+            top: 40px;
+            right: 5px;
+            width: 15px;
+            height: 25px;
+            background: linear-gradient(145deg, #FFDBAC 0%, #E8B895 100%);
+            border-radius: 8px;
+            transform-origin: top center;
+        }
+        
+        .player-left-leg {
+            position: absolute;
+            top: 65px;
+            left: 18px;
+            width: 12px;
+            height: 20px;
+            background: #2C3E50;
+            border-radius: 6px 6px 3px 3px;
+        }
+        
+        .player-right-leg {
+            position: absolute;
+            top: 65px;
+            right: 18px;
+            width: 12px;
+            height: 20px;
+            background: #2C3E50;
+            border-radius: 6px 6px 3px 3px;
+        }
+        
+        /* ランドセル（男の子用） */
+        .player-boy .player-backpack {
+            position: absolute;
+            top: 38px;
+            left: 47px;
+            width: 8px;
+            height: 15px;
+            background: #FF9800;
+            border-radius: 3px;
+        }
+        
+        /* 女の子プレイヤー */
+        .player-girl .player-head {
+            position: absolute;
+            top: 5px;
+            left: 10px;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(145deg, #FFDBAC 0%, #E8B895 100%);
+            border-radius: 50%;
+            border: 2px solid #D4AF37;
+        }
+        
+        .player-girl .player-hair {
+            position: absolute;
+            top: -2px;
+            left: 2px;
+            width: 36px;
+            height: 18px;
+            background: #4A0E4E;
+            border-radius: 50% 50% 60% 60%;
+        }
+        
+        .player-girl .player-eyes {
+            position: absolute;
+            top: 12px;
+            left: 8px;
+            width: 24px;
+            height: 8px;
+        }
+        
+        .player-girl .player-eyes::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 3px;
+            width: 6px;
+            height: 6px;
+            background: #000;
+            border-radius: 50%;
+        }
+        
+        .player-girl .player-eyes::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 3px;
+            width: 6px;
+            height: 6px;
+            background: #000;
+            border-radius: 50%;
+        }
+        
+        .player-girl .player-body {
+            position: absolute;
+            top: 35px;
+            left: 15px;
+            width: 30px;
+            height: 35px;
+            background: linear-gradient(145deg, #FFB74D 0%, #FF9800 100%);
+            border-radius: 8px 8px 5px 5px;
+            border: 2px solid #F57C00;
+        }
+        
+        .player-girl .player-ribbon {
+            position: absolute;
+            top: 3px;
+            right: 8px;
+            width: 8px;
+            height: 8px;
+            background: #FF4081;
+            border-radius: 50%;
+        }
+        
+        .player-girl .player-ribbon::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            width: 12px;
+            height: 12px;
+            background: #E91E63;
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+        }
+        
+        /* 攻撃アニメーション */
+        .player-attacking .player-right-arm {
+            animation: playerAttack 0.6s ease-in-out;
+        }
+        
+        @keyframes playerAttack {
+            0% { transform: rotate(0deg) translateX(0); }
+            25% { transform: rotate(-45deg) translateX(-5px); }
+            50% { transform: rotate(-90deg) translateX(-10px); }
+            75% { transform: rotate(-45deg) translateX(-5px); }
+            100% { transform: rotate(0deg) translateX(0); }
+        }
+        
+        /* 武器エフェクト */
+        .weapon-effect {
+            position: absolute;
+            top: 35px;
+            right: -10px;
+            width: 20px;
+            height: 3px;
+            background: linear-gradient(90deg, #FFD700, #FFA500);
+            border-radius: 2px;
+            opacity: 0;
+            transform-origin: left center;
+        }
+        
+        .player-attacking .weapon-effect {
+            animation: weaponSlash 0.6s ease-in-out;
+        }
+        
+        @keyframes weaponSlash {
+            0% { opacity: 0; transform: rotate(0deg) scaleX(0); }
+            25% { opacity: 1; transform: rotate(-45deg) scaleX(1.5); }
+            50% { opacity: 1; transform: rotate(-90deg) scaleX(2); }
+            75% { opacity: 0.7; transform: rotate(-45deg) scaleX(1.5); }
+            100% { opacity: 0; transform: rotate(0deg) scaleX(0); }
+        }
+        
+        /* 装備アイテムのスタイル */
+        .equipment-sword {
+            position: absolute;
+            top: 25px;
+            right: -15px;
+            width: 30px;
+            height: 6px;
+            background: linear-gradient(90deg, #FFD700, #FFA500);
+            border-radius: 3px;
+            box-shadow: 0 0 12px #FFD700;
+            opacity: 0;
+        }
+        
+        .equipment-sword::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            right: -5px;
+            width: 8px;
+            height: 10px;
+            background: linear-gradient(145deg, #8B4513, #A0522D);
+            border-radius: 2px;
+        }
+        
+        .equipment-sword::after {
+            content: '';
+            position: absolute;
+            top: 1px;
+            left: 0;
+            width: 25px;
+            height: 2px;
+            background: linear-gradient(90deg, #FFFACD, #FFD700);
+            border-radius: 1px;
+        }
+        
+        .has-sword .equipment-sword {
+            opacity: 1;
+        }
+        
+        .equipment-shield {
+            position: absolute;
+            top: 35px;
+            left: -18px;
+            width: 22px;
+            height: 28px;
+            background: linear-gradient(145deg, #C0C0C0, #E8E8E8);
+            border-radius: 11px 11px 16px 6px;
+            border: 2px solid #A0A0A0;
+            box-shadow: 0 0 12px #C0C0C0;
+            opacity: 0;
+        }
+        
+        .equipment-shield::before {
+            content: '';
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            width: 12px;
+            height: 16px;
+            background: linear-gradient(145deg, #E8E8E8, #F5F5F5);
+            border-radius: 6px 6px 10px 2px;
+        }
+        
+        .equipment-shield::after {
+            content: '+';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #8B0000;
+            font-size: 10px;
+            font-weight: bold;
+        }
+        
+        .has-shield .equipment-shield {
+            opacity: 1;
+        }
+        
+        .equipment-helmet {
+            position: absolute;
+            top: -2px;
+            left: 5px;
+            width: 30px;
+            height: 25px;
+            background: linear-gradient(145deg, #CD7F32, #DAA520);
+            border-radius: 50% 50% 40% 40%;
+            border: 2px solid #8B4513;
+            box-shadow: 0 0 12px #CD7F32;
+            opacity: 0;
+        }
+        
+        .equipment-helmet::before {
             content: '';
             position: absolute;
             top: 8px;
-            left: 12px;
-            width: 8px;
-            height: 8px;
-            background: #000;
-            border-radius: 50%;
-            box-shadow: 15px 0 0 #000;
+            left: 3px;
+            width: 22px;
+            height: 12px;
+            background: linear-gradient(145deg, #DAA520, #F0E68C);
+            border-radius: 50% 50% 30% 30%;
         }
         
-        #player::after {
+        .equipment-helmet::after {
             content: '';
             position: absolute;
-            top: 25px;
-            left: 15px;
-            width: 15px;
-            height: 8px;
-            background: #ff4757;
-            border-radius: 0 0 15px 15px;
+            top: 15px;
+            left: 10px;
+            width: 8px;
+            height: 6px;
+            background: #8B4513;
+            border-radius: 0 0 4px 4px;
+        }
+        
+        .has-helmet .equipment-helmet {
+            opacity: 1;
+        }
+        
+        /* 装備時のグローエフェクト */
+        .player-powered {
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+            animation: playerPowered 2s ease-in-out infinite;
+        }
+        
+        @keyframes playerPowered {
+            0%, 100% { 
+                filter: brightness(1);
+                transform: scale(1);
+            }
+            50% { 
+                filter: brightness(1.2);
+                transform: scale(1.02);
+            }
+        }
+        
+        /* 全装備時の特別エフェクト */
+        .player-fully-equipped {
+            animation: playerFullyEquipped 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes playerFullyEquipped {
+            0%, 100% { 
+                filter: brightness(1) saturate(1);
+                box-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+            }
+            33% { 
+                filter: brightness(1.3) saturate(1.2);
+                box-shadow: 0 0 25px rgba(255, 100, 100, 0.8);
+            }
+            66% { 
+                filter: brightness(1.2) saturate(1.1);
+                box-shadow: 0 0 25px rgba(100, 100, 255, 0.8);
+            }
         }
         
         .room {
@@ -140,8 +521,21 @@
         }
         
         @keyframes ghostAttack {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.2); filter: brightness(1.5); }
+            0% { transform: scale(1) rotate(0deg); }
+            25% { transform: scale(1.15) rotate(-5deg); filter: brightness(1.3); }
+            50% { transform: scale(1.2) rotate(0deg); filter: brightness(1.5); }
+            75% { transform: scale(1.15) rotate(5deg); filter: brightness(1.3); }
+            100% { transform: scale(1) rotate(0deg); }
+        }
+        
+        .ghost-death {
+            animation: ghostDeath 0.6s ease-out forwards;
+        }
+        
+        @keyframes ghostDeath {
+            0% { transform: scale(1) rotate(0deg); opacity: 1; }
+            50% { transform: scale(1.3) rotate(180deg); opacity: 0.7; filter: brightness(2); }
+            100% { transform: scale(0) rotate(360deg); opacity: 0; }
         }
         
         @keyframes float {
@@ -204,35 +598,237 @@
         }
         
         @keyframes sparkle {
-            0%, 100% { transform: scale(1) rotate(0deg); }
-            50% { transform: scale(1.1) rotate(5deg); }
+            0%, 100% { 
+                transform: scale(1) rotate(0deg);
+                box-shadow: 0 0 15px currentColor, 0 0 30px currentColor;
+            }
+            25% { 
+                transform: scale(1.05) rotate(90deg);
+                box-shadow: 0 0 20px currentColor, 0 0 40px currentColor;
+            }
+            50% { 
+                transform: scale(1.1) rotate(180deg);
+                box-shadow: 0 0 25px currentColor, 0 0 50px currentColor;
+            }
+            75% { 
+                transform: scale(1.05) rotate(270deg);
+                box-shadow: 0 0 20px currentColor, 0 0 40px currentColor;
+            }
+        }
+        
+        .treasure-pulse {
+            animation: treasurePulse 0.8s ease-in-out;
+        }
+        
+        @keyframes treasurePulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.3) rotate(10deg); filter: brightness(1.5); }
+            100% { transform: scale(1); }
         }
         
         .boss {
             position: absolute;
-            width: 90px;
-            height: 90px;
-            background: radial-gradient(circle, #8b0000 0%, #4b0000 100%);
-            border-radius: 15px;
-            border: 4px solid #ff0000;
-            box-shadow: 0 0 30px rgba(255, 0, 0, 0.8);
-            animation: bossPulse 1s ease-in-out infinite;
+            width: 120px;
+            height: 160px;
             display: none;
             cursor: pointer;
+            animation: bossPulse 1s ease-in-out infinite;
         }
         
-        .boss::before {
-            content: '👹';
+        /* 魔王の頭部 */
+        .boss-head {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 50px;
+            top: 10px;
+            left: 20px;
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(145deg, #FFDBAC 0%, #E8B895 100%);
+            border-radius: 50%;
+            border: 3px solid #D4AF37;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
         }
+        
+        /* 魔王の髪 */
+        .boss-hair {
+            position: absolute;
+            top: 5px;
+            left: 10px;
+            width: 60px;
+            height: 35px;
+            background: #2C3E50;
+            border-radius: 50% 50% 30% 30%;
+        }
+        
+        /* 魔王の目 */
+        .boss-eyes {
+            position: absolute;
+            top: 25px;
+            left: 20px;
+            width: 40px;
+            height: 15px;
+        }
+        
+        .boss-eyes::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 5px;
+            width: 12px;
+            height: 12px;
+            background: #E74C3C;
+            border-radius: 50%;
+        }
+        
+        .boss-eyes::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 5px;
+            width: 12px;
+            height: 12px;
+            background: #E74C3C;
+            border-radius: 50%;
+        }
+        
+        /* 魔王のメガネ */
+        .boss-glasses {
+            position: absolute;
+            top: 20px;
+            left: 15px;
+            width: 50px;
+            height: 20px;
+            border: 3px solid #333;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .boss-glasses::after {
+            content: '';
+            position: absolute;
+            top: -3px;
+            left: 22px;
+            width: 6px;
+            height: 3px;
+            background: #333;
+        }
+        
+        /* 魔王の体 */
+        .boss-body {
+            position: absolute;
+            top: 70px;
+            left: 30px;
+            width: 60px;
+            height: 70px;
+            background: linear-gradient(145deg, #2C3E50 0%, #34495E 100%);
+            border-radius: 15px 15px 5px 5px;
+            border: 2px solid #1A252F;
+        }
+        
+        /* 魔王のネクタイ */
+        .boss-necktie {
+            position: absolute;
+            top: 75px;
+            left: 56px;
+            width: 8px;
+            height: 40px;
+            background: #C0392B;
+            clip-path: polygon(0% 0%, 100% 0%, 100% 80%, 50% 100%, 0% 80%);
+        }
+        
+        /* 魔王の左手 */
+        .boss-left-arm {
+            position: absolute;
+            top: 85px;
+            left: 10px;
+            width: 25px;
+            height: 40px;
+            background: linear-gradient(145deg, #FFDBAC 0%, #E8B895 100%);
+            border-radius: 12px;
+            transform-origin: top center;
+            animation: bossArmWave 2s ease-in-out infinite;
+        }
+        
+        /* 魔王の右手 */
+        .boss-right-arm {
+            position: absolute;
+            top: 85px;
+            right: 10px;
+            width: 25px;
+            height: 40px;
+            background: linear-gradient(145deg, #FFDBAC 0%, #E8B895 100%);
+            border-radius: 12px;
+            transform-origin: top center;
+            animation: bossArmWave 2s ease-in-out infinite 1s;
+        }
+        
+        /* 魔王の左脚 */
+        .boss-left-leg {
+            position: absolute;
+            top: 130px;
+            left: 35px;
+            width: 20px;
+            height: 25px;
+            background: #2C3E50;
+            border-radius: 10px 10px 5px 5px;
+        }
+        
+        /* 魔王の右脚 */
+        .boss-right-leg {
+            position: absolute;
+            top: 130px;
+            right: 35px;
+            width: 20px;
+            height: 25px;
+            background: #2C3E50;
+            border-radius: 10px 10px 5px 5px;
+        }
+        
+        @keyframes bossArmWave {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(15deg); }
+        }
+        
         
         @keyframes bossPulse {
+            0%, 100% { 
+                transform: scale(1);
+                box-shadow: 0 0 30px rgba(231, 76, 60, 0.8);
+            }
+            25% { 
+                transform: scale(1.03) rotate(1deg);
+                box-shadow: 0 0 40px rgba(231, 76, 60, 1);
+            }
+            75% { 
+                transform: scale(1.03) rotate(-1deg);
+                box-shadow: 0 0 40px rgba(231, 76, 60, 1);
+            }
+        }
+        
+        .boss-rage {
+            animation: bossRage 0.3s ease-in-out infinite;
+        }
+        
+        @keyframes bossRage {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            25% { transform: scale(1.05) rotate(2deg); }
+            75% { transform: scale(1.05) rotate(-2deg); }
+        }
+        
+        @keyframes bossAttack {
+            0% { transform: scale(1) rotate(0deg); }
+            25% { transform: scale(1.1) rotate(-5deg); filter: brightness(1.3); }
+            50% { transform: scale(1.15) rotate(5deg); filter: brightness(1.5); }
+            75% { transform: scale(1.1) rotate(-3deg); filter: brightness(1.3); }
+            100% { transform: scale(1) rotate(0deg); }
+        }
+        
+        .boss-projectile {
+            animation: bossProjectilePulse 0.4s ease-in-out infinite;
+        }
+        
+        @keyframes bossProjectilePulse {
             0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+            50% { transform: scale(1.3); filter: brightness(1.5); }
         }
         
         #ui {
@@ -320,6 +916,134 @@
                 );
         }
         
+        .character-select-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            z-index: 1000;
+        }
+        
+        .character-select-title {
+            font-size: 36px;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+            margin-bottom: 40px;
+            animation: titlePulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes titlePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .character-options {
+            display: flex;
+            gap: 60px;
+            margin-bottom: 40px;
+        }
+        
+        .character-option {
+            background: linear-gradient(145deg, #fff 0%, #f0f0f0 100%);
+            border: 4px solid #333;
+            border-radius: 20px;
+            padding: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            transform: scale(1);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+        
+        .character-option:hover {
+            transform: scale(1.05) translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            border-color: #4CAF50;
+        }
+        
+        .character-preview {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            position: relative;
+            overflow: hidden;
+            border: 3px solid #333;
+        }
+        
+        .boy-character {
+            background: linear-gradient(45deg, #4FC3F7 0%, #29B6F6 100%);
+        }
+        
+        .boy-character::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 25px;
+            width: 12px;
+            height: 12px;
+            background: #000;
+            border-radius: 50%;
+            box-shadow: 25px 0 0 #000;
+        }
+        
+        .boy-character::after {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            width: 80px;
+            height: 50px;
+            background: #8B4513;
+            border-radius: 50% 50% 30% 30%;
+        }
+        
+        .girl-character {
+            background: linear-gradient(45deg, #FFB74D 0%, #FF9800 100%);
+        }
+        
+        .girl-character::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 25px;
+            width: 12px;
+            height: 12px;
+            background: #000;
+            border-radius: 50%;
+            box-shadow: 25px 0 0 #000;
+        }
+        
+        .girl-character::after {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: 10px;
+            width: 100px;
+            height: 40px;
+            background: #4A0E4E;
+            border-radius: 50% 50% 60% 60%;
+        }
+        
+        .character-name {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        
+        .character-description {
+            font-size: 16px;
+            color: #666;
+            text-align: center;
+        }
+        
         .victory-screen {
             position: absolute;
             top: 0;
@@ -375,8 +1099,38 @@
         }
         
         @keyframes attackFlash {
-            0% { transform: scale(0); opacity: 1; }
-            100% { transform: scale(2); opacity: 0; }
+            0% { 
+                transform: scale(0) rotate(0deg); 
+                opacity: 1;
+                background: radial-gradient(circle, rgba(255, 255, 0, 0.9), rgba(255, 100, 0, 0.5), transparent);
+            }
+            50% {
+                transform: scale(1.5) rotate(180deg);
+                opacity: 0.8;
+                background: radial-gradient(circle, rgba(255, 200, 0, 0.8), rgba(255, 150, 0, 0.4), transparent);
+            }
+            100% { 
+                transform: scale(3) rotate(360deg); 
+                opacity: 0;
+                background: radial-gradient(circle, rgba(255, 255, 255, 0.6), transparent);
+            }
+        }
+        
+        .screen-shake {
+            animation: screenShake 0.5s ease-in-out;
+        }
+        
+        @keyframes screenShake {
+            0%, 100% { transform: translate(0); }
+            10% { transform: translate(-2px, -2px); }
+            20% { transform: translate(2px, -2px); }
+            30% { transform: translate(-2px, 2px); }
+            40% { transform: translate(2px, 2px); }
+            50% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, -2px); }
+            70% { transform: translate(-2px, 2px); }
+            80% { transform: translate(2px, 2px); }
+            90% { transform: translate(-2px, -2px); }
         }
         
         .projectile {
@@ -413,7 +1167,24 @@
 </head>
 <body>
     <div id="gameContainer">
-        <div id="gameArea">
+        <!-- キャラクター選択画面 -->
+        <div class="character-select-screen" id="characterSelect">
+            <div class="character-select-title">あおぞら学級の勇者を選ぼう！</div>
+            <div class="character-options">
+                <div class="character-option" onclick="selectCharacter('boy')">
+                    <div class="character-preview boy-character"></div>
+                    <div class="character-name">男の子</div>
+                    <div class="character-description">元気いっぱいの勇者</div>
+                </div>
+                <div class="character-option" onclick="selectCharacter('girl')">
+                    <div class="character-preview girl-character"></div>
+                    <div class="character-name">女の子</div>
+                    <div class="character-description">勇敢な勇者</div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="gameArea" style="display: none;">
             <div class="classroom-bg"></div>
             <div id="player"></div>
             
@@ -437,8 +1208,20 @@
             <div class="treasure shield" style="bottom: 90px; right: 120px;" data-item="shield"></div>
             <div class="treasure helmet" style="top: 290px; left: 380px;" data-item="helmet"></div>
             
-            <!-- 魔王 -->
-            <div class="boss" id="boss" style="top: 255px; left: 355px;"></div>
+            <!-- 魔王（先生） -->
+            <div class="boss" id="boss" style="top: 220px; left: 340px; display: none; z-index: 15;">
+                <div class="boss-head">
+                    <div class="boss-hair"></div>
+                    <div class="boss-eyes"></div>
+                    <div class="boss-glasses"></div>
+                </div>
+                <div class="boss-body"></div>
+                <div class="boss-necktie"></div>
+                <div class="boss-left-arm"></div>
+                <div class="boss-right-arm"></div>
+                <div class="boss-left-leg"></div>
+                <div class="boss-right-leg"></div>
+            </div>
         </div>
         
         <div id="ui">
@@ -487,6 +1270,7 @@
         const bossElement = document.getElementById('boss');
         const victoryScreen = document.getElementById('victoryScreen');
         const finalScoreElement = document.getElementById('finalScore');
+        const characterSelect = document.getElementById('characterSelect');
         
         let playerX = 400;
         let playerY = 300;
@@ -498,10 +1282,98 @@
         let isMoving = false;
         let projectiles = [];
         let ghostAttackTimers = [];
+        let selectedCharacter = null;
         
-        // プレイヤーの初期位置設定
-        player.style.left = playerX + 'px';
-        player.style.top = playerY + 'px';
+        // キャラクター選択関数
+        function selectCharacter(character) {
+            selectedCharacter = character;
+            player.className = 'player-' + character;
+            
+            // 全身キャラクターパーツを追加
+            const head = document.createElement('div');
+            head.className = 'player-head';
+            player.appendChild(head);
+            
+            const hair = document.createElement('div');
+            hair.className = 'player-hair';
+            head.appendChild(hair);
+            
+            const eyes = document.createElement('div');
+            eyes.className = 'player-eyes';
+            head.appendChild(eyes);
+            
+            const body = document.createElement('div');
+            body.className = 'player-body';
+            player.appendChild(body);
+            
+            const leftArm = document.createElement('div');
+            leftArm.className = 'player-left-arm';
+            player.appendChild(leftArm);
+            
+            const rightArm = document.createElement('div');
+            rightArm.className = 'player-right-arm';
+            player.appendChild(rightArm);
+            
+            const leftLeg = document.createElement('div');
+            leftLeg.className = 'player-left-leg';
+            player.appendChild(leftLeg);
+            
+            const rightLeg = document.createElement('div');
+            rightLeg.className = 'player-right-leg';
+            player.appendChild(rightLeg);
+            
+            // 武器エフェクト要素
+            const weaponEffect = document.createElement('div');
+            weaponEffect.className = 'weapon-effect';
+            rightArm.appendChild(weaponEffect);
+            
+            // 装備アイテム要素を追加
+            const sword = document.createElement('div');
+            sword.className = 'equipment-sword';
+            rightArm.appendChild(sword);
+            
+            const shield = document.createElement('div');
+            shield.className = 'equipment-shield';
+            leftArm.appendChild(shield);
+            
+            const helmet = document.createElement('div');
+            helmet.className = 'equipment-helmet';
+            head.appendChild(helmet);
+            
+            // キャラクター固有のパーツ
+            if (character === 'boy') {
+                const backpack = document.createElement('div');
+                backpack.className = 'player-backpack';
+                player.appendChild(backpack);
+            } else if (character === 'girl') {
+                const ribbon = document.createElement('div');
+                ribbon.className = 'player-ribbon';
+                head.appendChild(ribbon);
+            }
+            
+            characterSelect.style.display = 'none';
+            gameArea.style.display = 'block';
+            
+            // プレイヤーの初期位置設定
+            player.style.left = playerX + 'px';
+            player.style.top = playerY + 'px';
+            
+            // ゲーム開始処理
+            initializeGame();
+        }
+        
+        function initializeGame() {
+            // お化けの攻撃開始
+            initializeGhostAttacks();
+            gameLoop();
+            
+            // 開始メッセージ
+            setTimeout(() => {
+                showMessage('');
+            }, 6000);
+        }
+        
+        // キャラクター選択画面を表示
         
         // カーソルキーで移動とエンターキーで攻撃
         document.addEventListener('keydown', (e) => {
@@ -535,6 +1407,13 @@
                 playerY = newY;
                 player.style.left = playerX + 'px';
                 player.style.top = playerY + 'px';
+                
+                // 移動アニメーション
+                player.classList.add('player-moving');
+                setTimeout(() => {
+                    player.classList.remove('player-moving');
+                }, 500);
+                
                 checkCollisions();
             }
         });
@@ -567,11 +1446,15 @@
             requestAnimationFrame(gameLoop);
         }
         
-        // ゲーム開始
-        initializeGhostAttacks();
-        gameLoop();
+        // ゲーム開始はキャラクター選択後に行われる
         
         function attack() {
+            // プレイヤー攻撃アニメーション
+            player.classList.add('player-attacking');
+            setTimeout(() => {
+                player.classList.remove('player-attacking');
+            }, 600);
+            
             // 攻撃エフェクト表示
             const attackEffect = document.createElement('div');
             attackEffect.className = 'attack-effect';
@@ -580,7 +1463,9 @@
             gameArea.appendChild(attackEffect);
             
             setTimeout(() => {
-                gameArea.removeChild(attackEffect);
+                if (gameArea.contains(attackEffect)) {
+                    gameArea.removeChild(attackEffect);
+                }
             }, 300);
             
             let actionTaken = false;
@@ -600,9 +1485,22 @@
                 if (distance < 80) {
                     const itemType = treasure.dataset.item;
                     inventory[itemType] = true;
-                    treasure.style.display = 'none';
+                    
+                    // アイテム取得アニメーション
+                    treasure.classList.add('treasure-pulse');
+                    setTimeout(() => {
+                        treasure.style.display = 'none';
+                    }, 800);
                     
                     document.getElementById(itemType + '-slot').classList.add('collected');
+                    
+                    // プレイヤーの装備を更新
+                    updatePlayerEquipment();
+                    
+                    // 遅延してボスチェックを実行
+                    setTimeout(() => {
+                        checkForBossActivation();
+                    }, 100);
                     
                     const itemNames = { 
                         sword: '伝説の剣', 
@@ -634,14 +1532,26 @@
                 );
                 
                 if (distance < 100) {
-                    ghost.style.display = 'none';
+                    // お化け退治アニメーション
+                    ghost.classList.add('ghost-death');
+                    setTimeout(() => {
+                        ghost.style.display = 'none';
+                        // 遅延してボスチェックを実行
+                        setTimeout(() => {
+                            checkForBossActivation();
+                        }, 100);
+                    }, 600);
+                    
+                    // 画面振動エフェクト
+                    gameArea.classList.add('screen-shake');
+                    setTimeout(() => {
+                        gameArea.classList.remove('screen-shake');
+                    }, 500);
+                    
                     score += 10;
                     scoreElement.textContent = score;
                     showMessage('お化けを退治した！ +10点');
                     actionTaken = true;
-                    
-                    // 残りお化けチェック
-                    checkForBossActivation();
                 }
             });
             
@@ -663,27 +1573,22 @@
                     if (inventory.helmet) damage += 10;
                     
                     bossHP -= damage;
-                    showMessage(`魔王に${damage}ダメージ！残りHP: ${bossHP}`);
+                    showMessage(`悪い先生に${damage}ダメージ！残りHP: ${bossHP}`);
                     actionTaken = true;
                     
                     if (bossHP <= 0) {
+                        bossElement.classList.remove('boss-rage');
                         victory();
                     } else {
+                        // 魔王が怒る
+                        if (bossHP < 150) {
+                            bossElement.classList.add('boss-rage');
+                        }
+                        
                         // 魔王の反撃
                         setTimeout(() => {
-                            let counterDamage = 20;
-                            if (inventory.shield) counterDamage -= 10;
-                            if (inventory.helmet) counterDamage -= 5;
-                            
-                            hp -= Math.max(5, counterDamage);
-                            hpElement.textContent = hp;
-                            
-                            if (hp <= 0) {
-                                gameOver();
-                            } else {
-                                showMessage(`魔王の反撃！${counterDamage}ダメージを受けた！`);
-                            }
-                        }, 1000);
+                            bossCounterAttack();
+                        }, 800);
                     }
                 }
             }
@@ -691,6 +1596,63 @@
             if (!actionTaken) {
                 showMessage('攻撃できる相手がいません！');
             }
+        }
+        
+        // 魔王の反撃システム
+        function bossCounterAttack() {
+            // 魔王の攻撃アニメーション
+            bossElement.style.animation = 'bossAttack 0.6s ease-in-out';
+            setTimeout(() => {
+                bossElement.style.animation = 'bossPulse 1s ease-in-out infinite';
+            }, 600);
+            
+            // 魔王からプレイヤーへの弾丸発射
+            const bossRect = bossElement.getBoundingClientRect();
+            const gameAreaRect = gameArea.getBoundingClientRect();
+            
+            const bossX = bossRect.left - gameAreaRect.left + 60;
+            const bossY = bossRect.top - gameAreaRect.top + 80;
+            const targetX = playerX + 30;
+            const targetY = playerY + 40;
+            
+            // 魔王の特別な弾丸を作成
+            createBossProjectile(bossX, bossY, targetX, targetY);
+            
+            setTimeout(() => {
+            showMessage('悪い先生の特別攻撃！「このガキドモめ！」');
+        }, 1000);
+        }
+        
+        // 魔王の弾丸作成
+        function createBossProjectile(startX, startY, targetX, targetY) {
+            const projectile = document.createElement('div');
+            projectile.className = 'projectile boss-projectile';
+            projectile.style.left = startX + 'px';
+            projectile.style.top = startY + 'px';
+            projectile.style.background = 'radial-gradient(circle, #8B0000 0%, #FF0000 100%)';
+            projectile.style.boxShadow = '0 0 15px #FF0000';
+            projectile.style.width = '16px';
+            projectile.style.height = '16px';
+            gameArea.appendChild(projectile);
+            
+            const dx = targetX - startX;
+            const dy = targetY - startY;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            const speed = 3;
+            
+            const velocityX = (dx / distance) * speed;
+            const velocityY = (dy / distance) * speed;
+            
+            projectiles.push({
+                element: projectile,
+                x: startX,
+                y: startY,
+                vx: velocityX,
+                vy: velocityY,
+                life: 250,
+                isBoss: true,
+                damage: 25
+            });
         }
         
         // お化けの攻撃実行
@@ -768,15 +1730,25 @@
                 
                 if (distanceToPlayer < 25) {
                     // ヒット！
-                    let damage = 10;
-                    if (inventory.shield) damage -= 3;
-                    if (inventory.helmet) damage -= 2;
-                    damage = Math.max(2, damage);
+                    let damage = proj.isBoss ? proj.damage : 10;
+                    if (inventory.shield) damage -= proj.isBoss ? 8 : 3;
+                    if (inventory.helmet) damage -= proj.isBoss ? 5 : 2;
+                    damage = Math.max(proj.isBoss ? 5 : 2, damage);
                     
                     hp -= damage;
                     hpElement.textContent = hp;
                     
-                    showMessage(`お化けの魔法弾が命中！${damage}ダメージ！`);
+                    const attackerName = proj.isBoss ? '悪い先生' : 'お化け';
+                    const attackType = proj.isBoss ? '特大攻撃' : '魔法弾';
+                    showMessage(`${attackerName}の${attackType}が命中！${damage}ダメージ！`);
+                    
+                    // ヒットエフェクト
+                    if (proj.isBoss) {
+                        gameArea.classList.add('screen-shake');
+                        setTimeout(() => {
+                            gameArea.classList.remove('screen-shake');
+                        }, 500);
+                    }
                     
                     // 弾丸を削除
                     gameArea.removeChild(proj.element);
@@ -819,17 +1791,31 @@
             const remainingGhosts = document.querySelectorAll('.ghost:not([style*="display: none"])').length;
             const allItemsCollected = Object.values(inventory).every(item => item);
             
+            // Boss activation check removed for production
+            
             if (remainingGhosts === 0 && allItemsCollected && !bossActive) {
                 activateBoss();
             } else if (allItemsCollected && remainingGhosts > 0) {
                 showMessage('すべての伝説装備を手に入れた！残りのお化けを全て倒して魔王を呼び出そう！');
+            } else if (remainingGhosts === 0 && !allItemsCollected) {
+                showMessage('お化けを全て倒した！伝説の装備を集めて魔王を呼び出そう！');
             }
         }
         
         function activateBoss() {
             bossElement.style.display = 'block';
+            bossElement.style.visibility = 'visible';
+            bossElement.style.opacity = '1';
             bossActive = true;
-            showMessage('魔王が現れた！エンターキーで攻撃しよう！');
+            
+            // 魔王出現エフェクト
+            bossElement.style.transform = 'scale(0)';
+            setTimeout(() => {
+                bossElement.style.transition = 'transform 0.5s ease-out';
+                bossElement.style.transform = 'scale(1)';
+            }, 100);
+            
+            showMessage('悪い先生が現れた！「この学校は私のものだ！」エンターキーで攻撃しよう！');
         }
         
         function victory() {
@@ -879,17 +1865,42 @@
                 if (distance < 80) {
                     treasure.style.border = '4px solid #fff';
                     treasure.style.transform = 'scale(1.2)';
+                    treasure.style.filter = 'brightness(1.3)';
                 } else {
                     treasure.style.border = '3px solid #fff';
                     treasure.style.transform = 'scale(1)';
+                    treasure.style.filter = 'brightness(1)';
                 }
             });
         }
         
-        // ゲーム開始時メッセージを消す
-        setTimeout(() => {
-            showMessage('');
-        }, 6000);
+        // プレイヤーの装備更新関数
+        function updatePlayerEquipment() {
+            // 各装備の表示状態を更新
+            if (inventory.sword) {
+                player.classList.add('has-sword');
+            }
+            if (inventory.shield) {
+                player.classList.add('has-shield');
+            }
+            if (inventory.helmet) {
+                player.classList.add('has-helmet');
+            }
+            
+            // 装備数に応じた特別エフェクト
+            const equippedCount = Object.values(inventory).filter(item => item).length;
+            
+            if (equippedCount > 0) {
+                player.classList.add('player-powered');
+            }
+            
+            if (equippedCount === 3) {
+                player.classList.add('player-fully-equipped');
+                showMessage('全装備を身に着けた！力が湧いてくる！');
+            }
+        }
+        
+        // メッセージ処理は初期化時に行われる
     </script>
 </body>
 </html>
