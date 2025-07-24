@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ウエストハウス - レストラン経営ゲーム</title>
+    <meta name="description" content="つくば市の老舗洋食レストラン「ウエストハウス」でウェイターとして働く体験ゲーム。名物のデミグラスソースとグルメバーガーでお客様を満足させよう！">
+    <meta name="keywords" content="ウエストハウス,レストランゲーム,経営ゲーム,つくば市,洋食,デミグラスソース">
+    <meta name="author" content="ウエストハウス本店">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Yu Gothic Medium', 'Meiryo', sans-serif;
+            background: linear-gradient(135deg, #8B4513 0%, #D2691E 100%);
+            color: white;
+            overflow: hidden;
+            user-select: none;
+            cursor: default;
+        }
+        
+        #gameContainer {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+        
+        #gameArea {
+            width: 1000px;
+            height: 700px;
+            background: linear-gradient(45deg, #F5DEB3 0%, #DEB887 100%);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 4px solid #8B4513;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(139, 69, 19, 0.7);
+        }
+        
+        /* レストランの背景 */
+        .restaurant-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: 
+                repeating-linear-gradient(
+                    90deg,
+                    transparent,
+                    transparent 50px,
+                    rgba(139, 69, 19, 0.1) 52px
+                ),
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 50px,
+                    rgba(139, 69, 19, 0.1) 52px
+                );
+        }
+        
+        /* テーブル */
+        .table {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(145deg, #8B4513, #A0522D);
+            border-radius: 50%;
+            border: 3px solid #654321;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .table::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(145deg, #DEB887, #D2B48C);
+            border-radius: 50%;
+            border: 2px solid #CD853F;
+        }
+        
+        /* お客様 */
+        .customer {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(145deg, #FFB6C1, #FFA0B4);
+            border-radius: 50% 50% 60% 60%;
+            border: 3px solid #FF69B4;
+            animation: customerWait 2s ease-in-out infinite;
+            cursor: pointer;
+            z-index: 10;
+        }
+        
+        .customer::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 15px;
+            width: 8px;
+            height: 8px;
+            background: #000;
+            border-radius: 50%;
+            box-shadow: 20px 0 0 #000;
+        }
+        
+        .customer::after {
+            content: '';
+            position: absolute;
+            top: 25px;
+            left: 20px;
+            width: 15px;
+            height: 8px;
+            background: #FF4500;
+            border-radius: 0 0 15px 15px;
+        }
+        
+        @keyframes customerWait {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .customer.ordering {
+            animation: customerOrdering 0.5s ease-in-out;
+            border-color: #32CD32;
+        }
+        
+        @keyframes customerOrdering {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+        
+        .customer.satisfied {
+            border-color: #FFD700;
+            animation: customerSatisfied 1s ease-in-out;
+        }
+        
+        @keyframes customerSatisfied {
+            0%, 100% { transform: scale(1); }
+            25%, 75% { transform: scale(1.1) rotate(5deg); }
+            50% { transform: scale(1.15) rotate(-5deg); }
+        }
+        
+        /* 料理アイテム */
+        .food-item {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+            border: 3px solid #fff;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            animation: foodSparkle 2s ease-in-out infinite;
+        }
+        
+        .food-item:hover {
+            transform: scale(1.1);
+        }
+        
+        @keyframes foodSparkle {
+            0%, 100% { box-shadow: 0 0 10px rgba(255, 215, 0, 0.5); }
+            50% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.8); }
+        }
+        
+        .burger {
+            background: linear-gradient(145deg, #D2691E, #CD853F);
+        }
+        
+        .burger::before {
+            content: '🍔';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 30px;
+        }
+        
+        .demiglace {
+            background: linear-gradient(145deg, #8B0000, #A0522D);
+        }
+        
+        .demiglace::before {
+            content: '🍖';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 30px;
+        }
+        
+        .coffee {
+            background: linear-gradient(145deg, #8B4513, #A0522D);
+        }
+        
+        .coffee::before {
+            content: '☕';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 30px;
+        }
+        
+        /* プレイヤー（ウェイター） */
+        #player {
+            position: absolute;
+            width: 50px;
+            height: 70px;
+            transition: all 0.3s ease;
+            z-index: 15;
+            cursor: pointer;
+        }
+        
+        .player-head {
+            position: absolute;
+            top: 0;
+            left: 10px;
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(145deg, #FFDBAC, #E8B895);
+            border-radius: 50%;
+            border: 2px solid #D4AF37;
+        }
+        
+        .player-body {
+            position: absolute;
+            top: 25px;
+            left: 5px;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(145deg, #000, #333);
+            border-radius: 8px 8px 5px 5px;
+        }
+        
+        .player-apron {
+            position: absolute;
+            top: 30px;
+            left: 8px;
+            width: 34px;
+            height: 30px;
+            background: linear-gradient(145deg, #FFF, #F5F5F5);
+            border-radius: 5px;
+        }
+        
+        /* UI要素 */
+        #ui {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 100;
+            background: rgba(139, 69, 19, 0.9);
+            padding: 20px;
+            border-radius: 15px;
+            border: 3px solid #8B4513;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            color: white;
+            font-size: 16px;
+        }
+        
+        #timer {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+            background: rgba(220, 20, 60, 0.9);
+            padding: 15px 25px;
+            border-radius: 25px;
+            border: 3px solid #B22222;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        #message {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(139, 69, 19, 0.95);
+            padding: 20px 30px;
+            border-radius: 25px;
+            border: 3px solid #8B4513;
+            font-size: 18px;
+            text-align: center;
+            max-width: 800px;
+            z-index: 100;
+            color: white;
+        }
+        
+        /* ゲーム開始画面 */
+        .start-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #8B4513 0%, #D2691E 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            z-index: 1000;
+        }
+        
+        .start-title {
+            font-size: 48px;
+            color: #FFD700;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8);
+            margin-bottom: 30px;
+            animation: titlePulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes titlePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .start-info {
+            font-size: 20px;
+            color: #FFF;
+            text-align: center;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+        
+        .start-button {
+            background: linear-gradient(45deg, #32CD32, #228B22);
+            color: white;
+            border: none;
+            padding: 20px 40px;
+            font-size: 24px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .start-button:hover {
+            transform: scale(1.05);
+        }
+        
+        /* 結果画面 */
+        .result-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            z-index: 1000;
+        }
+        
+        .result-title {
+            font-size: 48px;
+            color: #FFD700;
+            text-align: center;
+            margin-bottom: 30px;
+            animation: resultGlow 2s ease-in-out infinite;
+        }
+        
+        @keyframes resultGlow {
+            0%, 100% { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8), 0 0 20px #FFD700; }
+            50% { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8), 0 0 40px #FFD700; }
+        }
+        
+        .result-stats {
+            font-size: 24px;
+            color: #FFF;
+            text-align: center;
+            margin-bottom: 30px;
+            line-height: 1.8;
+        }
+        
+        .restart-button {
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        
+        .restart-button:hover {
+            transform: scale(1.05);
+        }
+        
+        /* 注文吹き出し */
+        .order-bubble {
+            position: absolute;
+            background: white;
+            color: #333;
+            padding: 10px 15px;
+            border-radius: 20px;
+            border: 2px solid #8B4513;
+            font-size: 14px;
+            font-weight: bold;
+            animation: bubbleFloat 0.5s ease-out;
+            z-index: 20;
+        }
+        
+        .order-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 20px;
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 8px solid white;
+        }
+        
+        @keyframes bubbleFloat {
+            0% { opacity: 0; transform: translateY(10px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div id="gameContainer">
+        <!-- ゲーム開始画面 -->
+        <div class="start-screen" id="startScreen">
+            <div class="start-title">🍔 ウエストハウス 🍔</div>
+            <div class="start-info">
+                つくば市で42年愛され続ける老舗洋食レストラン<br>
+                名物の5日間煮込んだデミグラスソースと<br>
+                こだわりのグルメバーガーでお客様をおもてなし！<br><br>
+                <strong>ウェイターとしてお客様に料理を提供しよう！</strong>
+            </div>
+            <button class="start-button" onclick="startGame()">ゲーム開始</button>
+        </div>
+        
+        <div id="gameArea" style="display: none;">
+            <div class="restaurant-bg"></div>
+            
+            <!-- プレイヤー（ウェイター） -->
+            <div id="player">
+                <div class="player-head"></div>
+                <div class="player-body"></div>
+                <div class="player-apron"></div>
+            </div>
+            
+            <!-- テーブル -->
+            <div class="table" style="top: 100px; left: 150px;"></div>
+            <div class="table" style="top: 100px; right: 150px;"></div>
+            <div class="table" style="top: 300px; left: 200px;"></div>
+            <div class="table" style="top: 300px; right: 200px;"></div>
+            <div class="table" style="bottom: 150px; left: 150px;"></div>
+            <div class="table" style="bottom: 150px; right: 150px;"></div>
+            
+            <!-- 料理アイテム（キッチンエリア） -->
+            <div class="food-item burger" style="bottom: 50px; left: 50px;" data-food="burger"></div>
+            <div class="food-item demiglace" style="bottom: 50px; left: 130px;" data-food="demiglace"></div>
+            <div class="food-item coffee" style="bottom: 50px; left: 210px;" data-food="coffee"></div>
+        </div>
+        
+        <!-- UI -->
+        <div id="ui" style="display: none;">
+            <div>売上: ¥<span id="sales">0</span></div>
+            <div>満足度: <span id="satisfaction">100</span>%</div>
+            <div>提供数: <span id="served">0</span>品</div>
+        </div>
+        
+        <div id="timer" style="display: none;">
+            時間: <span id="timeLeft">60</span>秒
+        </div>
+        
+        <div id="message" style="display: none;">
+            矢印キーで移動、料理をクリックして持ち、お客様をクリックして提供！
+        </div>
+        
+        <!-- 結果画面 -->
+        <div class="result-screen" id="resultScreen">
+            <div class="result-title">🎉 お疲れ様でした！ 🎉</div>
+            <div class="result-stats" id="resultStats">
+                売上: ¥0<br>
+                満足度: 100%<br>
+                提供数: 0品
+            </div>
+            <button class="restart-button" onclick="location.reload()">もう一度プレイ</button>
+        </div>
+    </div>
+
+    <script>
+        const player = document.getElementById('player');
+        const gameArea = document.getElementById('gameArea');
+        const startScreen = document.getElementById('startScreen');
+        const resultScreen = document.getElementById('resultScreen');
+        const ui = document.getElementById('ui');
+        const timer = document.getElementById('timer');
+        const message = document.getElementById('message');
+        
+        let playerX = 500;
+        let playerY = 400;
+        let sales = 0;
+        let satisfaction = 100;
+        let served = 0;
+        let timeLeft = 60;
+        let gameRunning = false;
+        let customers = [];
+        let heldFood = null;
+        let gameTimer;
+        let customerSpawnTimer;
+        
+        // プレイヤーの初期位置設定
+        player.style.left = playerX + 'px';
+        player.style.top = playerY + 'px';
+        
+        // ゲーム開始
+        function startGame() {
+            startScreen.style.display = 'none';
+            gameArea.style.display = 'block';
+            ui.style.display = 'block';
+            timer.style.display = 'block';
+            message.style.display = 'block';
+            
+            gameRunning = true;
+            spawnCustomer();
+            
+            // ゲームタイマー
+            gameTimer = setInterval(() => {
+                timeLeft--;
+                document.getElementById('timeLeft').textContent = timeLeft;
+                
+                if (timeLeft <= 0) {
+                    endGame();
+                }
+            }, 1000);
+            
+            // お客様生成タイマー
+            customerSpawnTimer = setInterval(() => {
+                if (customers.length < 4) {
+                    spawnCustomer();
+                }
+            }, 8000);
+        }
+        
+        // キーボード操作
+        document.addEventListener('keydown', (e) => {
+            if (!gameRunning) return;
+            
+            const speed = 8;
+            let newX = playerX;
+            let newY = playerY;
+            
+            switch(e.key) {
+                case 'ArrowLeft':
+                    newX = Math.max(25, playerX - speed);
+                    break;
+                case 'ArrowRight':
+                    newX = Math.min(975, playerX + speed);
+                    break;
+                case 'ArrowUp':
+                    newY = Math.max(25, playerY - speed);
+                    break;
+                case 'ArrowDown':
+                    newY = Math.min(675, playerY + speed);
+                    break;
+            }
+            
+            if (newX !== playerX || newY !== playerY) {
+                playerX = newX;
+                playerY = newY;
+                player.style.left = playerX + 'px';
+                player.style.top = playerY + 'px';
+            }
+        });
+        
+        // お客様生成
+        function spawnCustomer() {
+            const tables = document.querySelectorAll('.table');
+            const availableTables = Array.from(tables).filter(table => {
+                return !customers.some(customer => customer.table === table);
+            });
+            
+            if (availableTables.length === 0) return;
+            
+            const randomTable = availableTables[Math.floor(Math.random() * availableTables.length)];
+            const tableRect = randomTable.getBoundingClientRect();
+            const gameAreaRect = gameArea.getBoundingClientRect();
+            
+            const customer = document.createElement('div');
+            customer.className = 'customer';
+            customer.style.left = (tableRect.left - gameAreaRect.left + 10) + 'px';
+            customer.style.top = (tableRect.top - gameAreaRect.top + 10) + 'px';
+            
+            const foods = ['burger', 'demiglace', 'coffee'];
+            const wantedFood = foods[Math.floor(Math.random() * foods.length)];
+            
+            const customerData = {
+                element: customer,
+                table: randomTable,
+                wantedFood: wantedFood,
+                patience: 100,
+                served: false
+            };
+            
+            customers.push(customerData);
+            gameArea.appendChild(customer);
+            
+            // 注文の吹き出し表示
+            showOrderBubble(customer, wantedFood);
+            
+            // お客様をクリックして料理提供
+            customer.addEventListener('click', () => serveCustomer(customerData));
+            
+            // 待機時間によるストレス増加
+            const patienceTimer = setInterval(() => {
+                if (customerData.served) {
+                    clearInterval(patienceTimer);
+                    return;
+                }
+                
+                customerData.patience -= 2;
+                if (customerData.patience <= 0) {
+                    removeCustomer(customerData);
+                    satisfaction = Math.max(0, satisfaction - 10);
+                    updateUI();
+                    clearInterval(patienceTimer);
+                }
+            }, 1000);
+        }
+        
+        // 注文吹き出し表示
+        function showOrderBubble(customer, food) {
+            const bubble = document.createElement('div');
+            bubble.className = 'order-bubble';
+            
+            const foodNames = {
+                burger: 'グルメバーガー',
+                demiglace: 'デミグラスソース',
+                coffee: 'コーヒー'
+            };
+            
+            bubble.textContent = foodNames[food];
+            bubble.style.left = '10px';
+            bubble.style.top = '-40px';
+            customer.appendChild(bubble);
+            
+            setTimeout(() => {
+                if (bubble.parentNode) {
+                    bubble.parentNode.removeChild(bubble);
+                }
+            }, 5000);
+        }
+        
+        // 料理アイテムクリック
+        document.querySelectorAll('.food-item').forEach(item => {
+            item.addEventListener('click', () => {
+                if (!gameRunning) return;
+                
+                const foodType = item.dataset.food;
+                heldFood = foodType;
+                
+                // 視覚的フィードバック
+                item.style.transform = 'scale(1.2)';
+                setTimeout(() => {
+                    item.style.transform = 'scale(1)';
+                }, 200);
+                
+                showMessage(`${getFoodName(foodType)}を持ちました！お客様のところへ届けましょう。`);
+            });
+        });
+        
+        // お客様に料理提供
+        function serveCustomer(customerData) {
+            if (!gameRunning || !heldFood || customerData.served) return;
+            
+            const distance = Math.sqrt(
+                Math.pow(playerX - (parseInt(customerData.element.style.left) + 30), 2) +
+                Math.pow(playerY - (parseInt(customerData.element.style.top) + 30), 2)
+            );
+            
+            if (distance > 100) {
+                showMessage('お客様に近づいてから料理を提供してください。');
+                return;
+            }
+            
+            customerData.element.classList.add('ordering');
+            
+            if (heldFood === customerData.wantedFood) {
+                // 正しい料理
+                customerData.element.classList.add('satisfied');
+                const prices = { burger: 1200, demiglace: 1800, coffee: 500 };
+                sales += prices[heldFood];
+                served++;
+                satisfaction = Math.min(100, satisfaction + 5);
+                
+                showMessage(`${getFoodName(heldFood)}をお届けしました！お客様に喜んでいただけました。`);
+                
+                setTimeout(() => removeCustomer(customerData), 2000);
+            } else {
+                // 間違った料理
+                satisfaction = Math.max(0, satisfaction - 15);
+                showMessage(`注文と違う料理です。お客様が困っています...`);
+                
+                setTimeout(() => removeCustomer(customerData), 3000);
+            }
+            
+            heldFood = null;
+            updateUI();
+        }
+        
+        // お客様を削除
+        function removeCustomer(customerData) {
+            const index = customers.indexOf(customerData);
+            if (index > -1) {
+                customers.splice(index, 1);
+                if (customerData.element.parentNode) {
+                    gameArea.removeChild(customerData.element);
+                }
+            }
+        }
+        
+        // UI更新
+        function updateUI() {
+            document.getElementById('sales').textContent = sales;
+            document.getElementById('satisfaction').textContent = satisfaction;
+            document.getElementById('served').textContent = served;
+        }
+        
+        // メッセージ表示
+        function showMessage(text) {
+            message.textContent = text;
+            setTimeout(() => {
+                if (message.textContent === text) {
+                    message.textContent = '矢印キーで移動、料理をクリックして持ち、お客様をクリックして提供！';
+                }
+            }, 3000);
+        }
+        
+        // 料理名取得
+        function getFoodName(food) {
+            const names = {
+                burger: 'グルメバーガー',
+                demiglace: 'デミグラスソース',
+                coffee: 'コーヒー'
+            };
+            return names[food] || food;
+        }
+        
+        // ゲーム終了
+        function endGame() {
+            gameRunning = false;
+            clearInterval(gameTimer);
+            clearInterval(customerSpawnTimer);
+            
+            // 評価計算
+            let grade = 'D';
+            if (satisfaction >= 90 && sales >= 5000) grade = 'S';
+            else if (satisfaction >= 80 && sales >= 3000) grade = 'A';
+            else if (satisfaction >= 70 && sales >= 2000) grade = 'B';
+            else if (satisfaction >= 60 && sales >= 1000) grade = 'C';
+            
+            document.getElementById('resultStats').innerHTML = `
+                売上: ¥${sales}<br>
+                満足度: ${satisfaction}%<br>
+                提供数: ${served}品<br>
+                評価: ${grade}ランク
+            `;
+            
+            resultScreen.style.display = 'flex';
+        }
+        
+        // 初期メッセージ設定
+        setTimeout(() => {
+            if (gameRunning) {
+                showMessage('');
+            }
+        }, 5000);
+    </script>
+</body>
+</html>
