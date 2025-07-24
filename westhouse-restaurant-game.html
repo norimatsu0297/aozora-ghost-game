@@ -480,7 +480,7 @@
         </div>
         
         <div id="message" style="display: none;">
-            矢印キーで移動、料理をクリックして持ち、お客様をクリックして提供！
+WASDキーで移動、料理をクリックして持ち、お客様をクリックして提供！
         </div>
         
         <!-- 結果画面 -->
@@ -549,7 +549,7 @@
             }, 8000);
         }
         
-        // キーボード操作
+        // キーボード操作（WASD）
         document.addEventListener('keydown', (e) => {
             if (!gameRunning) return;
             
@@ -557,17 +557,17 @@
             let newX = playerX;
             let newY = playerY;
             
-            switch(e.key) {
-                case 'ArrowLeft':
+            switch(e.key.toLowerCase()) {
+                case 'a':
                     newX = Math.max(25, playerX - speed);
                     break;
-                case 'ArrowRight':
+                case 'd':
                     newX = Math.min(975, playerX + speed);
                     break;
-                case 'ArrowUp':
+                case 'w':
                     newY = Math.max(25, playerY - speed);
                     break;
-                case 'ArrowDown':
+                case 's':
                     newY = Math.min(675, playerY + speed);
                     break;
             }
@@ -738,7 +738,7 @@
             message.textContent = text;
             setTimeout(() => {
                 if (message.textContent === text) {
-                    message.textContent = '矢印キーで移動、料理をクリックして持ち、お客様をクリックして提供！';
+                    message.textContent = 'WASDキーで移動、料理をクリックして持ち、お客様をクリックして提供！';
                 }
             }, 3000);
         }
