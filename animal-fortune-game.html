@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>動物霊獣占い - あなたの守護動物を見つけよう</title>
-    <meta name="description" content="古来より伝わる動物霊獣占い。ライオン、パンダ、イルカ、ペンギンの中からあなたの守護動物を選び、運勢を占おう。">
+    <title>動物占い - 今日のあなたはどの動物？</title>
+    <meta name="description" content="楽しい動物占い！虎、パンダ、イルカ、ペンギンの中から直感で選んで、今日の運勢をチェックしよう。毎日違う結果で楽しめます。">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700;900&display=swap');
         
@@ -16,8 +16,8 @@
         
         body {
             font-family: 'Noto Serif JP', serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-            color: #f0f0f0;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+            color: #333;
             min-height: 100vh;
             overflow-x: hidden;
             position: relative;
@@ -32,9 +32,9 @@
             right: 0;
             bottom: 0;
             background: 
-                radial-gradient(circle at 20% 30%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 70%, rgba(255, 100, 150, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 40% 80%, rgba(100, 255, 200, 0.1) 0%, transparent 50%);
+                radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(255, 192, 203, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(173, 216, 230, 0.2) 0%, transparent 50%);
             pointer-events: none;
             z-index: 1;
         }
@@ -80,54 +80,54 @@
             text-align: center;
             max-width: 600px;
             width: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            border: 3px solid #d4af37;
+            background: rgba(255, 255, 255, 0.9);
+            border: 3px solid #ff6b9d;
             border-radius: 20px;
             padding: 50px 30px;
             box-shadow: 
-                0 0 30px rgba(212, 175, 55, 0.3),
-                inset 0 0 20px rgba(212, 175, 55, 0.1);
+                0 0 30px rgba(255, 107, 157, 0.3),
+                inset 0 0 20px rgba(255, 107, 157, 0.1);
             backdrop-filter: blur(10px);
         }
         
         .main-title {
             font-size: 3.5rem;
             font-weight: 900;
-            color: #d4af37;
+            color: #ff6b9d;
             text-shadow: 
-                2px 2px 4px rgba(0, 0, 0, 0.8),
-                0 0 20px rgba(212, 175, 55, 0.5);
+                2px 2px 4px rgba(0, 0, 0, 0.3),
+                0 0 20px rgba(255, 107, 157, 0.5);
             margin-bottom: 20px;
             animation: titleGlow 3s ease-in-out infinite;
         }
         
         @keyframes titleGlow {
-            0%, 100% { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8), 0 0 20px rgba(212, 175, 55, 0.5); }
-            50% { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8), 0 0 40px rgba(212, 175, 55, 0.8); }
+            0%, 100% { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3), 0 0 20px rgba(255, 107, 157, 0.5); }
+            50% { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(255, 107, 157, 0.8); }
         }
         
         .subtitle {
             font-size: 1.3rem;
-            color: #f0f0f0;
+            color: #666;
             margin-bottom: 30px;
             line-height: 1.6;
         }
         
         .description {
             font-size: 1.1rem;
-            color: #cccccc;
+            color: #777;
             line-height: 1.8;
             margin-bottom: 40px;
             text-align: left;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.7);
             padding: 25px;
             border-radius: 15px;
-            border-left: 4px solid #d4af37;
+            border-left: 4px solid #ff6b9d;
         }
         
         .start-button {
-            background: linear-gradient(45deg, #d4af37, #ffd700);
-            color: #1a1a2e;
+            background: linear-gradient(45deg, #ff6b9d, #ff8fab);
+            color: white;
             border: none;
             padding: 20px 50px;
             font-size: 1.5rem;
@@ -135,15 +135,15 @@
             border-radius: 50px;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
+            box-shadow: 0 8px 25px rgba(255, 107, 157, 0.3);
             text-transform: uppercase;
             letter-spacing: 2px;
         }
         
         .start-button:hover {
             transform: translateY(-3px);
-            box-shadow: 0 12px 35px rgba(212, 175, 55, 0.4);
-            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            box-shadow: 0 12px 35px rgba(255, 107, 157, 0.4);
+            background: linear-gradient(45deg, #ff8fab, #ffa8cc);
         }
         
         /* 動物選択画面 */
@@ -157,22 +157,22 @@
             border-radius: 20px;
             padding: 40px 30px;
             box-shadow: 
-                0 0 30px rgba(212, 175, 55, 0.3),
-                inset 0 0 20px rgba(212, 175, 55, 0.1);
+                0 0 30px rgba(255, 107, 157, 0.3),
+                inset 0 0 20px rgba(255, 107, 157, 0.1);
             backdrop-filter: blur(10px);
         }
         
         .selection-title {
             font-size: 2.5rem;
             font-weight: 700;
-            color: #d4af37;
+            color: #ff6b9d;
             margin-bottom: 20px;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
         }
         
         .selection-subtitle {
             font-size: 1.2rem;
-            color: #f0f0f0;
+            color: #666;
             margin-bottom: 40px;
             line-height: 1.6;
         }
@@ -237,21 +237,21 @@
         .animal-name {
             font-size: 1.4rem;
             font-weight: 700;
-            color: #d4af37;
+            color: #ff6b9d;
             margin-bottom: 10px;
         }
         
         .animal-kanji {
             font-size: 2rem;
             font-weight: 900;
-            color: #f0f0f0;
+            color: #666;
             margin-bottom: 10px;
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
         }
         
         .animal-trait {
             font-size: 0.9rem;
-            color: #cccccc;
+            color: #777;
             line-height: 1.4;
         }
         
@@ -266,8 +266,8 @@
             border-radius: 20px;
             padding: 40px 30px;
             box-shadow: 
-                0 0 30px rgba(212, 175, 55, 0.3),
-                inset 0 0 20px rgba(212, 175, 55, 0.1);
+                0 0 30px rgba(255, 107, 157, 0.3),
+                inset 0 0 20px rgba(255, 107, 157, 0.1);
             backdrop-filter: blur(10px);
             animation: resultAppear 1s ease-out;
         }
@@ -280,7 +280,7 @@
         .result-title {
             font-size: 2.5rem;
             font-weight: 700;
-            color: #d4af37;
+            color: #ff6b9d;
             margin-bottom: 30px;
         }
         
@@ -303,7 +303,7 @@
         .selected-animal-name {
             font-size: 2rem;
             font-weight: 900;
-            color: #f0f0f0;
+            color: #666;
             margin-bottom: 10px;
         }
         
@@ -323,7 +323,7 @@
         .fortune-label {
             font-size: 1.2rem;
             font-weight: 700;
-            color: #d4af37;
+            color: #ff6b9d;
             margin-bottom: 8px;
             display: flex;
             align-items: center;
@@ -336,7 +336,7 @@
         
         .fortune-text {
             font-size: 1rem;
-            color: #f0f0f0;
+            color: #666;
             line-height: 1.6;
             padding-left: 25px;
         }
@@ -415,50 +415,50 @@
     <div id="gameContainer">
         <!-- タイトル画面 -->
         <div class="title-screen" id="titleScreen">
-            <h1 class="main-title">動物霊獣占い</h1>
-            <p class="subtitle">〜 あなたの守護動物を見つけよう 〜</p>
+            <h1 class="main-title">動物占い</h1>
+            <p class="subtitle">〜 今日のあなたはどの動物？ 〜</p>
             <div class="description">
-                古来より伝わる動物霊獣の教えによると、すべての人には守護となる動物の霊が宿っているとされています。<br><br>
+                楽しい動物占いで今日の運勢をチェック！<br><br>
                 
-                四つの神聖なる動物の中から、あなたの心が最も惹かれるものを選んでください。<br><br>
+                4つのかわいい動物の中から、直感で一番気になる子を選んでね。<br><br>
                 
-                その選択があなたの運命と未来への道しるべとなるでしょう。
+                毎日違う結果が出るから、ぜひ毎日遊びに来てください♪
             </div>
             <button class="start-button" onclick="showSelection()">占いを始める</button>
         </div>
         
         <!-- 動物選択画面 -->
         <div class="selection-screen" id="selectionScreen">
-            <h2 class="selection-title">守護動物を選択</h2>
-            <p class="selection-subtitle">心の声に従い、最も惹かれる動物を一つ選んでください</p>
+            <h2 class="selection-title">動物を選んでね</h2>
+            <p class="selection-subtitle">直感で、今日一番気になる動物をタップしてください</p>
             
             <div class="animals-grid">
-                <div class="animal-card" onclick="selectAnimal('lion')">
-                    <span class="animal-emoji">🦁</span>
-                    <div class="animal-kanji">獅</div>
-                    <div class="animal-name">ライオン</div>
-                    <div class="animal-trait">王者の風格<br>勇気と威厳</div>
+                <div class="animal-card" onclick="selectAnimal('tiger')">
+                    <span class="animal-emoji">🐅</span>
+                    <div class="animal-kanji">虎</div>
+                    <div class="animal-name">トラ</div>
+                    <div class="animal-trait">情熱的で勇敢<br>エネルギッシュ</div>
                 </div>
                 
                 <div class="animal-card" onclick="selectAnimal('panda')">
                     <span class="animal-emoji">🐼</span>
                     <div class="animal-kanji">熊</div>
                     <div class="animal-name">パンダ</div>
-                    <div class="animal-trait">穏やかな心<br>平和と調和</div>
+                    <div class="animal-trait">のんびり屋さん<br>癒し系キャラ</div>
                 </div>
                 
                 <div class="animal-card" onclick="selectAnimal('dolphin')">
                     <span class="animal-emoji">🐬</span>
                     <div class="animal-kanji">海</div>
                     <div class="animal-name">イルカ</div>
-                    <div class="animal-trait">知性と友愛<br>自由な精神</div>
+                    <div class="animal-trait">頭が良くて社交的<br>明るい性格</div>
                 </div>
                 
                 <div class="animal-card" onclick="selectAnimal('penguin')">
                     <span class="animal-emoji">🐧</span>
                     <div class="animal-kanji">氷</div>
                     <div class="animal-name">ペンギン</div>
-                    <div class="animal-trait">忠実な心<br>協調と結束</div>
+                    <div class="animal-trait">真面目で誠実<br>仲間思い</div>
                 </div>
             </div>
         </div>
@@ -497,55 +497,128 @@
             }
         }
         
-        // 動物の占い結果データ
+        // 日付に基づいて占い結果をランダム化する関数
+        function getDailyFortune(animalType) {
+            const today = new Date();
+            const seed = today.getFullYear() * 10000 + (today.getMonth() + 1) * 100 + today.getDate();
+            const random = (seed * 9301 + 49297) % 233280 / 233280; // シンプルな疑似乱数
+            
+            return Math.floor(random * 3); // 0-2の値を返す
+        }
+        
+        // 動物の占い結果データ（3パターンずつ）
         const fortuneData = {
-            lion: {
-                emoji: '🦁',
-                name: '威風堂々なるライオン',
-                kanji: '獅',
-                fortunes: {
-                    personality: 'あなたは生まれながらのリーダーです。困難な状況でも決して諦めず、周囲の人々を勇気づける力を持っています。プライドが高く、正義感が強いあなたは、多くの人から尊敬を集めるでしょう。',
-                    love: '恋愛では情熱的で一途です。相手に対しては保護欲が強く、大切な人を守ろうとする気持ちが人一倍強いでしょう。理想が高いため、運命の人との出会いには時間がかかるかもしれません。',
-                    work: '仕事では指導力を発揮し、チームをまとめる役割に向いています。責任感が強く、大きなプロジェクトを成功に導く力があります。独立起業にも適性があります。',
-                    health: '体力には恵まれていますが、ストレスを溜めやすい傾向があります。適度な運動と十分な休息を心がけることで、持続的な健康を維持できるでしょう。',
-                    fortune: '今年は新しいチャレンジの年です。恐れずに前進することで、大きな成果を得られるでしょう。秋頃に重要な転機が訪れる可能性があります。'
-                }
+            tiger: {
+                emoji: '🐅',
+                name: 'エネルギッシュな虎',
+                kanji: '虎',
+                fortunes: [
+                    {
+                        personality: '今日のあなたは虎のように情熱的！チャレンジ精神旺盛で、どんな困難も乗り越えられそう。リーダーシップを発揮して、みんなを引っ張っていこう。',
+                        love: '恋愛運は絶好調♪ 積極的にアプローチすることで、素敵な出会いがありそう。既にパートナーがいる人は、サプライズで相手を喜ばせてみて。',
+                        work: 'お仕事では新しいプロジェクトにチャレンジするのにぴったりの日。あなたのアイデアが注目を集めるかも。自信を持って発言してみよう！',
+                        health: '体力満タン！運動やアクティブな活動で、さらにエネルギーをチャージできそう。ただし、食べ過ぎには注意してね。',
+                        fortune: '今日のラッキーカラーはオレンジ。新しいことを始めるのに最適な日です。午後からは特に運気が上昇しそう！'
+                    },
+                    {
+                        personality: 'クールな虎モード発動中。冷静な判断力で、周りからの信頼度アップ。落ち着いて行動することで、良い結果につながりそう。',
+                        love: '恋愛は慎重派に。相手をじっくり観察して、本当の気持ちを見極めるのがポイント。焦らずゆっくりと関係を深めていこう。',
+                        work: '集中力が高まる日。細かい作業や計画立てに向いています。同僚との協力も大切に。チームワークで大きな成果を得られそう。',
+                        health: 'リラックスタイムを大切に。読書や音楽鑑賞など、心を落ち着ける活動がおすすめ。深呼吸して、心身を整えよう。',
+                        fortune: '今日のラッキーアイテムは青いもの。静かな場所で過ごす時間が、新しいひらめきをもたらしてくれそう。'
+                    },
+                    {
+                        personality: 'やんちゃな虎の日！好奇心いっぱいで、いろんなことに興味津々。新しい発見がたくさんありそうな、わくわくする一日になりそう。',
+                        love: 'ユーモアたっぷりのあなたに、みんなが注目。楽しい会話で相手の心をゲット！笑顔を忘れずに、明るく過ごそう。',
+                        work: 'クリエイティブな発想が冴える日。アイデア出しや企画作りにぴったり。遊び心を仕事に取り入れると、面白い結果が生まれそう。',
+                        health: 'アクティブに動き回りたい気分。散歩やダンスなど、楽しみながらできる運動がおすすめ。体を動かして、ストレス発散しよう！',
+                        fortune: '今日のラッキースポットは人が集まる場所。友達と一緒の時間が、特別な幸運を運んできてくれそう♪'
+                    }
+                ]
             },
             panda: {
                 emoji: '🐼',
-                name: '心穏やかなるパンダ',
+                name: 'のんびりパンダ',
                 kanji: '熊',
-                fortunes: {
-                    personality: 'あなたは平和を愛する優しい心の持ち主です。争いを好まず、周囲との調和を大切にします。マイペースですが、その穏やかな性格で多くの人に癒しを与える存在です。',
-                    love: '恋愛では安定を求める傾向があります。じっくりと相手を知ってから関係を深めるタイプで、一度愛した人とは長く添い遂げる運命にあります。家庭的な幸せを重視します。',
-                    work: '仕事では協調性を活かし、チームワークを大切にします。創作活動や人を癒す職業に向いています。急がず着実に歩むことで、確実な成功を手にするでしょう。',
-                    health: '心身ともに安定している傾向にあります。ただし、運動不足になりがちなので、軽い散歩や自然に触れる活動を取り入れることをお勧めします。',
-                    fortune: '今年は安定と充実の年です。焦らずゆっくりと物事を進めることで、思わぬ幸運が舞い込むでしょう。春に良い知らせが届く可能性があります。'
-                }
+                fortunes: [
+                    {
+                        personality: '今日はのんびりパンダモード♪ マイペースなあなたに、周りの人が癒されています。焦らず自分のペースで進んでいけば大丈夫！',
+                        love: 'ほんわか恋愛運。やさしい雰囲気のあなたに、素敵な人が近づいてくるかも。無理をせず、自然体でいることが一番の魅力です。',
+                        work: 'コツコツ努力が実を結ぶ日。地道な作業や継続していることに、良い結果が見えてきそう。周りとの協調も大切にして。',
+                        health: 'リラックスが一番！美味しいものを食べて、ゆっくり過ごすのがおすすめ。ただし、食べ過ぎには気をつけてね。',
+                        fortune: '今日のラッキーアイテムは緑色のもの。自然に触れる時間が、心を豊かにしてくれそう。公園散歩もいいかも♪'
+                    },
+                    {
+                        personality: 'のんびりしつつも、しっかり者のパンダ。周りの人のお世話をしたり、サポートすることで、みんなから感謝されそう。',
+                        love: '包容力のあるあなたに、相手もほっと安心。聞き上手な一面を活かして、大切な人との絆を深めて。思いやりが鍵です。',
+                        work: 'チームのまとめ役として活躍できそう。みんなの意見を聞いて、バランスよく調整する能力が光ります。平和的な解決策を見つけて。',
+                        health: 'ストレスが少ない穏やかな日。ヨガや瞑想など、心を落ち着ける活動がぴったり。内面の美しさも磨かれそう。',
+                        fortune: '今日のラッキー時間は夕方。のんびりティータイムが、新しいアイデアや出会いを運んできてくれるかも。'
+                    },
+                    {
+                        personality: 'ちょっぴり甘えん坊なパンダの日。周りの人に頼ったり、助けてもらうことで、新しい人間関係が生まれそう。素直さが魅力です。',
+                        love: 'かわいらしい一面が恋愛運をアップ！甘え上手なあなたに、相手もメロメロになりそう。でも、わがままは程々に。',
+                        work: '一人で悩まず、先輩や同僚に相談してみて。意外なアドバイスがもらえて、問題がスッキリ解決するかも。',
+                        health: '好きなものを食べて、好きなことをする日。我慢しすぎず、自分を甘やかすことも大切。でも、バランスは考えてね。',
+                        fortune: '今日のラッキーフードは甘いもの。お気に入りのスイーツが、幸せな気持ちと一緒に、良いニュースも運んでくれそう♪'
+                    }
+                ]
             },
             dolphin: {
                 emoji: '🐬',
-                name: '知性輝くイルカ',
+                name: 'かしこいイルカ',
                 kanji: '海',
-                fortunes: {
-                    personality: 'あなたは知的で社交的な人です。コミュニケーション能力に長け、多くの人と良好な関係を築くことができます。好奇心旺盛で、常に新しいことを学ぼうとする姿勢があります。',
-                    love: '恋愛では楽しさと理解を重視します。相手とは友達のような関係から始まり、深い絆で結ばれるでしょう。知的な会話を楽しめる相手との相性が特に良いです。',
-                    work: '仕事では創造性と柔軟性を活かし、新しいアイデアを生み出すことが得意です。教育、メディア、IT関連の分野で才能を発揮するでしょう。チームプレイも得意です。',
-                    health: '活動的で健康的な生活を送る傾向にあります。水泳などの水中運動や、脳トレーニングを取り入れることで、心身ともにさらに充実するでしょう。',
-                    fortune: '今年は学びと成長の年です。新しい知識やスキルの習得が将来の大きな財産となります。夏頃に人生を変える出会いがあるかもしれません。'
-                }
+                fortunes: [
+                    {
+                        personality: '今日は頭脳明晰なイルカモード！新しいことを学ぶのにぴったりの日。好奇心旺盛なあなたに、面白い情報がたくさん集まってきそう。',
+                        love: 'おしゃべり上手なあなたに、みんなが注目。楽しい会話で、相手との距離がグッと縮まりそう。知的な魅力で勝負して！',
+                        work: 'アイデアがどんどん浮かんでくる創造的な日。新しい企画や提案で、周りをあっと驚かせることができそう。積極的に発言してみて。',
+                        health: '頭を使う活動がおすすめ。読書やパズル、新しいスキルの勉強など。脳トレで、さらに賢くなれちゃうかも！',
+                        fortune: '今日のラッキーアイテムは本や雑誌。新しい知識が、思わぬチャンスを運んできてくれそう。学びを楽しんで♪'
+                    },
+                    {
+                        personality: 'フレンドリーなイルカの日。コミュニケーション能力抜群で、初対面の人ともすぐに仲良くなれそう。人とのつながりを大切にして。',
+                        love: '友達から恋人へ発展するかも？親しみやすいあなたに、自然と人が集まってきます。笑顔を忘れずに、楽しく過ごそう。',
+                        work: 'チームワークが光る日。みんなとの連携プレーで、大きな成果を上げられそう。困っている人がいたら、積極的にサポートして。',
+                        health: '社交的な活動で心も体もリフレッシュ。友達とのお出かけや、グループでの運動がおすすめ。一人より、みんなと一緒が吉。',
+                        fortune: '今日のラッキー場所は人が集まるところ。カフェやイベント会場で、素敵な出会いや情報に遭遇するかも。'
+                    },
+                    {
+                        personality: 'クリエイティブなイルカの日！芸術的センスが冴えて、美しいものや面白いものを作り出せそう。感性を大切にして。',
+                        love: 'ロマンチックな演出で、相手をキュンとさせちゃおう。あなたの創造力を活かした、素敵なサプライズを考えてみて。',
+                        work: 'デザインや企画、表現力を活かせる仕事で大活躍。今までにない発想で、新しい風を吹き込めそう。芸術的な感性を信じて。',
+                        health: '美しいものに触れて、心を豊かに。美術館や自然の中で過ごす時間が、インスピレーションをくれそう。',
+                        fortune: '今日のラッキーカラーは青。海や空の色が、あなたに平穏と創造力をもたらしてくれます。青いアイテムを身につけて♪'
+                    }
+                ]
             },
             penguin: {
                 emoji: '🐧',
-                name: '忠義厚きペンギン',
+                name: 'まじめなペンギン',
                 kanji: '氷',
-                fortunes: {
-                    personality: 'あなたは誠実で責任感の強い人です。約束を守り、困っている人を見過ごすことができない優しさを持っています。控えめですが、芯の強さを秘めた信頼できる存在です。',
-                    love: '恋愛では一途で献身的です。パートナーに対して深い愛情を注ぎ、困難な時も支え合える関係を築きます。結婚後は理想的な家庭を作る才能があります。',
-                    work: '仕事では堅実性と継続力を活かし、長期的なプロジェクトで成果を上げます。サポート役に回ることも多いですが、その貢献は必ず評価されるでしょう。',
-                    health: '規則正しい生活を送り、健康管理に気を使う傾向があります。寒さに強く、冬のスポーツや活動を楽しむことで、体力と精神力の両方を鍛えられます。',
-                    fortune: '今年は絆を深める年です。家族や親しい友人との関係がより一層強くなり、それが運気上昇の鍵となります。冬に特に良い変化が期待できるでしょう。'
-                }
+                fortunes: [
+                    {
+                        personality: '今日は真面目で一生懸命なペンギン。コツコツと努力を続けるあなたを、周りの人がしっかり見ていますよ。頑張りが報われる日です！',
+                        love: '誠実なあなたの魅力が光る日。真剣に向き合う姿勢が、相手の心を動かしそう。約束は必ず守って、信頼関係を築いていこう。',
+                        work: '責任感の強さが評価される日。任された仕事は最後まできっちりやり遂げて。あなたの真面目さが、大きな信頼につながります。',
+                        health: '規則正しい生活で体調バッチリ。早寝早起き、バランスの良い食事で、健康的な一日を過ごせそう。継続は力なり！',
+                        fortune: '今日のラッキーアイテムは時計。時間を大切にすることで、新しいチャンスが巡ってきそう。スケジュール管理も完璧に♪'
+                    },
+                    {
+                        personality: '仲間思いのペンギンモード。困っている人を見つけたら、そっと手を差し伸べるやさしさが、あなたの魅力。チームワークを大切にして。',
+                        love: '支え合える関係が理想。お互いを思いやる気持ちが、絆を深めてくれそう。相手の立場に立って考えることで、愛情もより深まります。',
+                        work: 'サポート役として大活躍。縁の下の力持ちとして、チーム全体を支える重要な役割を果たせそう。地道な努力が認められる日。',
+                        health: '仲間と一緒の運動や活動がおすすめ。一人でがんばるより、みんなでワイワイ楽しみながらの方が、長続きしそう。',
+                        fortune: '今日のラッキーカラーは白。純粋な心持ちで接することで、周りからの評価もアップ。清潔感のある装いで出かけよう。'
+                    },
+                    {
+                        personality: 'しっかり者のペンギンの日。計画性があって、物事をきちんと整理するのが得意。今日は整理整頓や準備に力を入れてみて。',
+                        love: '将来を見据えた真剣な恋愛。お互いの夢や目標について話し合うことで、より深い理解が生まれそう。安定した関係を築いて。',
+                        work: '企画や準備作業で力を発揮。細かいところまで気配りができるあなたに、みんなが頼りにしてくれそう。段取り上手でプロジェクト成功！',
+                        health: '健康管理が得意なあなた。バランスの取れた食事や適度な運動で、理想的な生活リズムを維持できそう。お手本のような一日に。',
+                        fortune: '今日のラッキー時間は朝の時間。早起きして準備万端で一日をスタートすることで、すべてがスムーズに進みそう。'
+                    }
+                ]
             }
         };
         
@@ -557,6 +630,8 @@
         
         function selectAnimal(animal) {
             const data = fortuneData[animal];
+            const fortuneIndex = getDailyFortune(animal);
+            const todaysFortune = data.fortunes[fortuneIndex];
             
             // 結果画面の内容を設定
             document.getElementById('resultEmoji').textContent = data.emoji;
@@ -565,24 +640,24 @@
             const fortuneContent = document.getElementById('fortuneContent');
             fortuneContent.innerHTML = `
                 <div class="fortune-category">
-                    <div class="fortune-label">性格・特徴</div>
-                    <div class="fortune-text">${data.fortunes.personality}</div>
+                    <div class="fortune-label">今日の性格</div>
+                    <div class="fortune-text">${todaysFortune.personality}</div>
                 </div>
                 <div class="fortune-category">
                     <div class="fortune-label">恋愛運</div>
-                    <div class="fortune-text">${data.fortunes.love}</div>
+                    <div class="fortune-text">${todaysFortune.love}</div>
                 </div>
                 <div class="fortune-category">
-                    <div class="fortune-label">仕事運</div>
-                    <div class="fortune-text">${data.fortunes.work}</div>
+                    <div class="fortune-label">お仕事運</div>
+                    <div class="fortune-text">${todaysFortune.work}</div>
                 </div>
                 <div class="fortune-category">
                     <div class="fortune-label">健康運</div>
-                    <div class="fortune-text">${data.fortunes.health}</div>
+                    <div class="fortune-text">${todaysFortune.health}</div>
                 </div>
                 <div class="fortune-category">
-                    <div class="fortune-label">総合運勢</div>
-                    <div class="fortune-text">${data.fortunes.fortune}</div>
+                    <div class="fortune-label">今日のメッセージ</div>
+                    <div class="fortune-text">${todaysFortune.fortune}</div>
                 </div>
             `;
             
