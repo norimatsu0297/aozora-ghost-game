@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>動物霊獣占い - あなたの守護動物を見つけよう</title>
+    <meta name="description" content="古来より伝わる動物霊獣占い。ライオン、パンダ、イルカ、ペンギンの中からあなたの守護動物を選び、運勢を占おう。">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Serif JP', serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: #f0f0f0;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* 背景の装飾効果 */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(255, 100, 150, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(100, 255, 200, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        /* 星の背景アニメーション */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 2;
+        }
+        
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: #fff;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+        
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+        
+        /* メインコンテナ */
+        #gameContainer {
+            position: relative;
+            z-index: 10;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        /* タイトル画面 */
+        .title-screen {
+            text-align: center;
+            max-width: 600px;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            border: 3px solid #d4af37;
+            border-radius: 20px;
+            padding: 50px 30px;
+            box-shadow: 
+                0 0 30px rgba(212, 175, 55, 0.3),
+                inset 0 0 20px rgba(212, 175, 55, 0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        .main-title {
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: #d4af37;
+            text-shadow: 
+                2px 2px 4px rgba(0, 0, 0, 0.8),
+                0 0 20px rgba(212, 175, 55, 0.5);
+            margin-bottom: 20px;
+            animation: titleGlow 3s ease-in-out infinite;
+        }
+        
+        @keyframes titleGlow {
+            0%, 100% { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8), 0 0 20px rgba(212, 175, 55, 0.5); }
+            50% { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8), 0 0 40px rgba(212, 175, 55, 0.8); }
+        }
+        
+        .subtitle {
+            font-size: 1.3rem;
+            color: #f0f0f0;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        
+        .description {
+            font-size: 1.1rem;
+            color: #cccccc;
+            line-height: 1.8;
+            margin-bottom: 40px;
+            text-align: left;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 25px;
+            border-radius: 15px;
+            border-left: 4px solid #d4af37;
+        }
+        
+        .start-button {
+            background: linear-gradient(45deg, #d4af37, #ffd700);
+            color: #1a1a2e;
+            border: none;
+            padding: 20px 50px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .start-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(212, 175, 55, 0.4);
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+        }
+        
+        /* 動物選択画面 */
+        .selection-screen {
+            display: none;
+            text-align: center;
+            max-width: 900px;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            border: 3px solid #d4af37;
+            border-radius: 20px;
+            padding: 40px 30px;
+            box-shadow: 
+                0 0 30px rgba(212, 175, 55, 0.3),
+                inset 0 0 20px rgba(212, 175, 55, 0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        .selection-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #d4af37;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+        }
+        
+        .selection-subtitle {
+            font-size: 1.2rem;
+            color: #f0f0f0;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+        
+        .animals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .animal-card {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            border-radius: 20px;
+            padding: 30px 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(5px);
+        }
+        
+        .animal-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(212, 175, 55, 0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.6s ease;
+            opacity: 0;
+        }
+        
+        .animal-card:hover::before {
+            opacity: 1;
+            transform: rotate(45deg) translate(50%, 50%);
+        }
+        
+        .animal-card:hover {
+            transform: translateY(-10px) scale(1.05);
+            border-color: #d4af37;
+            box-shadow: 
+                0 15px 35px rgba(212, 175, 55, 0.2),
+                0 0 30px rgba(212, 175, 55, 0.3);
+        }
+        
+        .animal-emoji {
+            font-size: 4rem;
+            margin-bottom: 15px;
+            display: block;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .animal-name {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #d4af37;
+            margin-bottom: 10px;
+        }
+        
+        .animal-kanji {
+            font-size: 2rem;
+            font-weight: 900;
+            color: #f0f0f0;
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+        }
+        
+        .animal-trait {
+            font-size: 0.9rem;
+            color: #cccccc;
+            line-height: 1.4;
+        }
+        
+        /* 占い結果画面 */
+        .result-screen {
+            display: none;
+            text-align: center;
+            max-width: 700px;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            border: 3px solid #d4af37;
+            border-radius: 20px;
+            padding: 40px 30px;
+            box-shadow: 
+                0 0 30px rgba(212, 175, 55, 0.3),
+                inset 0 0 20px rgba(212, 175, 55, 0.1);
+            backdrop-filter: blur(10px);
+            animation: resultAppear 1s ease-out;
+        }
+        
+        @keyframes resultAppear {
+            0% { opacity: 0; transform: scale(0.8) translateY(50px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        
+        .result-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #d4af37;
+            margin-bottom: 30px;
+        }
+        
+        .selected-animal {
+            margin-bottom: 30px;
+        }
+        
+        .selected-animal-emoji {
+            font-size: 5rem;
+            margin-bottom: 15px;
+            display: block;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        .selected-animal-name {
+            font-size: 2rem;
+            font-weight: 900;
+            color: #f0f0f0;
+            margin-bottom: 10px;
+        }
+        
+        .fortune-content {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-left: 4px solid #d4af37;
+        }
+        
+        .fortune-category {
+            margin-bottom: 25px;
+            text-align: left;
+        }
+        
+        .fortune-label {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #d4af37;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .fortune-label::before {
+            content: '◆';
+            margin-right: 10px;
+        }
+        
+        .fortune-text {
+            font-size: 1rem;
+            color: #f0f0f0;
+            line-height: 1.6;
+            padding-left: 25px;
+        }
+        
+        .restart-button {
+            background: linear-gradient(45deg, #4a90e2, #357abd);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(74, 144, 226, 0.3);
+        }
+        
+        .restart-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(74, 144, 226, 0.4);
+        }
+        
+        /* レスポンシブデザイン */
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 2.5rem;
+            }
+            
+            .title-screen, .selection-screen, .result-screen {
+                padding: 30px 20px;
+                margin: 10px;
+            }
+            
+            .animals-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+            
+            .animal-card {
+                padding: 20px 15px;
+            }
+            
+            .animal-emoji {
+                font-size: 3rem;
+            }
+            
+            .animal-kanji {
+                font-size: 1.5rem;
+            }
+            
+            .selected-animal-emoji {
+                font-size: 4rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .main-title {
+                font-size: 2rem;
+            }
+            
+            .animals-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .fortune-content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 星の背景 -->
+    <div class="stars" id="stars"></div>
+    
+    <div id="gameContainer">
+        <!-- タイトル画面 -->
+        <div class="title-screen" id="titleScreen">
+            <h1 class="main-title">動物霊獣占い</h1>
+            <p class="subtitle">〜 あなたの守護動物を見つけよう 〜</p>
+            <div class="description">
+                古来より伝わる動物霊獣の教えによると、すべての人には守護となる動物の霊が宿っているとされています。<br><br>
+                
+                四つの神聖なる動物の中から、あなたの心が最も惹かれるものを選んでください。<br><br>
+                
+                その選択があなたの運命と未来への道しるべとなるでしょう。
+            </div>
+            <button class="start-button" onclick="showSelection()">占いを始める</button>
+        </div>
+        
+        <!-- 動物選択画面 -->
+        <div class="selection-screen" id="selectionScreen">
+            <h2 class="selection-title">守護動物を選択</h2>
+            <p class="selection-subtitle">心の声に従い、最も惹かれる動物を一つ選んでください</p>
+            
+            <div class="animals-grid">
+                <div class="animal-card" onclick="selectAnimal('lion')">
+                    <span class="animal-emoji">🦁</span>
+                    <div class="animal-kanji">獅</div>
+                    <div class="animal-name">ライオン</div>
+                    <div class="animal-trait">王者の風格<br>勇気と威厳</div>
+                </div>
+                
+                <div class="animal-card" onclick="selectAnimal('panda')">
+                    <span class="animal-emoji">🐼</span>
+                    <div class="animal-kanji">熊</div>
+                    <div class="animal-name">パンダ</div>
+                    <div class="animal-trait">穏やかな心<br>平和と調和</div>
+                </div>
+                
+                <div class="animal-card" onclick="selectAnimal('dolphin')">
+                    <span class="animal-emoji">🐬</span>
+                    <div class="animal-kanji">海</div>
+                    <div class="animal-name">イルカ</div>
+                    <div class="animal-trait">知性と友愛<br>自由な精神</div>
+                </div>
+                
+                <div class="animal-card" onclick="selectAnimal('penguin')">
+                    <span class="animal-emoji">🐧</span>
+                    <div class="animal-kanji">氷</div>
+                    <div class="animal-name">ペンギン</div>
+                    <div class="animal-trait">忠実な心<br>協調と結束</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 占い結果画面 -->
+        <div class="result-screen" id="resultScreen">
+            <h2 class="result-title">占い結果</h2>
+            
+            <div class="selected-animal">
+                <span class="selected-animal-emoji" id="resultEmoji"></span>
+                <div class="selected-animal-name" id="resultName"></div>
+            </div>
+            
+            <div class="fortune-content" id="fortuneContent">
+                <!-- 占い内容がここに動的に挿入されます -->
+            </div>
+            
+            <button class="restart-button" onclick="restart()">もう一度占う</button>
+        </div>
+    </div>
+    
+    <script>
+        // 星の背景生成
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            const numStars = 100;
+            
+            for (let i = 0; i < numStars; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                star.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                starsContainer.appendChild(star);
+            }
+        }
+        
+        // 動物の占い結果データ
+        const fortuneData = {
+            lion: {
+                emoji: '🦁',
+                name: '威風堂々なるライオン',
+                kanji: '獅',
+                fortunes: {
+                    personality: 'あなたは生まれながらのリーダーです。困難な状況でも決して諦めず、周囲の人々を勇気づける力を持っています。プライドが高く、正義感が強いあなたは、多くの人から尊敬を集めるでしょう。',
+                    love: '恋愛では情熱的で一途です。相手に対しては保護欲が強く、大切な人を守ろうとする気持ちが人一倍強いでしょう。理想が高いため、運命の人との出会いには時間がかかるかもしれません。',
+                    work: '仕事では指導力を発揮し、チームをまとめる役割に向いています。責任感が強く、大きなプロジェクトを成功に導く力があります。独立起業にも適性があります。',
+                    health: '体力には恵まれていますが、ストレスを溜めやすい傾向があります。適度な運動と十分な休息を心がけることで、持続的な健康を維持できるでしょう。',
+                    fortune: '今年は新しいチャレンジの年です。恐れずに前進することで、大きな成果を得られるでしょう。秋頃に重要な転機が訪れる可能性があります。'
+                }
+            },
+            panda: {
+                emoji: '🐼',
+                name: '心穏やかなるパンダ',
+                kanji: '熊',
+                fortunes: {
+                    personality: 'あなたは平和を愛する優しい心の持ち主です。争いを好まず、周囲との調和を大切にします。マイペースですが、その穏やかな性格で多くの人に癒しを与える存在です。',
+                    love: '恋愛では安定を求める傾向があります。じっくりと相手を知ってから関係を深めるタイプで、一度愛した人とは長く添い遂げる運命にあります。家庭的な幸せを重視します。',
+                    work: '仕事では協調性を活かし、チームワークを大切にします。創作活動や人を癒す職業に向いています。急がず着実に歩むことで、確実な成功を手にするでしょう。',
+                    health: '心身ともに安定している傾向にあります。ただし、運動不足になりがちなので、軽い散歩や自然に触れる活動を取り入れることをお勧めします。',
+                    fortune: '今年は安定と充実の年です。焦らずゆっくりと物事を進めることで、思わぬ幸運が舞い込むでしょう。春に良い知らせが届く可能性があります。'
+                }
+            },
+            dolphin: {
+                emoji: '🐬',
+                name: '知性輝くイルカ',
+                kanji: '海',
+                fortunes: {
+                    personality: 'あなたは知的で社交的な人です。コミュニケーション能力に長け、多くの人と良好な関係を築くことができます。好奇心旺盛で、常に新しいことを学ぼうとする姿勢があります。',
+                    love: '恋愛では楽しさと理解を重視します。相手とは友達のような関係から始まり、深い絆で結ばれるでしょう。知的な会話を楽しめる相手との相性が特に良いです。',
+                    work: '仕事では創造性と柔軟性を活かし、新しいアイデアを生み出すことが得意です。教育、メディア、IT関連の分野で才能を発揮するでしょう。チームプレイも得意です。',
+                    health: '活動的で健康的な生活を送る傾向にあります。水泳などの水中運動や、脳トレーニングを取り入れることで、心身ともにさらに充実するでしょう。',
+                    fortune: '今年は学びと成長の年です。新しい知識やスキルの習得が将来の大きな財産となります。夏頃に人生を変える出会いがあるかもしれません。'
+                }
+            },
+            penguin: {
+                emoji: '🐧',
+                name: '忠義厚きペンギン',
+                kanji: '氷',
+                fortunes: {
+                    personality: 'あなたは誠実で責任感の強い人です。約束を守り、困っている人を見過ごすことができない優しさを持っています。控えめですが、芯の強さを秘めた信頼できる存在です。',
+                    love: '恋愛では一途で献身的です。パートナーに対して深い愛情を注ぎ、困難な時も支え合える関係を築きます。結婚後は理想的な家庭を作る才能があります。',
+                    work: '仕事では堅実性と継続力を活かし、長期的なプロジェクトで成果を上げます。サポート役に回ることも多いですが、その貢献は必ず評価されるでしょう。',
+                    health: '規則正しい生活を送り、健康管理に気を使う傾向があります。寒さに強く、冬のスポーツや活動を楽しむことで、体力と精神力の両方を鍛えられます。',
+                    fortune: '今年は絆を深める年です。家族や親しい友人との関係がより一層強くなり、それが運気上昇の鍵となります。冬に特に良い変化が期待できるでしょう。'
+                }
+            }
+        };
+        
+        // 画面切り替え
+        function showSelection() {
+            document.getElementById('titleScreen').style.display = 'none';
+            document.getElementById('selectionScreen').style.display = 'block';
+        }
+        
+        function selectAnimal(animal) {
+            const data = fortuneData[animal];
+            
+            // 結果画面の内容を設定
+            document.getElementById('resultEmoji').textContent = data.emoji;
+            document.getElementById('resultName').textContent = data.name;
+            
+            const fortuneContent = document.getElementById('fortuneContent');
+            fortuneContent.innerHTML = `
+                <div class="fortune-category">
+                    <div class="fortune-label">性格・特徴</div>
+                    <div class="fortune-text">${data.fortunes.personality}</div>
+                </div>
+                <div class="fortune-category">
+                    <div class="fortune-label">恋愛運</div>
+                    <div class="fortune-text">${data.fortunes.love}</div>
+                </div>
+                <div class="fortune-category">
+                    <div class="fortune-label">仕事運</div>
+                    <div class="fortune-text">${data.fortunes.work}</div>
+                </div>
+                <div class="fortune-category">
+                    <div class="fortune-label">健康運</div>
+                    <div class="fortune-text">${data.fortunes.health}</div>
+                </div>
+                <div class="fortune-category">
+                    <div class="fortune-label">総合運勢</div>
+                    <div class="fortune-text">${data.fortunes.fortune}</div>
+                </div>
+            `;
+            
+            // 画面切り替え
+            document.getElementById('selectionScreen').style.display = 'none';
+            document.getElementById('resultScreen').style.display = 'block';
+        }
+        
+        function restart() {
+            document.getElementById('resultScreen').style.display = 'none';
+            document.getElementById('titleScreen').style.display = 'block';
+        }
+        
+        // 初期化
+        document.addEventListener('DOMContentLoaded', () => {
+            createStars();
+        });
+    </script>
+</body>
+</html>
