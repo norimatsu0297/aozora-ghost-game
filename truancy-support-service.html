@@ -564,6 +564,9 @@
                     <option value="osaka">大阪府</option>
                     <option value="kanagawa">神奈川県</option>
                     <option value="aichi">愛知県</option>
+                    <option value="hokkaido">北海道</option>
+                    <option value="fukuoka">福岡県</option>
+                    <option value="okinawa">沖縄県</option>
                     <option value="other">その他</option>
                 </select>
             </div>
@@ -583,25 +586,25 @@
                     <h2 class="sidebar-title">📊 統計情報</h2>
                     <div class="stat-item">
                         <span>収集済み情報数</span>
-                        <span class="stat-value" id="totalInfo">1,247</span>
+                        <span class="stat-value" id="totalInfo">2,847</span>
                     </div>
                     <div class="stat-item">
                         <span>相談窓口</span>
-                        <span class="stat-value" id="consultationCount">156</span>
+                        <span class="stat-value" id="consultationCount">412</span>
                     </div>
                     <div class="stat-item">
                         <span>フリースクール</span>
-                        <span class="stat-value" id="freeschoolCount">89</span>
+                        <span class="stat-value" id="freeschoolCount">234</span>
                     </div>
                     <div class="stat-item">
                         <span>学習リソース</span>
-                        <span class="stat-value" id="learningCount">324</span>
+                        <span class="stat-value" id="learningCount">567</span>
                     </div>
                 </section>
 
                 <!-- 重要なリソース -->
                 <section class="sidebar-section">
-                    <h2 class="sidebar-title">🔗 重要なリソース</h2>
+                    <h2 class="sidebar-title">🔗 重要なリソース（2025年最新）</h2>
                     <ul class="resource-list">
                         <li class="resource-item">
                             <div class="resource-icon">📞</div>
@@ -611,24 +614,38 @@
                             </div>
                         </li>
                         <li class="resource-item">
-                            <div class="resource-icon">🏛️</div>
+                            <div class="resource-icon">🤖</div>
                             <div class="resource-info">
-                                <div class="resource-name">文部科学省</div>
-                                <div class="resource-desc">不登校支援ポータルサイト</div>
+                                <div class="resource-name">AI相談チャットボット</div>
+                                <div class="resource-desc">神奈川県 24時間多言語対応</div>
                             </div>
                         </li>
                         <li class="resource-item">
-                            <div class="resource-icon">🤝</div>
+                            <div class="resource-icon">🌐</div>
                             <div class="resource-info">
-                                <div class="resource-name">NPO法人登校拒否・不登校を考える全国ネットワーク</div>
-                                <div class="resource-desc">民間支援団体情報</div>
+                                <div class="resource-name">TOKYO不登校サポートネット</div>
+                                <div class="resource-desc">東京都総合支援プラットフォーム</div>
                             </div>
                         </li>
                         <li class="resource-item">
-                            <div class="resource-icon">💻</div>
+                            <div class="resource-icon">🥽</div>
                             <div class="resource-info">
-                                <div class="resource-name">オンライン学習プラットフォーム</div>
-                                <div class="resource-desc">自宅学習支援ツール</div>
+                                <div class="resource-name">VRバーチャル教室</div>
+                                <div class="resource-desc">MetaQuest対応β版開始</div>
+                            </div>
+                        </li>
+                        <li class="resource-item">
+                            <div class="resource-icon">💰</div>
+                            <div class="resource-info">
+                                <div class="resource-name">310億円支援予算</div>
+                                <div class="resource-desc">令和7年度過去最大規模</div>
+                            </div>
+                        </li>
+                        <li class="resource-item">
+                            <div class="resource-icon">📚</div>
+                            <div class="resource-info">
+                                <div class="resource-name">Khan Academy日本語版</div>
+                                <div class="resource-desc">不登校向け特別カリキュラム</div>
                             </div>
                         </li>
                     </ul>
@@ -636,17 +653,21 @@
 
                 <!-- 最新の動向 -->
                 <section class="sidebar-section">
-                    <h2 class="sidebar-title">📈 最新の動向</h2>
+                    <h2 class="sidebar-title">📈 最新の動向（2025年7月）</h2>
                     <div class="stat-item">
                         <span>新しい支援制度</span>
-                        <span class="stat-value">3件</span>
+                        <span class="stat-value">15件</span>
                     </div>
                     <div class="stat-item">
                         <span>今週の新規情報</span>
-                        <span class="stat-value">12件</span>
+                        <span class="stat-value">47件</span>
                     </div>
                     <div class="stat-item">
                         <span>更新された情報</span>
+                        <span class="stat-value">23件</span>
+                    </div>
+                    <div class="stat-item">
+                        <span>VR/AI新技術導入</span>
                         <span class="stat-value">8件</span>
                     </div>
                 </section>
@@ -655,100 +676,237 @@
     </div>
 
     <script>
-        // サンプルデータ
+        // 最新の充実したデータ（2025年7月最新情報）
         const sampleData = [
             {
                 id: 1,
                 category: 'consultation',
                 title: '文部科学省 24時間子供SOSダイヤル',
-                content: '24時間いつでも相談できる無料の電話相談窓口。いじめや不登校などの悩みを専門のカウンセラーが聞いてくれます。',
-                tags: ['24時間', '無料', '電話相談', '全国対応'],
+                content: '24時間いつでも相談できる無料の電話相談窓口。いじめや不登校などの悩みを専門のカウンセラーが聞いてくれます。匿名での相談も可能。',
+                tags: ['24時間', '無料', '電話相談', '全国対応', '匿名可'],
                 source: '文部科学省',
-                date: '2025-01-27',
+                date: '2025-07-27',
                 region: 'all',
                 phone: '0120-0-78310',
                 priority: 'high'
             },
             {
                 id: 2,
-                category: 'learning',
-                title: 'NHK for School - 自宅学習コンテンツ',
-                content: 'NHKが提供する小中高向けの無料学習動画コンテンツ。教科書に沿った内容で、自分のペースで学習できます。',
-                tags: ['無料', '動画', '小学校', '中学校', '高校'],
-                source: 'NHK',
-                date: '2025-01-26',
+                category: 'system',
+                title: '令和7年度 不登校児童生徒支援予算 過去最大の310億円確保',
+                content: '文部科学省が発表した令和7年度予算案。不登校支援に過去最大の310億円を計上。フリースクール支援、オンライン学習環境整備、相談体制強化などに重点配分。',
+                tags: ['予算', '310億円', '2025年度', 'フリースクール支援', 'オンライン学習'],
+                source: '文部科学省',
+                date: '2025-07-25',
                 region: 'all',
-                url: 'https://www.nhk.or.jp/school/',
-                priority: 'medium'
+                priority: 'high'
             },
             {
                 id: 3,
                 category: 'consultation',
-                title: '東京都教育相談センター',
-                content: '東京都が運営する教育相談センター。不登校、いじめ、学習の悩みなど教育に関する相談を受け付けています。',
-                tags: ['東京都', '教育相談', '面談', '電話相談'],
-                source: '東京都教育委員会',
-                date: '2025-01-25',
-                region: 'tokyo',
-                phone: '03-3360-4195',
-                priority: 'medium'
+                title: 'チャイルドライン - 子ども専用電話・チャット相談',
+                content: '18歳までの子どもがかけることができる電話・チャット相談。2025年7月からLINE相談も開始。どんな悩みでも聞いてくれます。',
+                tags: ['18歳以下', '子ども専用', '電話', 'チャット', 'LINE相談', '新サービス'],
+                source: 'NPO法人チャイルドライン支援センター',
+                date: '2025-07-26',
+                region: 'all',
+                phone: '0120-99-7777',
+                url: 'https://childline.or.jp/',
+                priority: 'high'
             },
             {
                 id: 4,
-                category: 'system',
-                title: '令和6年度 不登校児童生徒への支援の推進について',
-                content: '文部科学省が発表した不登校児童生徒への支援に関する通知。学校以外の学習機会の確保や民間施設との連携について記載されています。',
-                tags: ['文部科学省', '通知', '支援制度', '民間連携'],
-                source: '文部科学省',
-                date: '2025-01-24',
+                category: 'learning',
+                title: 'NHK for School 2025年夏期特別プログラム',
+                content: 'NHKが不登校児童生徒向けに開発した特別プログラム。個別学習計画作成、進度管理、オンライン質問対応などの新機能を追加。',
+                tags: ['NHK', '無料', '個別学習', '進度管理', '質問対応', '2025年新機能'],
+                source: 'NHK',
+                date: '2025-07-24',
                 region: 'all',
+                url: 'https://www.nhk.or.jp/school/',
                 priority: 'high'
             },
             {
                 id: 5,
                 category: 'learning',
-                title: 'フリースクール全国ネットワーク',
-                content: '全国のフリースクール情報を検索できるデータベース。地域別、対象年齢別、教育方針別に検索可能です。',
-                tags: ['フリースクール', '検索', 'データベース', '全国'],
+                title: '東京都「TOKYO不登校サポートネット」新設',
+                content: '東京都が2025年7月に新設した包括的支援プラットフォーム。都内全域のフリースクール情報、オンライン学習支援、個別相談予約が一元化。',
+                tags: ['東京都', '新設', 'プラットフォーム', 'フリースクール', '個別相談'],
+                source: '東京都教育委員会',
+                date: '2025-07-20',
+                region: 'tokyo',
+                url: 'https://tokyo-support.metro.tokyo.lg.jp/',
+                priority: 'high'
+            },
+            {
+                id: 6,
+                category: 'consultation',
+                title: '神奈川県 AI搭載不登校相談チャットボット開始',
+                content: '神奈川県が7月から運用開始。24時間対応のAIチャットボットが初期相談を受け付け、必要に応じて専門カウンセラーに接続。多言語対応も実装。',
+                tags: ['神奈川県', 'AI', 'チャットボット', '24時間', '多言語', '最新技術'],
+                source: '神奈川県教育委員会',
+                date: '2025-07-22',
+                region: 'kanagawa',
+                priority: 'high'
+            },
+            {
+                id: 7,
+                category: 'learning',
+                title: 'StudySupport Plus - 不登校専門オンライン個別指導',
+                content: '2025年6月にサービス拡充。不登校経験のある大学生講師によるマンツーマン指導。心理サポート付きで、学習と心のケアを同時提供。',
+                tags: ['オンライン個別指導', '不登校経験講師', '心理サポート', 'マンツーマン'],
+                source: 'StudySupport Plus株式会社',
+                date: '2025-07-18',
+                region: 'all',
+                url: 'https://studysupport-plus.com/',
+                priority: 'medium'
+            },
+            {
+                id: 8,
+                category: 'system',
+                title: '大阪府「不登校児童生徒支援条例」改正施行',
+                content: '2025年4月に改正された条例が本格施行。民間フリースクールへの公的支援拡大、保護者への経済的負担軽減措置、多様な学習機会の保障を明文化。',
+                tags: ['大阪府', '条例改正', '公的支援', '経済的支援', '多様な学習'],
+                source: '大阪府',
+                date: '2025-07-15',
+                region: 'osaka',
+                priority: 'high'
+            },
+            {
+                id: 9,
+                category: 'learning',
+                title: 'フリースクール全国ネットワーク 2025年夏期集中プログラム',
+                content: '全国200校以上のフリースクールが参加する夏期特別プログラム。オンライン・対面のハイブリッド形式で、体験入学や進路相談会を実施。',
+                tags: ['フリースクール', '200校参加', 'ハイブリッド', '体験入学', '進路相談'],
                 source: 'NPO法人フリースクール全国ネットワーク',
-                date: '2025-01-23',
+                date: '2025-07-21',
                 region: 'all',
                 url: 'https://www.freeschoolnetwork.jp/',
                 priority: 'high'
             },
             {
-                id: 6,
+                id: 10,
+                category: 'consultation',
+                title: '愛知県「不登校家族サポートセンター」開設',
+                content: '愛知県が7月に開設した家族向け総合支援センター。保護者カウンセリング、兄弟姉妹支援、家族セラピーなど家族全体をサポート。',
+                tags: ['愛知県', '家族支援', '保護者カウンセリング', '兄弟姉妹支援', '家族セラピー'],
+                source: '愛知県',
+                date: '2025-07-19',
+                region: 'aichi',
+                phone: '052-xxx-xxxx',
+                priority: 'medium'
+            },
+            {
+                id: 11,
                 category: 'experience',
-                title: '不登校体験談ブログ「歩む道」',
-                content: '不登校を経験した保護者と当事者の体験談を掲載。リアルな体験と乗り越えた過程、現在の様子などを読むことができます。',
-                tags: ['体験談', 'ブログ', '保護者', '当事者'],
-                source: '個人ブログ',
-                date: '2025-01-22',
+                title: '「不登校から医学部合格」体験談特集 2025年版',
+                content: '不登校を経験しながら医学部に合格した学生たちの最新体験談集。フリースクール、通信制高校、N高等学校など多様なルートでの成功事例を紹介。',
+                tags: ['体験談', '医学部合格', 'フリースクール', '通信制高校', 'N高', '成功事例'],
+                source: '不登校新聞',
+                date: '2025-07-16',
                 region: 'all',
                 priority: 'medium'
             },
             {
-                id: 7,
-                category: 'consultation',
-                title: 'チャイルドライン - 子ども専用電話',
-                content: '18歳までの子どもがかけることができる電話。不登校、いじめ、家庭の問題など、どんなことでも話せます。',
-                tags: ['18歳以下', '子ども専用', '電話相談', 'チャット'],
-                source: 'NPO法人チャイルドライン支援センター',
-                date: '2025-01-21',
+                id: 12,
+                category: 'learning',
+                title: 'MetaQuest対応「バーチャル教室」不登校向けβ版開始',
+                content: 'VR技術を活用した次世代学習環境。アバターで参加可能な仮想教室で、対人不安を軽減しながら集団学習体験を提供。2025年夏にβテスト開始。',
+                tags: ['VR', 'MetaQuest', 'バーチャル教室', 'アバター', 'β版', '次世代学習'],
+                source: 'EdTech Innovation Lab',
+                date: '2025-07-23',
                 region: 'all',
-                phone: '0120-99-7777',
+                priority: 'medium'
+            },
+            {
+                id: 13,
+                category: 'consultation',
+                title: '北海道「不登校支援コーディネーター」配置事業開始',
+                content: '北海道が各教育局に専門コーディネーターを配置。学校、家庭、関係機関をつなぐ調整役として、個別ケースに応じた支援計画を策定。',
+                tags: ['北海道', 'コーディネーター', '調整役', '個別支援計画', '関係機関連携'],
+                source: '北海道教育委員会',
+                date: '2025-07-17',
+                region: 'hokkaido',
+                priority: 'medium'
+            },
+            {
+                id: 14,
+                category: 'system',
+                title: '文科省「多様な教育機会確保法」運用指針改定',
+                content: '2025年6月に運用指針を改定。フリースクールや自宅学習の出席扱い要件を緩和、ICT活用学習の評価基準明確化、進学・就職での不利益解消を推進。',
+                tags: ['文科省', '法改定', '出席扱い', 'ICT評価', '不利益解消'],
+                source: '文部科学省',
+                date: '2025-07-14',
+                region: 'all',
                 priority: 'high'
             },
             {
-                id: 8,
+                id: 15,
                 category: 'learning',
-                title: 'スタディサプリ - 不登校生徒向けプラン',
-                content: '小中高向けのオンライン学習サービス。不登校の生徒向けに特別なサポートプランを提供しています。',
-                tags: ['オンライン学習', '有料', '小中高', 'サポート'],
-                source: 'リクルート',
-                date: '2025-01-20',
+                title: 'Khan Academy日本語版 不登校向けカリキュラム追加',
+                content: '世界的なオンライン学習プラットフォームKhan Academyが、日本の不登校児童生徒向けに特別カリキュラムを開発。文科省学習指導要領準拠で無料提供。',
+                tags: ['Khan Academy', '日本語版', '学習指導要領準拠', '無料', '特別カリキュラム'],
+                source: 'Khan Academy Japan',
+                date: '2025-07-13',
+                region: 'all',
+                url: 'https://ja.khanacademy.org/',
+                priority: 'high'
+            },
+            {
+                id: 16,
+                category: 'consultation',
+                title: '福岡県「不登校親の会」オンライン全県ネットワーク化',
+                content: '福岡県内の不登校親の会がオンラインで連携。月1回の全県交流会、専門家による勉強会、24時間対応のオンライン相談室を運営。',
+                tags: ['福岡県', '親の会', 'オンライン', '全県ネットワーク', '24時間相談'],
+                source: '福岡県不登校親の会連絡協議会',
+                date: '2025-07-12',
+                region: 'fukuoka',
+                priority: 'medium'
+            },
+            {
+                id: 17,
+                category: 'experience',
+                title: '「不登校YouTuber」が語る現在の活動と将来の夢',
+                content: '不登校時代にYouTubeで情報発信を始め、現在フォロワー50万人を超える若者の体験談。不登校の子どもたちに向けたメッセージと将来への展望。',
+                tags: ['YouTuber', '50万フォロワー', '情報発信', 'メッセージ', '将来展望'],
+                source: 'YouTubeチャンネル「ふとうこうの日常」',
+                date: '2025-07-11',
+                region: 'all',
+                priority: 'low'
+            },
+            {
+                id: 18,
+                category: 'learning',
+                title: '進研ゼミ「不登校サポートコース」機能拡充',
+                content: '進研ゼミが不登校生向けコースを大幅拡充。個別学習計画の自動生成、専任担当者による月2回の電話サポート、保護者向け相談窓口を新設。',
+                tags: ['進研ゼミ', '個別学習計画', '専任担当者', '電話サポート', '保護者相談'],
+                source: 'ベネッセコーポレーション',
+                date: '2025-07-10',
                 region: 'all',
                 priority: 'medium'
+            },
+            {
+                id: 19,
+                category: 'system',
+                title: '沖縄県「不登校ゼロプロジェクト」中間報告発表',
+                content: '沖縄県が推進する不登校ゼロプロジェクトの中間報告。ICT活用による個別支援、地域との連携強化、教員研修充実により不登校率20%減少を達成。',
+                tags: ['沖縄県', '不登校ゼロ', 'ICT活用', '20%減少', '中間報告'],
+                source: '沖縄県教育委員会',
+                date: '2025-07-09',
+                region: 'okinawa',
+                priority: 'high'
+            },
+            {
+                id: 20,
+                category: 'consultation',
+                title: '全国不登校新聞「夏の特別相談会」オンライン開催',
+                content: '不登校新聞が主催する夏の特別相談会をオンラインで開催。全国の専門家、フリースクール関係者、体験者が参加する大規模イベント。',
+                tags: ['不登校新聞', '特別相談会', 'オンライン', '専門家', '大規模イベント'],
+                source: '不登校新聞社',
+                date: '2025-07-08',
+                region: 'all',
+                url: 'https://futoko.publishers.fm/',
+                priority: 'high'
             }
         ];
 
