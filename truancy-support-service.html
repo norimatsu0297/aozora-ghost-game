@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>不登校サポート情報センター - 包括的な支援情報とリソース</title>
+    <meta name="description" content="不登校に関する最新情報、支援制度、相談窓口、学習リソースを自動収集・整理して提供。保護者・当事者・支援者向けの包括的な情報センター。">
+    <meta name="keywords" content="不登校,支援,相談,学習,フリースクール,適応指導教室,在宅学習,メンタルヘルス">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* ヘッダー */
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #4a5568;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            color: white;
+            font-size: 1.2rem;
+        }
+        
+        .last-updated {
+            font-size: 0.9rem;
+            color: #718096;
+            display: flex;
+            align-items: center;
+        }
+        
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            background: #48bb78;
+            border-radius: 50%;
+            margin-right: 8px;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        /* メインコンテナ */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        /* ヒーロセクション */
+        .hero {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            color: #2d3748;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+        
+        .hero p {
+            font-size: 1.1rem;
+            color: #4a5568;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+        
+        .search-bar {
+            max-width: 500px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 15px 50px 15px 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 50px;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        
+        .search-input:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .search-btn {
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border: none;
+            border-radius: 50px;
+            padding: 10px 20px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .search-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+        
+        /* カテゴリータブ */
+        .category-tabs {
+            display: flex;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .tab {
+            flex: 1;
+            min-width: 120px;
+            padding: 12px 16px;
+            background: transparent;
+            border: 2px solid #e2e8f0;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-weight: 500;
+            color: #4a5568;
+        }
+        
+        .tab.active {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border-color: transparent;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+        
+        .tab:hover:not(.active) {
+            border-color: #667eea;
+            transform: translateY(-1px);
+        }
+        
+        /* コンテンツエリア */
+        .content-area {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        /* 情報カード */
+        .info-cards {
+            display: grid;
+            gap: 1.5rem;
+        }
+        
+        .card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border-left: 4px solid #667eea;
+        }
+        
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+        
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 0.5rem;
+        }
+        
+        .card-meta {
+            font-size: 0.9rem;
+            color: #718096;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .card-content {
+            color: #4a5568;
+            margin-bottom: 1rem;
+        }
+        
+        .card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .tag {
+            background: #edf2f7;
+            color: #4a5568;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .card-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: #edf2f7;
+            color: #4a5568;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* サイドバー */
+        .sidebar {
+            display: grid;
+            gap: 1.5rem;
+        }
+        
+        .sidebar-section {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .sidebar-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .sidebar-title::before {
+            content: '📊';
+            margin-right: 8px;
+        }
+        
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .stat-item:last-child {
+            border-bottom: none;
+        }
+        
+        .stat-value {
+            font-weight: 600;
+            color: #667eea;
+        }
+        
+        /* リソースリスト */
+        .resource-list {
+            list-style: none;
+        }
+        
+        .resource-item {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+        }
+        
+        .resource-item:last-child {
+            border-bottom: none;
+        }
+        
+        .resource-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            color: white;
+            font-size: 0.9rem;
+        }
+        
+        .resource-info {
+            flex: 1;
+        }
+        
+        .resource-name {
+            font-weight: 500;
+            color: #2d3748;
+            margin-bottom: 2px;
+        }
+        
+        .resource-desc {
+            font-size: 0.8rem;
+            color: #718096;
+        }
+        
+        /* フィルター */
+        .filters {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .filter-group {
+            margin-bottom: 1rem;
+        }
+        
+        .filter-label {
+            font-weight: 500;
+            color: #2d3748;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        
+        .filter-select {
+            width: 100%;
+            padding: 8px 12px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+        
+        .filter-select:focus {
+            border-color: #667eea;
+        }
+        
+        /* ローディング */
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: #718096;
+        }
+        
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid #e2e8f0;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* レスポンシブデザイン */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero {
+                padding: 2rem 1rem;
+            }
+            
+            .content-area {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .category-tabs {
+                flex-direction: column;
+            }
+            
+            .tab {
+                min-width: auto;
+            }
+            
+            .header-content {
+                padding: 0 1rem;
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .card {
+                padding: 1rem;
+            }
+        }
+        
+        /* アクセシビリティ */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+        
+        /* フォーカススタイル */
+        button:focus,
+        input:focus,
+        select:focus,
+        .tab:focus {
+            outline: 3px solid rgba(102, 126, 234, 0.3);
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body>
+    <!-- ヘッダー -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">🏫</div>
+                不登校サポート情報センター
+            </div>
+            <div class="last-updated">
+                <div class="status-indicator"></div>
+                最終更新: <span id="lastUpdated">2025年01月27日 15:30</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- メインコンテナ -->
+    <div class="container">
+        <!-- ヒーローセクション -->
+        <section class="hero">
+            <h1>包括的な不登校支援情報</h1>
+            <p>不登校に関する最新の支援制度、相談窓口、学習リソース、体験談などを自動収集・整理して提供します。あなたに必要な情報をすぐに見つけることができます。</p>
+            <div class="search-bar">
+                <input 
+                    type="text" 
+                    class="search-input" 
+                    placeholder="知りたい情報を検索... (例: フリースクール、相談窓口、学習支援)"
+                    id="searchInput"
+                    aria-label="情報検索"
+                >
+                <button class="search-btn" onclick="performSearch()" aria-label="検索実行">
+                    🔍
+                </button>
+            </div>
+        </section>
+
+        <!-- カテゴリータブ -->
+        <nav class="category-tabs" role="tablist">
+            <button class="tab active" onclick="switchCategory('all')" role="tab" aria-selected="true" id="tab-all">
+                📋 すべて
+            </button>
+            <button class="tab" onclick="switchCategory('consultation')" role="tab" aria-selected="false" id="tab-consultation">
+                💬 相談・支援
+            </button>
+            <button class="tab" onclick="switchCategory('learning')" role="tab" aria-selected="false" id="tab-learning">
+                📚 学習支援
+            </button>
+            <button class="tab" onclick="switchCategory('experience')" role="tab" aria-selected="false" id="tab-experience">
+                👥 体験談
+            </button>
+            <button class="tab" onclick="switchCategory('system')" role="tab" aria-selected="false" id="tab-system">
+                📄 制度・政策
+            </button>
+        </nav>
+
+        <!-- フィルター -->
+        <section class="filters">
+            <div class="filter-group">
+                <label for="regionFilter" class="filter-label">地域</label>
+                <select id="regionFilter" class="filter-select" onchange="applyFilters()">
+                    <option value="">全国</option>
+                    <option value="tokyo">東京都</option>
+                    <option value="osaka">大阪府</option>
+                    <option value="kanagawa">神奈川県</option>
+                    <option value="aichi">愛知県</option>
+                    <option value="other">その他</option>
+                </select>
+            </div>
+        </section>
+
+        <!-- コンテンツエリア -->
+        <div class="content-area">
+            <!-- メインコンテンツ -->
+            <main class="info-cards" id="infoCards">
+                <!-- 情報カードがここに動的に挿入されます -->
+            </main>
+
+            <!-- サイドバー -->
+            <aside class="sidebar">
+                <!-- 統計情報 -->
+                <section class="sidebar-section">
+                    <h2 class="sidebar-title">📊 統計情報</h2>
+                    <div class="stat-item">
+                        <span>収集済み情報数</span>
+                        <span class="stat-value" id="totalInfo">1,247</span>
+                    </div>
+                    <div class="stat-item">
+                        <span>相談窓口</span>
+                        <span class="stat-value" id="consultationCount">156</span>
+                    </div>
+                    <div class="stat-item">
+                        <span>フリースクール</span>
+                        <span class="stat-value" id="freeschoolCount">89</span>
+                    </div>
+                    <div class="stat-item">
+                        <span>学習リソース</span>
+                        <span class="stat-value" id="learningCount">324</span>
+                    </div>
+                </section>
+
+                <!-- 重要なリソース -->
+                <section class="sidebar-section">
+                    <h2 class="sidebar-title">🔗 重要なリソース</h2>
+                    <ul class="resource-list">
+                        <li class="resource-item">
+                            <div class="resource-icon">📞</div>
+                            <div class="resource-info">
+                                <div class="resource-name">24時間子供SOSダイヤル</div>
+                                <div class="resource-desc">0120-0-78310（なやみ言おう）</div>
+                            </div>
+                        </li>
+                        <li class="resource-item">
+                            <div class="resource-icon">🏛️</div>
+                            <div class="resource-info">
+                                <div class="resource-name">文部科学省</div>
+                                <div class="resource-desc">不登校支援ポータルサイト</div>
+                            </div>
+                        </li>
+                        <li class="resource-item">
+                            <div class="resource-icon">🤝</div>
+                            <div class="resource-info">
+                                <div class="resource-name">NPO法人登校拒否・不登校を考える全国ネットワーク</div>
+                                <div class="resource-desc">民間支援団体情報</div>
+                            </div>
+                        </li>
+                        <li class="resource-item">
+                            <div class="resource-icon">💻</div>
+                            <div class="resource-info">
+                                <div class="resource-name">オンライン学習プラットフォーム</div>
+                                <div class="resource-desc">自宅学習支援ツール</div>
+                            </div>
+                        </li>
+                    </ul>
+                </section>
+
+                <!-- 最新の動向 -->
+                <section class="sidebar-section">
+                    <h2 class="sidebar-title">📈 最新の動向</h2>
+                    <div class="stat-item">
+                        <span>新しい支援制度</span>
+                        <span class="stat-value">3件</span>
+                    </div>
+                    <div class="stat-item">
+                        <span>今週の新規情報</span>
+                        <span class="stat-value">12件</span>
+                    </div>
+                    <div class="stat-item">
+                        <span>更新された情報</span>
+                        <span class="stat-value">8件</span>
+                    </div>
+                </section>
+            </aside>
+        </div>
+    </div>
+
+    <script>
+        // サンプルデータ
+        const sampleData = [
+            {
+                id: 1,
+                category: 'consultation',
+                title: '文部科学省 24時間子供SOSダイヤル',
+                content: '24時間いつでも相談できる無料の電話相談窓口。いじめや不登校などの悩みを専門のカウンセラーが聞いてくれます。',
+                tags: ['24時間', '無料', '電話相談', '全国対応'],
+                source: '文部科学省',
+                date: '2025-01-27',
+                region: 'all',
+                phone: '0120-0-78310',
+                priority: 'high'
+            },
+            {
+                id: 2,
+                category: 'learning',
+                title: 'NHK for School - 自宅学習コンテンツ',
+                content: 'NHKが提供する小中高向けの無料学習動画コンテンツ。教科書に沿った内容で、自分のペースで学習できます。',
+                tags: ['無料', '動画', '小学校', '中学校', '高校'],
+                source: 'NHK',
+                date: '2025-01-26',
+                region: 'all',
+                url: 'https://www.nhk.or.jp/school/',
+                priority: 'medium'
+            },
+            {
+                id: 3,
+                category: 'consultation',
+                title: '東京都教育相談センター',
+                content: '東京都が運営する教育相談センター。不登校、いじめ、学習の悩みなど教育に関する相談を受け付けています。',
+                tags: ['東京都', '教育相談', '面談', '電話相談'],
+                source: '東京都教育委員会',
+                date: '2025-01-25',
+                region: 'tokyo',
+                phone: '03-3360-4195',
+                priority: 'medium'
+            },
+            {
+                id: 4,
+                category: 'system',
+                title: '令和6年度 不登校児童生徒への支援の推進について',
+                content: '文部科学省が発表した不登校児童生徒への支援に関する通知。学校以外の学習機会の確保や民間施設との連携について記載されています。',
+                tags: ['文部科学省', '通知', '支援制度', '民間連携'],
+                source: '文部科学省',
+                date: '2025-01-24',
+                region: 'all',
+                priority: 'high'
+            },
+            {
+                id: 5,
+                category: 'learning',
+                title: 'フリースクール全国ネットワーク',
+                content: '全国のフリースクール情報を検索できるデータベース。地域別、対象年齢別、教育方針別に検索可能です。',
+                tags: ['フリースクール', '検索', 'データベース', '全国'],
+                source: 'NPO法人フリースクール全国ネットワーク',
+                date: '2025-01-23',
+                region: 'all',
+                url: 'https://www.freeschoolnetwork.jp/',
+                priority: 'high'
+            },
+            {
+                id: 6,
+                category: 'experience',
+                title: '不登校体験談ブログ「歩む道」',
+                content: '不登校を経験した保護者と当事者の体験談を掲載。リアルな体験と乗り越えた過程、現在の様子などを読むことができます。',
+                tags: ['体験談', 'ブログ', '保護者', '当事者'],
+                source: '個人ブログ',
+                date: '2025-01-22',
+                region: 'all',
+                priority: 'medium'
+            },
+            {
+                id: 7,
+                category: 'consultation',
+                title: 'チャイルドライン - 子ども専用電話',
+                content: '18歳までの子どもがかけることができる電話。不登校、いじめ、家庭の問題など、どんなことでも話せます。',
+                tags: ['18歳以下', '子ども専用', '電話相談', 'チャット'],
+                source: 'NPO法人チャイルドライン支援センター',
+                date: '2025-01-21',
+                region: 'all',
+                phone: '0120-99-7777',
+                priority: 'high'
+            },
+            {
+                id: 8,
+                category: 'learning',
+                title: 'スタディサプリ - 不登校生徒向けプラン',
+                content: '小中高向けのオンライン学習サービス。不登校の生徒向けに特別なサポートプランを提供しています。',
+                tags: ['オンライン学習', '有料', '小中高', 'サポート'],
+                source: 'リクルート',
+                date: '2025-01-20',
+                region: 'all',
+                priority: 'medium'
+            }
+        ];
+
+        let currentCategory = 'all';
+        let currentData = [...sampleData];
+
+        // 初期化
+        document.addEventListener('DOMContentLoaded', function() {
+            loadInitialData();
+            updateStats();
+            updateLastUpdated();
+        });
+
+        // 初期データ読み込み
+        function loadInitialData() {
+            displayCards(currentData);
+        }
+
+        // カテゴリー切り替え
+        function switchCategory(category) {
+            currentCategory = category;
+            
+            // タブの状態更新
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+                tab.setAttribute('aria-selected', 'false');
+            });
+            document.getElementById(`tab-${category}`).classList.add('active');
+            document.getElementById(`tab-${category}`).setAttribute('aria-selected', 'true');
+            
+            // データフィルタリング
+            let filteredData = category === 'all' ? 
+                [...sampleData] : 
+                sampleData.filter(item => item.category === category);
+            
+            currentData = filteredData;
+            displayCards(currentData);
+        }
+
+        // フィルター適用
+        function applyFilters() {
+            const regionFilter = document.getElementById('regionFilter').value;
+            
+            let filteredData = currentCategory === 'all' ? 
+                [...sampleData] : 
+                sampleData.filter(item => item.category === currentCategory);
+            
+            if (regionFilter) {
+                filteredData = filteredData.filter(item => 
+                    item.region === regionFilter || item.region === 'all'
+                );
+            }
+            
+            currentData = filteredData;
+            displayCards(currentData);
+        }
+
+        // 検索実行
+        function performSearch() {
+            const query = document.getElementById('searchInput').value.toLowerCase().trim();
+            
+            if (!query) {
+                displayCards(currentData);
+                return;
+            }
+            
+            const searchResults = currentData.filter(item => 
+                item.title.toLowerCase().includes(query) ||
+                item.content.toLowerCase().includes(query) ||
+                item.tags.some(tag => tag.toLowerCase().includes(query))
+            );
+            
+            displayCards(searchResults);
+        }
+
+        // Enterキーでの検索
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                performSearch();
+            }
+        });
+
+        // カード表示
+        function displayCards(data) {
+            const container = document.getElementById('infoCards');
+            
+            if (data.length === 0) {
+                container.innerHTML = `
+                    <div class="card">
+                        <div class="card-content">
+                            <p>該当する情報が見つかりませんでした。検索条件を変更してお試しください。</p>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = data.map(item => createCardHTML(item)).join('');
+        }
+
+        // カードHTML生成
+        function createCardHTML(item) {
+            const priorityIcon = item.priority === 'high' ? '⭐' : 
+                                item.priority === 'medium' ? '🔸' : '🔹';
+            
+            const contactInfo = item.phone ? 
+                `<div class="card-meta">📞 ${item.phone}</div>` : '';
+            
+            const urlButton = item.url ? 
+                `<a href="${item.url}" target="_blank" class="btn btn-primary">サイトを見る</a>` : '';
+            
+            return `
+                <article class="card">
+                    <div class="card-header">
+                        <div>
+                            <h3 class="card-title">${priorityIcon} ${item.title}</h3>
+                            <div class="card-meta">
+                                📅 ${item.date} | 📍 ${item.source}
+                            </div>
+                            ${contactInfo}
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <p>${item.content}</p>
+                    </div>
+                    <div class="card-tags">
+                        ${item.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                    </div>
+                    <div class="card-actions">
+                        ${urlButton}
+                        <button class="btn btn-secondary" onclick="shareInfo(${item.id})">
+                            📤 共有
+                        </button>
+                        <button class="btn btn-secondary" onclick="saveInfo(${item.id})">
+                            💾 保存
+                        </button>
+                    </div>
+                </article>
+            `;
+        }
+
+        // 情報共有
+        function shareInfo(id) {
+            const item = sampleData.find(item => item.id === id);
+            if (navigator.share) {
+                navigator.share({
+                    title: item.title,
+                    text: item.content,
+                    url: window.location.href
+                });
+            } else {
+                // フォールバック：クリップボードにコピー
+                const text = `${item.title}\n${item.content}\n${window.location.href}`;
+                navigator.clipboard.writeText(text).then(() => {
+                    alert('情報をクリップボードにコピーしました');
+                });
+            }
+        }
+
+        // 情報保存
+        function saveInfo(id) {
+            const savedItems = JSON.parse(localStorage.getItem('savedInfo') || '[]');
+            if (!savedItems.includes(id)) {
+                savedItems.push(id);
+                localStorage.setItem('savedInfo', JSON.stringify(savedItems));
+                alert('情報を保存しました');
+            } else {
+                alert('この情報は既に保存されています');
+            }
+        }
+
+        // 統計情報更新
+        function updateStats() {
+            const stats = {
+                total: sampleData.length,
+                consultation: sampleData.filter(item => item.category === 'consultation').length,
+                learning: sampleData.filter(item => item.category === 'learning').length,
+                freeschool: sampleData.filter(item => item.tags.includes('フリースクール')).length
+            };
+            
+            document.getElementById('totalInfo').textContent = stats.total.toLocaleString();
+            document.getElementById('consultationCount').textContent = stats.consultation;
+            document.getElementById('learningCount').textContent = stats.learning;
+            document.getElementById('freeschoolCount').textContent = stats.freeschool;
+        }
+
+        // 最終更新時刻の更新
+        function updateLastUpdated() {
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('ja-JP', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit'
+            });
+            const timeStr = now.toLocaleTimeString('ja-JP', {
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+            
+            document.getElementById('lastUpdated').textContent = `${dateStr} ${timeStr}`;
+        }
+
+        // 自動更新（実際の実装では外部APIからデータを取得）
+        setInterval(() => {
+            updateLastUpdated();
+            // 実際の実装では新しいデータをフェッチ
+        }, 60000); // 1分ごと
+    </script>
+</body>
+</html>
