@@ -1042,21 +1042,28 @@
                 displayCards(currentData);
             }
         }
-        ];
 
         let currentCategory = 'all';
         let currentData = [...trustedData];
 
         // 初期化
         document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM読み込み完了、初期化開始');
+            console.log('trustedData:', trustedData.length + '件');
             loadInitialData();
             updateStats();
             updateLastUpdated();
+            initAutoUpdate();
         });
 
         // 初期データ読み込み
         function loadInitialData() {
+            // trustedDataがまだ空の場合の初期化
+            if (currentData.length === 0) {
+                currentData = [...trustedData];
+            }
             displayCards(currentData);
+            console.log('初期データ読み込み完了:', currentData.length + '件');
         }
 
         // カテゴリー切り替え
@@ -1333,10 +1340,7 @@
             updateLastUpdated();
         }, 60000);
 
-        // 自動更新機能を初期化
-        document.addEventListener('DOMContentLoaded', function() {
-            initAutoUpdate();
-        });
+        // 自動更新機能を初期化 - メインのDOMContentLoadedで呼び出されるため削除
     </script>
 </body>
 </html>
