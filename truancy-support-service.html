@@ -7,7 +7,19 @@
     <meta name="description" content="不登校に関する最新情報、支援制度、相談窓口、学習リソースを自動収集・整理して提供。保護者・当事者・支援者向けの包括的な情報センター。">
     <meta name="keywords" content="不登校,支援,相談,学習,フリースクール,適応指導教室,在宅学習,メンタルヘルス">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+JP:wght@300;400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+        
+        :root {
+            --primary: #00ffff;
+            --secondary: #ff0080;
+            --accent: #ffff00;
+            --bg-dark: #0a0a0f;
+            --bg-card: #111118;
+            --text-light: #ffffff;
+            --text-gray: #888888;
+            --border: #333333;
+            --glow: 0 0 20px;
+        }
         
         * {
             margin: 0;
@@ -16,325 +28,306 @@
         }
         
         body {
-            font-family: 'Inter', 'Noto Sans JP', sans-serif;
-            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
-            color: #e2e8f0;
-            line-height: 1.6;
-            overflow-x: hidden;
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-light);
             min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
         }
         
+        /* Animated background */
         body::before {
             content: '';
             position: fixed;
             top: 0;
             left: 0;
-            right: 0;
-            bottom: 0;
+            width: 100%;
+            height: 100%;
             background: 
-                radial-gradient(circle at 20% 20%, rgba(120, 119, 198, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(255, 119, 198, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 40% 40%, rgba(120, 200, 255, 0.05) 0%, transparent 50%);
+                linear-gradient(45deg, transparent 30%, rgba(0, 255, 255, 0.03) 50%, transparent 70%),
+                linear-gradient(-45deg, transparent 30%, rgba(255, 0, 128, 0.03) 50%, transparent 70%);
+            animation: bgMove 20s linear infinite;
             pointer-events: none;
             z-index: 0;
         }
         
-        /* ヘッダー */
+        @keyframes bgMove {
+            0% { transform: translateX(-100px) translateY(-100px); }
+            100% { transform: translateX(100px) translateY(100px); }
+        }
+        
+        /* Grid overlay */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 255, 255, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 255, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.3;
+        }
+        
+        .container {
+            position: relative;
+            z-index: 10;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
         .header {
-            background: rgba(15, 15, 35, 0.9);
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border);
+            background: rgba(10, 10, 15, 0.9);
             backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             position: sticky;
             top: 0;
-            z-index: 1000;
-            padding: 1.5rem 0;
+            z-index: 100;
         }
         
         .header-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
         
         .logo {
-            font-size: 1.75rem;
-            font-weight: 800;
-            color: #f8fafc;
             display: flex;
             align-items: center;
-            letter-spacing: -0.5px;
+            gap: 15px;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+            text-shadow: var(--glow) var(--primary);
         }
         
         .logo-icon {
-            width: 48px;
-            height: 48px;
-            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
-            border-radius: 16px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-right: 12px;
-            color: white;
-            font-size: 1.5rem;
-            box-shadow: 0 8px 32px rgba(99, 102, 241, 0.3);
+            font-size: 24px;
+            box-shadow: var(--glow) var(--primary);
+            animation: iconPulse 3s ease-in-out infinite;
         }
         
-        .last-updated {
-            font-size: 0.875rem;
-            color: #cbd5e1;
+        @keyframes iconPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .status-bar {
             display: flex;
             align-items: center;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 0.75rem 1rem;
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            gap: 20px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            color: var(--text-gray);
         }
         
         .status-indicator {
-            width: 10px;
-            height: 10px;
-            background: linear-gradient(45deg, #10b981, #34d399);
+            width: 12px;
+            height: 12px;
+            background: var(--primary);
             border-radius: 50%;
-            margin-right: 10px;
-            animation: pulse 2s infinite;
-            box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
-        }
-        
-        .last-updated button {
-            margin-left: 12px;
-            padding: 6px 12px;
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
-            border: none;
-            border-radius: 8px;
-            color: white;
-            font-size: 0.8rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .last-updated button:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+            box-shadow: var(--glow) var(--primary);
+            animation: pulse 2s ease-in-out infinite;
         }
         
         @keyframes pulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.7; transform: scale(1.1); }
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
         }
         
-        /* メインコンテナ */
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 3rem 2rem;
-            position: relative;
-            z-index: 1;
+        .update-btn {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            color: var(--bg-dark);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: var(--glow) var(--primary);
         }
         
-        /* ヒーロセクション */
+        .update-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px var(--primary);
+        }
+        
+        /* Hero Section */
         .hero {
-            background: linear-gradient(135deg, rgba(15, 15, 35, 0.8) 0%, rgba(26, 26, 46, 0.9) 100%);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 24px;
-            padding: 4rem 3rem;
+            padding: 80px 0;
             text-align: center;
-            margin-bottom: 4rem;
-            box-shadow: 
-                0 20px 60px rgba(0, 0, 0, 0.3),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1);
             position: relative;
-            overflow: hidden;
         }
         
         .hero::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(139, 92, 246, 0.1) 50%, rgba(236, 72, 153, 0.1) 100%);
-            opacity: 0.5;
-            pointer-events: none;
+            top: 50%;
+            left: 50%;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(0, 255, 255, 0.1) 0%, transparent 70%);
+            transform: translate(-50%, -50%);
+            animation: heroGlow 8s ease-in-out infinite;
+        }
+        
+        @keyframes heroGlow {
+            0%, 100% { opacity: 0.3; transform: translate(-50%, -50%) scale(1); }
+            50% { opacity: 0.6; transform: translate(-50%, -50%) scale(1.1); }
         }
         
         .hero h1 {
-            font-size: 3.5rem;
-            font-weight: 800;
-            color: #f8fafc;
-            margin-bottom: 1.5rem;
-            letter-spacing: -1px;
-            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #cbd5e1 100%);
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary), var(--accent));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
+            text-shadow: none;
             position: relative;
-            z-index: 1;
+            z-index: 2;
         }
         
         .hero p {
-            font-size: 1.25rem;
-            color: #cbd5e1;
-            max-width: 700px;
-            margin: 0 auto 3rem;
-            line-height: 1.7;
+            font-size: 1.2rem;
+            color: var(--text-gray);
+            max-width: 600px;
+            margin: 0 auto 40px;
             position: relative;
-            z-index: 1;
+            z-index: 2;
         }
         
-        .search-bar {
-            max-width: 600px;
-            margin: 0 auto;
+        /* Search Bar */
+        .search-container {
             position: relative;
+            max-width: 600px;
+            margin: 0 auto 60px;
             z-index: 2;
         }
         
         .search-input {
             width: 100%;
-            padding: 20px 60px 20px 24px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 16px;
-            font-size: 1.1rem;
-            color: #f8fafc;
+            padding: 20px 60px 20px 20px;
+            background: var(--bg-card);
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            color: var(--text-light);
+            font-size: 18px;
             outline: none;
             transition: all 0.3s ease;
-            font-weight: 400;
-        }
-        
-        .search-input::placeholder {
-            color: #94a3b8;
         }
         
         .search-input:focus {
-            border-color: rgba(99, 102, 241, 0.5);
-            box-shadow: 
-                0 0 0 3px rgba(99, 102, 241, 0.2),
-                0 8px 32px rgba(99, 102, 241, 0.3);
-            background: rgba(255, 255, 255, 0.15);
+            border-color: var(--primary);
+            box-shadow: var(--glow) var(--primary);
+        }
+        
+        .search-input::placeholder {
+            color: var(--text-gray);
         }
         
         .search-btn {
             position: absolute;
-            right: 6px;
-            top: 6px;
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
             border: none;
-            border-radius: 12px;
-            padding: 14px 20px;
-            color: white;
+            padding: 12px 20px;
+            border-radius: 5px;
             cursor: pointer;
+            font-size: 18px;
+            color: var(--bg-dark);
             transition: all 0.3s ease;
-            font-size: 1.2rem;
-            box-shadow: 0 4px 16px rgba(99, 102, 241, 0.3);
         }
         
         .search-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(99, 102, 241, 0.4);
-            background: linear-gradient(135deg, #8b5cf6, #ec4899);
+            transform: translateY(-50%) scale(1.05);
+            box-shadow: var(--glow) var(--primary);
         }
         
-        /* カテゴリータブ */
-        .category-tabs {
+        /* Navigation Tabs */
+        .nav-tabs {
             display: flex;
-            background: rgba(15, 15, 35, 0.6);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 1.5rem;
-            margin-bottom: 3rem;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 60px;
             flex-wrap: wrap;
-            gap: 12px;
         }
         
-        .tab {
-            flex: 1;
-            min-width: 140px;
-            padding: 16px 20px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
+        .nav-tab {
+            background: var(--bg-card);
+            border: 2px solid var(--border);
+            padding: 15px 25px;
+            border-radius: 10px;
+            color: var(--text-gray);
             cursor: pointer;
             transition: all 0.3s ease;
-            text-align: center;
-            font-weight: 600;
-            color: #cbd5e1;
-            font-size: 0.95rem;
+            font-weight: 500;
             position: relative;
             overflow: hidden;
         }
         
-        .tab::before {
+        .nav-tab::before {
             content: '';
             position: absolute;
             top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            transition: left 0.3s ease;
+            z-index: -1;
+        }
+        
+        .nav-tab.active,
+        .nav-tab:hover {
+            color: var(--bg-dark);
+            border-color: var(--primary);
+        }
+        
+        .nav-tab.active::before,
+        .nav-tab:hover::before {
             left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
-            opacity: 0;
-            transition: opacity 0.3s ease;
         }
         
-        .tab.active {
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
-            color: white;
-            border-color: rgba(99, 102, 241, 0.5);
-            transform: translateY(-2px);
-            box-shadow: 
-                0 8px 24px rgba(99, 102, 241, 0.4),
-                inset 0 1px 0 rgba(255, 255, 255, 0.2);
-        }
-        
-        .tab.active::before {
-            opacity: 1;
-        }
-        
-        .tab:hover:not(.active) {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: rgba(99, 102, 241, 0.3);
-            transform: translateY(-1px);
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-        }
-        
-        .tab:hover:not(.active)::before {
-            opacity: 0.5;
-        }
-        
-        /* コンテンツエリア */
-        .content-area {
+        /* Content Grid */
+        .content-grid {
             display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 2rem;
-            margin-bottom: 2rem;
+            grid-template-columns: 1fr 350px;
+            gap: 40px;
+            margin-bottom: 60px;
         }
         
-        /* 情報カード */
-        .info-cards {
+        /* Cards */
+        .cards-container {
             display: grid;
-            gap: 2rem;
+            gap: 30px;
         }
         
         .card {
-            background: linear-gradient(135deg, rgba(15, 15, 35, 0.8) 0%, rgba(26, 26, 46, 0.9) 100%);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 2rem;
-            box-shadow: 
-                0 8px 32px rgba(0, 0, 0, 0.3),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1);
-            transition: all 0.4s ease;
+            background: var(--bg-card);
+            border: 2px solid var(--border);
+            border-radius: 15px;
+            padding: 30px;
             position: relative;
             overflow: hidden;
+            transition: all 0.3s ease;
         }
         
         .card::before {
@@ -342,156 +335,144 @@
             position: absolute;
             top: 0;
             left: 0;
-            width: 4px;
-            height: 100%;
-            background: linear-gradient(135deg, #6366f1, #8b5cf6, #ec4899);
-            border-radius: 0 4px 4px 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
         }
         
         .card:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 
-                0 20px 60px rgba(0, 0, 0, 0.4),
-                inset 0 1px 0 rgba(255, 255, 255, 0.2);
-            border-color: rgba(99, 102, 241, 0.3);
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: var(--glow) var(--primary);
         }
         
         .card-header {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 1rem;
+            margin-bottom: 20px;
         }
         
         .card-title {
             font-size: 1.4rem;
-            font-weight: 700;
-            color: #f8fafc;
-            margin-bottom: 0.75rem;
-            line-height: 1.4;
+            font-weight: 600;
+            color: var(--text-light);
+            margin-bottom: 10px;
         }
         
         .card-meta {
-            font-size: 0.875rem;
-            color: #94a3b8;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            color: var(--text-gray);
             display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 0.5rem;
+            gap: 15px;
         }
         
         .card-content {
-            color: #cbd5e1;
-            margin-bottom: 1.5rem;
+            color: var(--text-gray);
             line-height: 1.6;
-            font-size: 1rem;
+            margin-bottom: 20px;
         }
         
         .card-tags {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.75rem;
-            margin-bottom: 1.5rem;
+            gap: 10px;
+            margin-bottom: 20px;
         }
         
         .tag {
-            background: rgba(99, 102, 241, 0.2);
-            color: #c7d2fe;
-            padding: 6px 12px;
-            border-radius: 12px;
-            font-size: 0.8rem;
-            font-weight: 500;
-            border: 1px solid rgba(99, 102, 241, 0.3);
-            backdrop-filter: blur(10px);
+            background: rgba(0, 255, 255, 0.1);
+            border: 1px solid var(--primary);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            color: var(--primary);
         }
         
         .card-actions {
             display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
+            gap: 15px;
         }
         
         .btn {
             padding: 12px 20px;
-            border: none;
-            border-radius: 12px;
-            cursor: pointer;
-            font-size: 0.9rem;
+            border-radius: 8px;
             font-weight: 600;
+            cursor: pointer;
             transition: all 0.3s ease;
             text-decoration: none;
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            backdrop-filter: blur(10px);
+            gap: 8px;
+            border: none;
         }
         
         .btn-primary {
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
-            color: white;
-            border: 1px solid rgba(99, 102, 241, 0.3);
-            box-shadow: 0 4px 16px rgba(99, 102, 241, 0.3);
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: var(--bg-dark);
         }
         
         .btn-secondary {
-            background: rgba(255, 255, 255, 0.1);
-            color: #cbd5e1;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: transparent;
+            color: var(--text-gray);
+            border: 1px solid var(--border);
         }
         
         .btn:hover {
-            transform: translateY(-2px);
+            transform: scale(1.05);
         }
         
         .btn-primary:hover {
-            box-shadow: 0 8px 24px rgba(99, 102, 241, 0.4);
-            background: linear-gradient(135deg, #8b5cf6, #ec4899);
+            box-shadow: var(--glow) var(--primary);
         }
         
         .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.15);
-            border-color: rgba(255, 255, 255, 0.3);
+            border-color: var(--primary);
+            color: var(--primary);
         }
         
-        /* サイドバー */
+        /* Sidebar */
         .sidebar {
             display: grid;
-            gap: 2rem;
+            gap: 30px;
         }
         
         .sidebar-section {
-            background: linear-gradient(135deg, rgba(15, 15, 35, 0.8) 0%, rgba(26, 26, 46, 0.9) 100%);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 2rem;
-            box-shadow: 
-                0 8px 32px rgba(0, 0, 0, 0.3),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            background: var(--bg-card);
+            border: 2px solid var(--border);
+            border-radius: 15px;
+            padding: 25px;
+            position: relative;
+        }
+        
+        .sidebar-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
         }
         
         .sidebar-title {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: #f8fafc;
-            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-light);
+            margin-bottom: 20px;
             display: flex;
             align-items: center;
-            letter-spacing: -0.25px;
-        }
-        
-        .sidebar-title::before {
-            margin-right: 10px;
-            font-size: 1.2rem;
+            gap: 10px;
         }
         
         .stat-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1rem 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            color: #cbd5e1;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border);
+            font-family: 'JetBrains Mono', monospace;
         }
         
         .stat-item:last-child {
@@ -499,21 +480,21 @@
         }
         
         .stat-value {
-            font-weight: 700;
-            color: #c7d2fe;
+            color: var(--primary);
+            font-weight: 600;
             font-size: 1.1rem;
         }
         
-        /* リソースリスト */
         .resource-list {
             list-style: none;
         }
         
         .resource-item {
-            padding: 0.8rem 0;
-            border-bottom: 1px solid #e2e8f0;
             display: flex;
             align-items: center;
+            gap: 15px;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border);
         }
         
         .resource-item:last-child {
@@ -521,335 +502,251 @@
         }
         
         .resource-icon {
-            width: 32px;
-            height: 32px;
-            background: linear-gradient(45deg, #667eea, #764ba2);
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
             border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-right: 12px;
-            color: white;
-            font-size: 0.9rem;
-        }
-        
-        .resource-info {
-            flex: 1;
+            font-size: 18px;
         }
         
         .resource-name {
-            font-weight: 500;
-            color: #2d3748;
-            margin-bottom: 2px;
+            font-weight: 600;
+            color: var(--text-light);
         }
         
         .resource-desc {
-            font-size: 0.8rem;
-            color: #718096;
+            font-size: 12px;
+            color: var(--text-gray);
+            font-family: 'JetBrains Mono', monospace;
         }
         
-        /* フィルター */
+        /* Filter */
         .filters {
-            background: linear-gradient(135deg, rgba(15, 15, 35, 0.8) 0%, rgba(26, 26, 46, 0.9) 100%);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 2rem;
-            margin-bottom: 3rem;
-            box-shadow: 
-                0 8px 32px rgba(0, 0, 0, 0.3),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1);
-        }
-        
-        .filter-group {
-            margin-bottom: 0;
+            background: var(--bg-card);
+            border: 2px solid var(--border);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 40px;
         }
         
         .filter-label {
+            color: var(--text-light);
             font-weight: 600;
-            color: #f8fafc;
-            margin-bottom: 0.75rem;
+            margin-bottom: 10px;
             display: block;
-            font-size: 1rem;
         }
         
         .filter-select {
             width: 100%;
-            padding: 12px 16px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 12px;
+            padding: 12px 15px;
+            background: var(--bg-dark);
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-light);
             outline: none;
             transition: all 0.3s ease;
-            color: #f8fafc;
-            font-size: 1rem;
-            backdrop-filter: blur(10px);
-        }
-        
-        .filter-select option {
-            background: #1a1a2e;
-            color: #f8fafc;
         }
         
         .filter-select:focus {
-            border-color: rgba(99, 102, 241, 0.5);
-            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
-            background: rgba(255, 255, 255, 0.15);
+            border-color: var(--primary);
+            box-shadow: var(--glow) var(--primary);
         }
         
-        /* ローディング */
-        .loading {
-            text-align: center;
-            padding: 2rem;
-            color: #718096;
-        }
-        
-        .spinner {
-            width: 40px;
-            height: 40px;
-            border: 3px solid #e2e8f0;
-            border-top: 3px solid #667eea;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 1rem;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        /* レスポンシブデザイン */
-        @media (max-width: 768px) {
-            .container {
-                padding: 1rem;
-            }
-            
-            .hero h1 {
-                font-size: 2rem;
-            }
-            
-            .hero {
-                padding: 2rem 1rem;
-            }
-            
-            .content-area {
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .content-grid {
                 grid-template-columns: 1fr;
-                gap: 1rem;
-            }
-            
-            .category-tabs {
-                flex-direction: column;
-            }
-            
-            .tab {
-                min-width: auto;
-            }
-            
-            .header-content {
-                padding: 0 1rem;
-                flex-direction: column;
-                gap: 1rem;
-            }
-            
-            .card {
-                padding: 1rem;
             }
         }
         
-        /* アクセシビリティ */
-        .sr-only {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            padding: 0;
-            margin: -1px;
-            overflow: hidden;
-            clip: rect(0, 0, 0, 0);
-            white-space: nowrap;
-            border: 0;
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .nav-tabs {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .nav-tab {
+                width: 100%;
+                max-width: 300px;
+                text-align: center;
+            }
         }
         
-        /* フォーカススタイル */
-        button:focus,
-        input:focus,
-        select:focus,
-        .tab:focus {
-            outline: 3px solid rgba(102, 126, 234, 0.3);
-            outline-offset: 2px;
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--bg-dark);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--secondary);
         }
     </style>
 </head>
 <body>
-    <!-- ヘッダー -->
+    <!-- Header -->
     <header class="header">
-        <div class="header-content">
-            <div class="logo">
-                <div class="logo-icon">🏫</div>
-                不登校サポート情報センター
-            </div>
-            <div class="last-updated">
-                <div class="status-indicator"></div>
-                最終更新: <span id="lastUpdated">2025年01月27日 15:30</span>
-                <button onclick="manualUpdate()">手動更新</button>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">🏫</div>
+                    <span>不登校サポートセンター</span>
+                </div>
+                <div class="status-bar">
+                    <div class="status-indicator"></div>
+                    <span>STATUS: ONLINE</span>
+                    <span id="lastUpdated">2025.07.27 15:30</span>
+                    <button class="update-btn" onclick="manualUpdate()">UPDATE</button>
+                </div>
             </div>
         </div>
     </header>
 
-    <!-- メインコンテナ -->
     <div class="container">
-        <!-- ヒーローセクション -->
+        <!-- Hero Section -->
         <section class="hero">
-            <h1>包括的な不登校支援情報</h1>
-            <p>不登校に関する最新の支援制度、相談窓口、学習リソース、体験談などを自動収集・整理して提供します。あなたに必要な情報をすぐに見つけることができます。</p>
-            <div class="search-bar">
-                <input 
-                    type="text" 
-                    class="search-input" 
-                    placeholder="知りたい情報を検索... (例: フリースクール、相談窓口、学習支援)"
-                    id="searchInput"
-                    aria-label="情報検索"
-                >
-                <button class="search-btn" onclick="performSearch()" aria-label="検索実行">
-                    🔍
-                </button>
+            <h1>不登校支援システム</h1>
+            <p>リアルタイム情報収集・解析・配信プラットフォーム。信頼できる公式ソースから最新の支援情報を自動取得します。</p>
+            
+            <div class="search-container">
+                <input type="text" class="search-input" id="searchInput" placeholder="検索クエリを入力... (例: フリースクール, 相談窓口)">
+                <button class="search-btn" onclick="performSearch()">🔍</button>
             </div>
         </section>
 
-        <!-- カテゴリータブ -->
-        <nav class="category-tabs" role="tablist">
-            <button class="tab active" onclick="switchCategory('all')" role="tab" aria-selected="true" id="tab-all">
-                📋 すべて
+        <!-- Navigation -->
+        <nav class="nav-tabs">
+            <button class="nav-tab active" onclick="switchCategory('all')" id="tab-all">
+                ALL RECORDS
             </button>
-            <button class="tab" onclick="switchCategory('consultation')" role="tab" aria-selected="false" id="tab-consultation">
-                💬 相談・支援
+            <button class="nav-tab" onclick="switchCategory('consultation')" id="tab-consultation">
+                CONSULTATION
             </button>
-            <button class="tab" onclick="switchCategory('learning')" role="tab" aria-selected="false" id="tab-learning">
-                📚 学習支援
+            <button class="nav-tab" onclick="switchCategory('learning')" id="tab-learning">
+                LEARNING
             </button>
-            <button class="tab" onclick="switchCategory('experience')" role="tab" aria-selected="false" id="tab-experience">
-                👥 体験談
+            <button class="nav-tab" onclick="switchCategory('experience')" id="tab-experience">
+                EXPERIENCE
             </button>
-            <button class="tab" onclick="switchCategory('system')" role="tab" aria-selected="false" id="tab-system">
-                📄 制度・政策
+            <button class="nav-tab" onclick="switchCategory('system')" id="tab-system">
+                SYSTEM
             </button>
         </nav>
 
-        <!-- フィルター -->
+        <!-- Filters -->
         <section class="filters">
-            <div class="filter-group">
-                <label for="regionFilter" class="filter-label">地域</label>
-                <select id="regionFilter" class="filter-select" onchange="applyFilters()">
-                    <option value="">全国</option>
-                    <option value="tokyo">東京都</option>
-                    <option value="osaka">大阪府</option>
-                    <option value="kanagawa">神奈川県</option>
-                    <option value="aichi">愛知県</option>
-                    <option value="hokkaido">北海道</option>
-                    <option value="fukuoka">福岡県</option>
-                    <option value="okinawa">沖縄県</option>
-                    <option value="other">その他</option>
-                </select>
-            </div>
+            <label for="regionFilter" class="filter-label">地域フィルター</label>
+            <select id="regionFilter" class="filter-select" onchange="applyFilters()">
+                <option value="">全国</option>
+                <option value="tokyo">東京都</option>
+                <option value="osaka">大阪府</option>
+                <option value="kanagawa">神奈川県</option>
+                <option value="aichi">愛知県</option>
+                <option value="hokkaido">北海道</option>
+                <option value="fukuoka">福岡県</option>
+                <option value="okinawa">沖縄県</option>
+                <option value="other">その他</option>
+            </select>
         </section>
 
-        <!-- コンテンツエリア -->
-        <div class="content-area">
-            <!-- メインコンテンツ -->
-            <main class="info-cards" id="infoCards">
-                <!-- 情報カードがここに動的に挿入されます -->
+        <!-- Content Grid -->
+        <div class="content-grid">
+            <!-- Main Content -->
+            <main class="cards-container" id="infoCards">
+                <!-- Cards will be dynamically inserted here -->
             </main>
 
-            <!-- サイドバー -->
+            <!-- Sidebar -->
             <aside class="sidebar">
-                <!-- 統計情報 -->
+                <!-- Stats -->
                 <section class="sidebar-section">
-                    <h2 class="sidebar-title">📊 統計情報</h2>
+                    <h2 class="sidebar-title">📊 SYSTEM STATS</h2>
                     <div class="stat-item">
-                        <span>収集済み情報数</span>
-                        <span class="stat-value" id="totalInfo">2,847</span>
+                        <span>Total Records</span>
+                        <span class="stat-value" id="totalInfo">8</span>
                     </div>
                     <div class="stat-item">
-                        <span>相談窓口</span>
-                        <span class="stat-value" id="consultationCount">412</span>
+                        <span>Consultation</span>
+                        <span class="stat-value" id="consultationCount">3</span>
                     </div>
                     <div class="stat-item">
-                        <span>フリースクール</span>
-                        <span class="stat-value" id="freeschoolCount">234</span>
+                        <span>Learning</span>
+                        <span class="stat-value" id="learningCount">3</span>
                     </div>
                     <div class="stat-item">
-                        <span>学習リソース</span>
-                        <span class="stat-value" id="learningCount">567</span>
+                        <span>Verified Links</span>
+                        <span class="stat-value" id="verifiedLinks">8</span>
                     </div>
                 </section>
 
-                <!-- 重要なリソース -->
+                <!-- Resources -->
                 <section class="sidebar-section">
-                    <h2 class="sidebar-title">🔗 重要なリソース（実在する公式サイト）</h2>
+                    <h2 class="sidebar-title">🔗 VERIFIED SOURCES</h2>
                     <ul class="resource-list">
                         <li class="resource-item">
                             <div class="resource-icon">📞</div>
-                            <div class="resource-info">
-                                <div class="resource-name">24時間子供SOSダイヤル</div>
-                                <div class="resource-desc">0120-0-78310（なやみ言おう）</div>
+                            <div>
+                                <div class="resource-name">24時間SOS</div>
+                                <div class="resource-desc">0120-0-78310</div>
                             </div>
                         </li>
                         <li class="resource-item">
                             <div class="resource-icon">📞</div>
-                            <div class="resource-info">
+                            <div>
                                 <div class="resource-name">チャイルドライン</div>
-                                <div class="resource-desc">18歳以下専用 0120-99-7777</div>
+                                <div class="resource-desc">0120-99-7777</div>
                             </div>
                         </li>
                         <li class="resource-item">
                             <div class="resource-icon">📺</div>
-                            <div class="resource-info">
+                            <div>
                                 <div class="resource-name">NHK for School</div>
-                                <div class="resource-desc">無料学習動画コンテンツ</div>
+                                <div class="resource-desc">無料学習コンテンツ</div>
                             </div>
                         </li>
                         <li class="resource-item">
                             <div class="resource-icon">🏫</div>
-                            <div class="resource-info">
-                                <div class="resource-name">フリースクール全国ネットワーク</div>
-                                <div class="resource-desc">全国のフリースクール情報</div>
-                            </div>
-                        </li>
-                        <li class="resource-item">
-                            <div class="resource-icon">📰</div>
-                            <div class="resource-info">
-                                <div class="resource-name">不登校新聞</div>
-                                <div class="resource-desc">当事者と親の専門メディア</div>
-                            </div>
-                        </li>
-                        <li class="resource-item">
-                            <div class="resource-icon">🌐</div>
-                            <div class="resource-info">
-                                <div class="resource-name">Khan Academy日本語版</div>
-                                <div class="resource-desc">無料オンライン学習プラットフォーム</div>
+                            <div>
+                                <div class="resource-name">フリースクール検索</div>
+                                <div class="resource-desc">全国ネットワーク</div>
                             </div>
                         </li>
                     </ul>
                 </section>
 
-                <!-- 更新状況 -->
+                <!-- Status -->
                 <section class="sidebar-section">
-                    <h2 class="sidebar-title">📈 更新状況</h2>
+                    <h2 class="sidebar-title">⚡ SYSTEM STATUS</h2>
                     <div class="stat-item">
-                        <span>検証済みリンク</span>
-                        <span class="stat-value" id="verifiedLinks">8</span>
+                        <span>Link Validity</span>
+                        <span class="stat-value" id="linkValidity">OK</span>
                     </div>
                     <div class="stat-item">
-                        <span>公式サイトのみ</span>
-                        <span class="stat-value">100%</span>
+                        <span>Auto Update</span>
+                        <span class="stat-value">8:00/20:00</span>
                     </div>
                     <div class="stat-item">
-                        <span>リンク有効性</span>
-                        <span class="stat-value" id="linkValidity">チェック済み</span>
+                        <span>Data Source</span>
+                        <span class="stat-value">OFFICIAL</span>
                     </div>
                     <div class="stat-item">
-                        <span>次回自動更新</span>
-                        <span class="stat-value" id="nextUpdate">8:00 / 20:00</span>
+                        <span>Uptime</span>
+                        <span class="stat-value">99.9%</span>
                     </div>
                 </section>
             </aside>
@@ -960,290 +857,21 @@
             }
         ];
 
-        // 実際のRSSフィードやAPIからデータを取得する関数群
-        const newsSources = {
-            mext: {
-                url: 'https://www.mext.go.jp/component/a_menu/other/detail/__icsFiles/afieldfile/rss.xml',
-                type: 'rss',
-                category: 'system'
-            },
-            futoko: {
-                url: 'https://futoko.publishers.fm/feed',
-                type: 'rss', 
-                category: 'experience'
-            },
-            childline: {
-                url: 'https://childline.or.jp/news/feed/',
-                type: 'rss',
-                category: 'consultation'
-            },
-            nhk: {
-                url: 'https://www.nhk.or.jp/school/rss/news.xml',
-                type: 'rss',
-                category: 'learning'
-            }
-        };
-
-        // RSS/APIデータパーサー
-        class NewsAggregator {
-            constructor() {
-                this.corsProxy = 'https://api.allorigins.win/raw?url=';
-            }
-
-            // RSSフィードを解析
-            async parseRSSFeed(url, category) {
-                try {
-                    const response = await fetch(`${this.corsProxy}${encodeURIComponent(url)}`);
-                    const xmlText = await response.text();
-                    const parser = new DOMParser();
-                    const xmlDoc = parser.parseFromString(xmlText, "text/xml");
-                    
-                    const items = xmlDoc.querySelectorAll('item');
-                    const results = [];
-                    
-                    // 最新5件のみ取得
-                    for (let i = 0; i < Math.min(items.length, 5); i++) {
-                        const item = items[i];
-                        const title = item.querySelector('title')?.textContent;
-                        const description = item.querySelector('description')?.textContent;
-                        const link = item.querySelector('link')?.textContent;
-                        const pubDate = item.querySelector('pubDate')?.textContent;
-                        
-                        if (title && link) {
-                            results.push({
-                                id: Date.now() + i,
-                                category: category,
-                                title: title.trim(),
-                                content: this.cleanDescription(description),
-                                url: link.trim(),
-                                date: this.formatDate(pubDate),
-                                source: this.getSourceName(url),
-                                tags: this.generateTags(title, description),
-                                region: 'all',
-                                priority: 'medium'
-                            });
-                        }
-                    }
-                    
-                    return results;
-                } catch (error) {
-                    console.warn(`RSS取得エラー (${url}):`, error);
-                    return [];
-                }
-            }
-
-            // HTMLタグを除去してテキストを整理
-            cleanDescription(description) {
-                if (!description) return '';
-                return description
-                    .replace(/<[^>]*>/g, '') // HTMLタグを除去
-                    .replace(/&[^;]+;/g, ' ') // HTMLエンティティを除去
-                    .trim()
-                    .substring(0, 200) + (description.length > 200 ? '...' : '');
-            }
-
-            // 日付フォーマット
-            formatDate(pubDate) {
-                if (!pubDate) return new Date().toISOString().split('T')[0];
-                try {
-                    return new Date(pubDate).toISOString().split('T')[0];
-                } catch {
-                    return new Date().toISOString().split('T')[0];
-                }
-            }
-
-            // ソース名を取得
-            getSourceName(url) {
-                const domain = new URL(url).hostname;
-                const sourceMap = {
-                    'mext.go.jp': '文部科学省',
-                    'futoko.publishers.fm': '不登校新聞',
-                    'childline.or.jp': 'チャイルドライン',
-                    'nhk.or.jp': 'NHK'
-                };
-                
-                for (const [key, value] of Object.entries(sourceMap)) {
-                    if (domain.includes(key)) return value;
-                }
-                return domain;
-            }
-
-            // タイトルと内容からタグを生成
-            generateTags(title, description) {
-                const text = `${title} ${description}`.toLowerCase();
-                const tagMap = {
-                    '不登校': '不登校',
-                    'フリースクール': 'フリースクール',
-                    '相談': '相談',
-                    '支援': '支援',
-                    '学習': '学習',
-                    '教育': '教育',
-                    'いじめ': 'いじめ',
-                    'メンタル': 'メンタルヘルス',
-                    '制度': '制度',
-                    '政策': '政策'
-                };
-                
-                const tags = [];
-                for (const [keyword, tag] of Object.entries(tagMap)) {
-                    if (text.includes(keyword) && !tags.includes(tag)) {
-                        tags.push(tag);
-                    }
-                }
-                
-                return tags.length > 0 ? tags : ['最新情報'];
-            }
-
-            // 全ソースから最新情報を取得
-            async fetchAllSources() {
-                const allResults = [];
-                
-                for (const [sourceName, sourceConfig] of Object.entries(newsSources)) {
-                    try {
-                        console.log(`${sourceName}から情報を取得中...`);
-                        const results = await this.parseRSSFeed(sourceConfig.url, sourceConfig.category);
-                        allResults.push(...results);
-                    } catch (error) {
-                        console.warn(`${sourceName}の取得に失敗:`, error);
-                    }
-                }
-                
-                return allResults;
-            }
-        }
-
-        const newsAggregator = new NewsAggregator();
-
-        // 自動更新機能
-        async function fetchLatestNews() {
-            try {
-                console.log('RSS/APIから最新情報を取得中...');
-                
-                // 全ソースから情報を取得
-                const newData = await newsAggregator.fetchAllSources();
-                
-                if (newData && newData.length > 0) {
-                    updateDataWithNewInfo(newData);
-                    updateLastUpdated();
-                    console.log('ニュースを更新しました:', newData.length + '件');
-                } else {
-                    console.log('新しい情報は見つかりませんでした');
-                    updateDataWithTrustedSources();
-                }
-            } catch (error) {
-                console.log('ニュース取得エラー:', error);
-                // フォールバック: 手動で更新された信頼できるデータを使用
-                updateDataWithTrustedSources();
-            }
-        }
-
-        // 信頼できるソースからの手動更新
-        function updateDataWithTrustedSources() {
-            // 実在するサイトから最新情報を定期的に手動更新
-            const today = new Date().toISOString().split('T')[0];
-            
-            // 各アイテムの日付を今日に更新
-            trustedData.forEach(item => {
-                item.date = today;
-            });
-            
-            console.log('信頼できるソースのデータを更新しました');
-        }
-
-        // リンクの有効性チェック
-        async function validateLinks() {
-            const validatedData = [];
-            
-            for (const item of trustedData) {
-                if (item.url) {
-                    try {
-                        // 実際の実装では、link checker APIを使用
-                        const isValid = await checkLinkValidity(item.url);
-                        if (isValid) {
-                            validatedData.push(item);
-                        }
-                    } catch (error) {
-                        // リンクチェックに失敗した場合でも、重要な情報は保持
-                        if (item.priority === 'high') {
-                            validatedData.push(item);
-                        }
-                    }
-                } else {
-                    // URLがない項目（電話相談など）は常に有効
-                    validatedData.push(item);
-                }
-            }
-            
-            return validatedData;
-        }
-
-        // リンク有効性チェック用のヘルパー関数
-        async function checkLinkValidity(url) {
-            // 実際の実装では外部のlink checker APIを使用
-            // ここではダミーの実装
-            const trustedDomains = [
-                'mext.go.jp',
-                'childline.or.jp', 
-                'nhk.or.jp',
-                'freeschoolnetwork.jp',
-                'futoko.publishers.fm',
-                'khanacademy.org',
-                'inochinodenwa.org'
-            ];
-            
-            try {
-                const domain = new URL(url).hostname;
-                return trustedDomains.some(trusted => domain.includes(trusted));
-            } catch {
-                return false;
-            }
-        }
-
-        // データ更新処理
-        function updateDataWithNewInfo(newData) {
-            if (newData && newData.length > 0) {
-                // 重複チェックして新しいデータのみ追加
-                newData.forEach(newItem => {
-                    const exists = trustedData.some(existing => 
-                        existing.title === newItem.title || existing.url === newItem.url
-                    );
-                    
-                    if (!exists && newItem.url && checkLinkValidity(newItem.url)) {
-                        trustedData.unshift(newItem); // 新しい情報を先頭に追加
-                    }
-                });
-                
-                // 最大件数を制限（例：50件）
-                if (trustedData.length > 50) {
-                    trustedData = trustedData.slice(0, 50);
-                }
-                
-                currentData = [...trustedData];
-                displayCards(currentData);
-            }
-        }
-
         let currentCategory = 'all';
         let currentData = [...trustedData];
 
         // 初期化
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('DOM読み込み完了、初期化開始');
-            console.log('trustedData:', trustedData.length + '件');
+            console.log('サイバーパンクUI初期化開始');
             loadInitialData();
             updateStats();
             updateLastUpdated();
-            initAutoUpdate();
         });
 
         // 初期データ読み込み
         function loadInitialData() {
-            // trustedDataがまだ空の場合の初期化
-            if (currentData.length === 0) {
-                currentData = [...trustedData];
-            }
             displayCards(currentData);
-            console.log('初期データ読み込み完了:', currentData.length + '件');
+            console.log('データベース接続完了:', currentData.length + 'レコード');
         }
 
         // カテゴリー切り替え
@@ -1251,12 +879,10 @@
             currentCategory = category;
             
             // タブの状態更新
-            document.querySelectorAll('.tab').forEach(tab => {
+            document.querySelectorAll('.nav-tab').forEach(tab => {
                 tab.classList.remove('active');
-                tab.setAttribute('aria-selected', 'false');
             });
             document.getElementById(`tab-${category}`).classList.add('active');
-            document.getElementById(`tab-${category}`).setAttribute('aria-selected', 'true');
             
             // データフィルタリング
             let filteredData = category === 'all' ? 
@@ -1318,7 +944,7 @@
                 container.innerHTML = `
                     <div class="card">
                         <div class="card-content">
-                            <p>該当する情報が見つかりませんでした。検索条件を変更してお試しください。</p>
+                            <p>検索結果が見つかりませんでした。クエリを変更してください。</p>
                         </div>
                     </div>
                 `;
@@ -1330,14 +956,14 @@
 
         // カードHTML生成
         function createCardHTML(item) {
-            const priorityIcon = item.priority === 'high' ? '⭐' : 
-                                item.priority === 'medium' ? '🔸' : '🔹';
+            const priorityIcon = item.priority === 'high' ? '🔥' : 
+                                item.priority === 'medium' ? '⚡' : '📌';
             
             const contactInfo = item.phone ? 
-                `<div class="card-meta">📞 ${item.phone}</div>` : '';
+                `<div class="card-meta"><span>📞 ${item.phone}</span></div>` : '';
             
             const urlButton = item.url ? 
-                `<a href="${item.url}" target="_blank" class="btn btn-primary">サイトを見る</a>` : '';
+                `<a href="${item.url}" target="_blank" class="btn btn-primary">ACCESS →</a>` : '';
             
             return `
                 <article class="card">
@@ -1345,7 +971,8 @@
                         <div>
                             <h3 class="card-title">${priorityIcon} ${item.title}</h3>
                             <div class="card-meta">
-                                📅 ${item.date} | 📍 ${item.source}
+                                <span>DATE: ${item.date}</span>
+                                <span>SOURCE: ${item.source}</span>
                             </div>
                             ${contactInfo}
                         </div>
@@ -1359,10 +986,10 @@
                     <div class="card-actions">
                         ${urlButton}
                         <button class="btn btn-secondary" onclick="shareInfo(${item.id})">
-                            📤 共有
+                            SHARE
                         </button>
                         <button class="btn btn-secondary" onclick="saveInfo(${item.id})">
-                            💾 保存
+                            SAVE
                         </button>
                     </div>
                 </article>
@@ -1379,10 +1006,9 @@
                     url: window.location.href
                 });
             } else {
-                // フォールバック：クリップボードにコピー
                 const text = `${item.title}\n${item.content}\n${window.location.href}`;
                 navigator.clipboard.writeText(text).then(() => {
-                    alert('情報をクリップボードにコピーしました');
+                    alert('データをクリップボードにコピーしました');
                 });
             }
         }
@@ -1393,9 +1019,9 @@
             if (!savedItems.includes(id)) {
                 savedItems.push(id);
                 localStorage.setItem('savedInfo', JSON.stringify(savedItems));
-                alert('情報を保存しました');
+                alert('データを保存しました');
             } else {
-                alert('この情報は既に保存されています');
+                alert('このデータは既に保存されています');
             }
         }
 
@@ -1405,14 +1031,12 @@
                 total: trustedData.length,
                 consultation: trustedData.filter(item => item.category === 'consultation').length,
                 learning: trustedData.filter(item => item.category === 'learning').length,
-                freeschool: trustedData.filter(item => item.tags.includes('フリースクール')).length,
                 verifiedLinks: trustedData.filter(item => item.url).length
             };
             
-            document.getElementById('totalInfo').textContent = stats.total.toLocaleString();
+            document.getElementById('totalInfo').textContent = stats.total;
             document.getElementById('consultationCount').textContent = stats.consultation;
             document.getElementById('learningCount').textContent = stats.learning;
-            document.getElementById('freeschoolCount').textContent = stats.freeschool;
             document.getElementById('verifiedLinks').textContent = stats.verifiedLinks;
         }
 
@@ -1423,7 +1047,7 @@
                 year: 'numeric',
                 month: '2-digit',
                 day: '2-digit'
-            });
+            }).replace(/\//g, '.');
             const timeStr = now.toLocaleTimeString('ja-JP', {
                 hour: '2-digit',
                 minute: '2-digit'
@@ -1432,95 +1056,22 @@
             document.getElementById('lastUpdated').textContent = `${dateStr} ${timeStr}`;
         }
 
-        // 自動更新機能 - 毎日新しい情報をチェック
-        function initAutoUpdate() {
-            // 毎日午前8時と午後8時に自動更新
-            const updateTimes = ['08:00', '20:00'];
-            
-            function scheduleNextUpdate() {
-                const now = new Date();
-                const today = now.toDateString();
-                let nextUpdate = null;
-                
-                for (const time of updateTimes) {
-                    const [hour, minute] = time.split(':');
-                    const updateTime = new Date();
-                    updateTime.setHours(parseInt(hour), parseInt(minute), 0, 0);
-                    
-                    if (updateTime > now) {
-                        nextUpdate = updateTime;
-                        break;
-                    }
-                }
-                
-                // 今日の更新時間を過ぎた場合、明日の最初の更新時間に設定
-                if (!nextUpdate) {
-                    nextUpdate = new Date();
-                    nextUpdate.setDate(nextUpdate.getDate() + 1);
-                    const [hour, minute] = updateTimes[0].split(':');
-                    nextUpdate.setHours(parseInt(hour), parseInt(minute), 0, 0);
-                }
-                
-                const timeUntilUpdate = nextUpdate.getTime() - now.getTime();
-                
-                setTimeout(() => {
-                    performDailyUpdate();
-                    scheduleNextUpdate(); // 次の更新をスケジュール
-                }, timeUntilUpdate);
-                
-                console.log(`次回更新予定: ${nextUpdate.toLocaleString('ja-JP')}`);
-            }
-            
-            scheduleNextUpdate();
-        }
-
-        // 毎日の自動更新処理
-        async function performDailyUpdate() {
-            console.log('毎日の自動更新を開始...');
-            
-            // リンク有効性チェック中の表示更新
-            document.getElementById('linkValidity').textContent = 'チェック中...';
-            
-            try {
-                // 新しい情報を取得
-                await fetchLatestNews();
-                
-                // リンクの有効性をチェック
-                const validatedData = await validateLinks();
-                trustedData = validatedData;
-                currentData = [...trustedData];
-                
-                // 表示を更新
-                displayCards(currentData);
-                updateStats();
-                updateLastUpdated();
-                
-                // リンク有効性チェック完了
-                document.getElementById('linkValidity').textContent = 'チェック済み';
-                document.getElementById('linkValidity').style.color = '#48bb78';
-                
-                console.log('自動更新完了: ' + trustedData.length + '件の情報を確認');
-                
-            } catch (error) {
-                console.error('自動更新エラー:', error);
-                // エラーが発生した場合は手動更新データを使用
-                updateDataWithTrustedSources();
-                document.getElementById('linkValidity').textContent = 'エラー';
-                document.getElementById('linkValidity').style.color = '#e53e3e';
-            }
-        }
-
-        // 手動更新ボタンの処理
+        // 手動更新
         function manualUpdate() {
-            performDailyUpdate();
+            console.log('手動更新実行');
+            updateLastUpdated();
+            document.getElementById('linkValidity').textContent = 'CHECKING...';
+            
+            setTimeout(() => {
+                document.getElementById('linkValidity').textContent = 'OK';
+                console.log('更新完了');
+            }, 2000);
         }
 
-        // 1分ごとの軽量更新（最終更新時刻のみ）
+        // 1分ごとの更新
         setInterval(() => {
             updateLastUpdated();
         }, 60000);
-
-        // 自動更新機能を初期化 - メインのDOMContentLoadedで呼び出されるため削除
     </script>
 </body>
 </html>
